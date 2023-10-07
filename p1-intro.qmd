@@ -1,0 +1,6 @@
+---
+title: "Practice Intro"
+---
+
+This would be a different data set, and this notebook would ONLY have directions, no pre-written code.
+
