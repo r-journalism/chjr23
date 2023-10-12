@@ -1,0 +1,44 @@
+# Managing a project
+
+Using RStudio projects make it straightforward to collect related work into its own folder. All your data, notebooks and related documents can be stored together. It saves you from some R-related hassles of setting working directories.
+
+With the addition of Quarto, you can turn your notebooks into readable documents for others, including your future self. While you don't have to publish your work, it makes it easy to do so using Quarto Pub, or Github if you are already using source control.
+
+My favorite default configuration for projects is the [Quarto Website](https://quarto.org/docs/websites/). With one extra configuration file you can tie all your notebooks together into a linked website. There are other bells and whistles, but that's the gist.
+
+In the video below, I go through the process of creating and configuring a Quarto Website. It's not perfect, but you may find it useful.
+
+## Preference vs convention
+
+Some things I do are for personal preference, but they are usually based on some logic. One thing I can say for sure: The more consistent you are setting up your projects, easier it is for your future self and collaborators.
+
+## File and folder management
+
+- I create two data folders: `data-raw` for my original data, and `data-processed` for anything I generate. I don't want to write over original data, which should not be changed. It doesn't stop me from making mistakes, but I'm less likely to make them.
+- I do my data cleaning in its own notebook, then export the cleaned data as an RDS file that preserves data types and the like. (I start any analysis from this cleaned data.) This helps avoid repetition in cleaning the same data over and over, and possibly in different ways. It's not unusual for me to be doing an analysis and realize I need to back into my cleaning notebook and fix or add something. I just do that and re-run everything so all future notebooks have the fix.
+- I name my notebooks in the order they should be run, like `01-cleaning.qmd` needs to be run before `02-analysis.qmd`. This might be overkill, but it is what I do. Also, when I export data from a notebook, I include that number or notebook name so I know where it came from.
+- I sometimes have a `resources` folder where I might store data dictionaries or documents related to my source data.
+- I use the `index.qmd` file of the Quarto website as my "about this project" page. I explain there what the project is about and link to the source of my data. Depending on the need I might have notes about how I downloaded or processed the data (though that might be in my cleaning notebook.) I include links to stories born from the project once they publish.
+- I don't use the default `about.qmd` page created with a Quarto website. I just rename that as my cleaning notebook.
+
+## Quarto YAML configurations
+
+- The [Quarto Website documentation](https://quarto.org/docs/websites/) is pretty good. It explains different configurations and navigation options you can use in the `_quarto.yml` file.
+- One thing I always add to `_quarto.yml` is `df-print: paged`. It makes your table output much nicer on the rendered pages. You can [read about it here](https://quarto.org/docs/computations/r.html#data-frames).
+
+## Quarto Pub
+
+[https://quartopub.com/](https://quartopub.com/) is a website where you can publish your notebooks for free through a simple command. You have to install the [Quarto CLI](https://quarto.org/docs/get-started/) and use the Terminal to push the files, but it is just a simple two-word command.
+
+## Github specific tricks
+
+If you use git and Github, you can take advantage of Github Pages to publish rendered pages along with your project.
+
+- You can update the `_quarto.yml` to change the output directory to use `docs`. This allows you to use Github Pages to publish your html for free right with your code. [Directions are here](https://quarto.org/docs/publishing/github-pages.html#render-to-docs).
+- If you use gitignore.io to create your gitignore file, be sure to comment out or remove the line about the `docs` folder. By default that configuration excludes pushing docs, but you want it if you are using Github Pages.
+- You can using [Quarto includes](https://quarto.org/docs/authoring/includes.html) to pull your standard README.md into your index page. I guild a regular README and then in my index I put one line: `{{< include README.md >}}`. This way your README works on Github, but also serves as the index of your project website. You just can't use fancy Quarto stuff like callouts, but regular Markdown is fine.
+
+## Project creation demo
+
+{{< video https://vimeo.com/873183057 >}}
+

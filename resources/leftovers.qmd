@@ -1,0 +1,85 @@
+---
+title: "Leftovers"
+---
+
+Some thing we probably don't have time for but might be useful.
+
+
+### How we use packages
+
+There are two steps to using an R package:
+
+-   **Install the package** onto your computer by using `install.packages("package_name")`. You only have to do this once for each computer, so I usually do it using the R Console instead of in a notebook. *We installed most of ours already*.
+-   **Include the library** using `library(package_name)`. This has to be done for **each notebook** or script that uses it, so it is usually one of the first things you'll see in a notebook.
+
+::: callout-note
+We use "quotes" around the package name when installing it, but we DON'T need quotes when we load it with `library(package_name)`.
+:::
+
+
+## About R chunks
+
+While you used the R console above to interact with R (yes, that is what you were doing), we will mostly add code to our notebooks using **code chunks**.
+
+1. In this RStudio notebook in the code chunk below, click on the green **play** button to run the code in the chunk.
+2. You should get a response something like `[1] 2` which is a row number `[1]` and the answer to the match equation `2`.
+
+```{r}
+1 + 1
+```
+
+There is a keyboard command to run a line of code, and it is among five key commands we really suggest you use. Presented for Mac:
+
+- *Cmd-return* runs a single line of code that your cursor is on.
+- *Cmd-shift-return* runs all the lines in the code chunk where your cursor is.
+
+All of these options are also in the Run menu at the top of the document.
+
+### OYO: Insert a code chunk
+
+The best way to insert a new code chunk is to use the keyboard command *Cmd-option-i*. That said, there is also a green `+c` button above the document near that *Run* menu.
+
+1. In the space below this direction but before the next headline, add a new code chunk using the keyboard command *Cmd-option-i*.
+    - Notice it adds all the characters needed and then puts your cursor inside so you are ready to type.
+2. Inside that code chunk, add `2 + 2` and then run the chunk to see the answer.
+    
+### Data frames and plots
+
+There is a sample data set in R called `cars` that has the stopping distance of cars as measured some time in history. We'll use it to show a couple more things about code blocks.
+
+The code chunk below has two lines of code:
+
+- The first just says `cars`, which prints out the data.
+- The second line is a function called `plot()` with `cars` inside of it. That function acts on the cars data to create a scatter plot.
+
+1. Run the code below.
+
+```{r}
+cars
+
+plot(cars)
+```
+
+Since we have two lines with two different outputs, the Quarto notebook shows them as panes you can swap back and forth. The rendered page shows each line of code, then its output.
+
+- The `data.frame` part is printing out data. There is a lot of information available in that printout, including the number of rows (we call them observations) and columns (we call them variables), the names of those columns/variables, the data types of each variable, and then their values. We call data like this a "data frame" or "tibble". It's like a highly structured spreadsheet.
+- The second pane is a chart (or plot as we call them). The function `plot()` took the only two variables in the data and, well, plotted them.
+
+Yes, it can be that easy to visualize data in R. But not usually.
+
+### Render your first document
+
+1. With this document open in R Studio, look at the toolbar directly above the writing and look for the **Render** button with the blue arrow next to it. Click on that word.
+2. This will create (or render) a "publishable" version of this document in HTML and present it in the *Viewer* page (or perhaps in a new window, which we can fix).
+
+You can read this lesson text there, but realize that rendered page doesn't update with edits in the Quarto document unless you tell it to.
+
+Keep this in mind:
+
+- There are keyboard commands to render a document: *Cmd-shift-k*.
+-   We can also easily publish the same work in other formats, like PDF, Word or even a slide show.
+-   We can also choose NOT to "publish" our work. We don't *have* to share our work on the internet, we are just ready if we want to.
+
+### OYO: Re-render this page one last time
+
+Now that you've been introduced to how a Quarto document is written, go ahead and re-render this page by using the .

@@ -1,0 +1,187 @@
+---
+title: "Solutions Day 1"
+---
+
+This is the notebook fellows will work through on the first day of the Center for Health Journalism Hands-On R course.
+
+You will be using daily weather summaries that have been downloaded  from [Climate Data Online](https://www.ncei.noaa.gov/cdo-web/datasets). The explanations use Texas, but there are files for Arkansas, California, New York and North Carolina for practice.
+
+## Goals
+
+Our goals are to:
+
+- Import our data.
+- Check all the column data types.
+- Add some new columns based on the date.
+- Recode some values in our data.
+- Remove some unnecessary variables/columns.
+- Export our cleaned data.
+
+## Setup
+
+Add the entire code block for libraries.
+
+```{r}
+#| label: setup
+#| message: false
+
+library(tidyverse)
+library(janitor)
+```
+
+## Import
+
+Follow the directions in the lesson to import the Texas data, starting with adding a new code block:
+
+```{r}
+tx_raw <- read_csv("data-raw/tx.csv") |> clean_names()
+
+tx_raw
+```
+
+### OYO: Import a different state
+
+Go through all the steps above, but with different a different state.
+
+
+
+## Peeking at data
+
+Use head, tail, glimpse and summary to look at the Texas data.
+
+Look at the top of your data:
+
+```{r}
+tx_raw |> head()
+```
+
+Look at 8 lines of the bottom of your data:
+
+```{r}
+tx_raw |> tail(8)
+```
+
+
+Use glimpse to see all your columns:
+
+```{r}
+tx_raw |> glimpse()
+```
+
+Use summary to learn about all your variables:
+
+```{r}
+tx_raw |> summary()
+```
+
+```{r}
+tx_raw$date |> summary()
+```
+
+### OYO: Peek at your state's data
+
+
+
+## Create or change data
+
+Create year, month values based on the date.
+
+```{r}
+tx_dates <- tx_raw |> 
+  mutate(
+    yr = year(date),
+    mn = month(date, label = TRUE),
+    yd = yday(date)
+  )
+
+tx_dates |> glimpse()
+```
+
+### OYO: Make date parts
+
+Make the same date parts, but with your own state data:
+
+
+## Recoding values
+
+Use distinct so you can see the station names:
+
+```{r}
+tx_dates |> distinct(name)
+```
+
+### Use mutate to recode
+
+Use recode to create a new column of short city names:
+
+```{r}
+tx_names <- tx_dates |> 
+  mutate(
+    city = recode(
+      name,
+      "HOUSTON WILLIAM P HOBBY AIRPORT, TX US" = "Houston",
+      "AUSTIN CAMP MABRY, TX US" = "Austin",
+      "DALLAS FAA AIRPORT, TX US" = "Dallas"
+    )
+  )
+
+tx_names |> glimpse()
+```
+
+Now check your results using distinct on `name` and `city`.
+
+```{r}
+tx_names |> distinct(name, city)
+```
+
+
+### OYO: Recode your cities
+
+Make similar short names, but for your state.
+
+
+## Select
+
+Create a new version of your data with only the columns you need, in the order you want them.
+
+```{r}
+tx_tight <- tx_names |> 
+  select(
+    city,
+    date,
+    rain = prcp,
+    snow,
+    snwd,
+    tmax,
+    tmin,
+    yr,
+    mn,
+    yd
+  )
+
+tx_tight |> glimpse()
+```
+
+### OYO: Select your cols
+
+Go through the same process as above, but with your own state data.
+
+
+
+## Export
+
+Write the file out as "rds" to the `data-processed` folder.
+
+```{r}
+tx_tight |> write_rds("data-processed/tx_clean.rds")
+```
+
+### OYO: Export your state
+
+Write your data to the `data-processed` folder. Make sure you use a name for your state.
+
+
+## Checking your notebooks
+
+Clear out your notebook and rerun all the code. Render the HTML page.
+

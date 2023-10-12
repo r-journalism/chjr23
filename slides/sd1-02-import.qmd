@@ -1,0 +1,16 @@
+---
+title: "Importing"
+author: "Christian McDonald"
+format: revealjs
+---
+
+# Importing
+
+Working through our first notebook
+
+## Libraries
+
+Libraries are a collections of pre-written functions that we download to our computer so we can us them in our code.
+
+The [Tidyverse](https://www.tidyverse.org/) has several libraries that are designed to work together, like [dplyr](https://dplyr.tidyverse.org/) to manipulate data, and [ggplot](https://ggplot2.tidyverse.org/) to make charts.
+

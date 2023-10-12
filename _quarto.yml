@@ -1,0 +1,40 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  sidebar:
+    style: "docked"
+    search: true
+    contents:
+      - section: "CHJR Part 1"
+        contents:
+          - text: Home
+            url: index.qmd
+      - section: "Lessons"
+        contents:
+          - lesson-day1-01-intro.qmd
+          - lesson-day1-02-clean.qmd
+          - lesson-day2-01-analysis.qmd
+      - section: "Practice"
+        contents:
+          - practice-day1-clean.qmd
+          - practice-day2-analysis.qmd
+      - section: "Solutions"
+        contents:
+          - solution-day1-clean.qmd
+          - solution-day2-analysis.qmd
+      - section: "Resources"
+        contents:
+          - resources/functions.qmd
+          - resources/projects.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    df-print: paged
+
+
+

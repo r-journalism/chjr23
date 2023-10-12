@@ -1,0 +1,80 @@
+---
+title: "Weather testing"
+---
+
+
+## California - R
+- Los Angeles - Downtown USC
+- Sacramento - Metro airport
+- San Francisco - Downtown
+
+## North Carolina - R
+- Charlotte Douglas Airport
+- Raleigh Durham International Airport
+- Wilmington International Airport
+Texas
+- Houston William P Hobby
+- Dallas FAA
+- Austin - Mabry
+
+## Arkansas
+- Little Rock
+- Fort Smith
+- Hot Springs
+
+## New York -R
+- NY City Central Park
+- Albany International Airport
+- Buffalo
+
+## Stations
+
+I really only need TX, CA & NC
+
+- AR: GHCND:USW00013963, GHCND:USC00033466, GHCND:USW00013964
+- CA: GHCND:USW00093134, GHCND:USW00093225, GHCND:USW00023272
+- NC: GHCND:USW00013881, GHCND:USW00013748, GHCND:USW00013722
+- TX: GHCND:USW00013960, GHCND:USW00012918, GHCND:USW00013958
+- NY: GHCND:USW00094728, GHCND:USW00014735, GHCND:USW00014733
+
+### CA notes
+
+DAPR = Number of days included in the multiday precipitation total (MDPR)
+MDPR = Multiday precipitation total (mm or inches as per user preference; use with DAPR and DWPR, if available)
+
+Testing the weather data
+
+```{r}
+#| label: setup
+#| message: false
+
+library(tidyverse)
+library(janitor)
+```
+
+## Import
+
+```{r}
+ca_raw <- read_csv("../data-raw/ca.csv") |> clean_names()
+tx_raw <- read_csv("../data-raw/tx.csv") |> clean_names()
+nc_raw <- read_csv("../data-raw/nc.csv") |> clean_names()
+```
+
+
+
+```{r}
+ca <- ca_raw |> select(
+  name, date, prcp, snow, snwd, tmax, tmin
+)
+
+tx <- tx_raw |> select(
+  name, date, prcp, snow, snwd, tmax, tmin
+)
+
+nc <- nc_raw |> select(
+  name, date, prcp, snow, snwd, tmax, tmin
+)
+
+
+```
+

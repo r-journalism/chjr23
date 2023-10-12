@@ -1,0 +1,11 @@
+---
+title: "Homework"
+---
+
+1. Go through the projects video
+2. Create a new quarto project or website
+3. Import our Skittles data (link TK)
+4. Find the answers to the following questions:
+    - Who got the most candy? Who the least?
+    - What is the average number of candies per bag?
+    - On average, which color candy is most prevalent

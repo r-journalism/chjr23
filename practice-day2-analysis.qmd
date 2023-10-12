@@ -1,0 +1,18 @@
+---
+title: "Practice Day 2"
+---
+
+## Goals
+
+To learn about: arrange, filter, slice, group_by, summarize
+
+To find several values from our data:
+
+- The coldest and warmest days
+- The rainiest and snowiest days
+- Years with most snow days
+- Years with most 100+ days
+- Years with most rain
+- Earliest day to reach 100+ each year
+
+With this lesson we'll just use Texas data. (You theoretically could use a different state, but would need to adjust your code to import the right data, use valid cities, etc.)

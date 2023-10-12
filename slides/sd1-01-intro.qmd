@@ -1,0 +1,83 @@
+---
+title: "Quarto, R & RStudio"
+author: "Christian McDonald & Andrew Ba Tran"
+format: revealjs
+---
+
+## Install R & RStudio
+
+You'll need to go to `https://posit.co/downloads/` and click on the big **Download RStudio** button there. There are two parts:
+
+1. Install the R language
+2. Install the RStudio Desktop program
+
+Make sure you run the installer or copy into your Applications folder as noted.
+
+The R language gets installed on your machine, but you never launch it like a regular program.
+
+## Install Quarto
+
+1. Go to `quarto.org/` and then click the **Getting Started** link.
+2. Download and install the software for your machine.
+
+## Launch RStudio
+
+1. From your Applications folder (or through your Start menu) launch the program called RStudio
+
+![launcher](images/launcher-rstudio.png)
+
+
+## About RStudio Desktop
+
+We'll orient a bit in class.
+
+![RStudio Desktop](images/intro-start.png)
+
+## Look for the console
+
+We need you to run some commands in the RStudio **Console**. We'll provide code to copy/paste.
+
+### Install packages
+
+This will take some time to run, depending on the internet.
+
+```r
+install.packages(c("usethis", "tidyverse", "quarto", "rmarkdown", "janitor"))
+```
+
+### Download, open the material
+
+As you are asked questions, choose the default answers or ones that make the most sense.
+
+```r
+usethis::use_course("https://github.com/r-journalism/chjr/archive/master.zip")
+```
+
+## Using projects
+
+:::: {.columns}
+
+::: {.column width="60%"}
+R needs to know where things live on your computer so it can find them.
+
+We use **projects** to organize our work. One folder for each project, with everything you need.
+:::
+
+::: {.column width="40%"}
+![](images/project-menu.png)
+:::
+
+::::
+
+
+
+## Open our first lesson
+
+1. In the **Files** pane, find our first file in `lessons/d1-01-intro.qmd` and open it.
+2. This should open in your pane to the left, with the Console below it.
+
+We'll work from there now.
+
+## Tour of our project
+
+

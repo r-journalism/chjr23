@@ -1,86 +1,786 @@
 [
   {
-    "objectID": "d1-01-intro.html",
-    "href": "d1-01-intro.html",
-    "title": "Introduction",
+    "objectID": "practice-day2-analysis.html",
+    "href": "practice-day2-analysis.html",
+    "title": "Practice Day 2",
     "section": "",
-    "text": "The idea is this …\nThere would be pre-written code, with explanations of what it does. Fellows would work through this notebook, running pre-written code and adding new code of their own in mini “on your own” quests.\nThey can Render the page as we go along to see how that works.\nPractice is in a different notebook."
+    "text": "To learn about: arrange, filter, slice, group_by, summarize\nTo find several values from our data:\n\nThe coldest and warmest days\nThe rainiest and snowiest days\nYears with most snow days\nYears with most 100+ days\nYears with most rain\nEarliest day to reach 100+ each year\n\nWith this lesson we’ll just use Texas data. (You theoretically could use a different state, but would need to adjust your code to import the right data, use valid cities, etc.)"
   },
   {
-    "objectID": "d1-01-intro.html#libraries",
-    "href": "d1-01-intro.html#libraries",
-    "title": "Introduction",
+    "objectID": "practice-day2-analysis.html#goals",
+    "href": "practice-day2-analysis.html#goals",
+    "title": "Practice Day 2",
+    "section": "",
+    "text": "To learn about: arrange, filter, slice, group_by, summarize\nTo find several values from our data:\n\nThe coldest and warmest days\nThe rainiest and snowiest days\nYears with most snow days\nYears with most 100+ days\nYears with most rain\nEarliest day to reach 100+ each year\n\nWith this lesson we’ll just use Texas data. (You theoretically could use a different state, but would need to adjust your code to import the right data, use valid cities, etc.)"
+  },
+  {
+    "objectID": "slides/sd1-02-import.html#libraries",
+    "href": "slides/sd1-02-import.html#libraries",
+    "title": "Importing",
     "section": "Libraries",
-    "text": "Libraries\nTalk about them. This is fenced to show the chunk options.\n\n```{r}\n#| label: setup\n#| message: false\n\nlibrary(tidyverse)\nlibrary(janitor)\n```\n\n\n\n\n\n\n\nImportant\n\n\n\nThere is no OYO for setting up libraries since we don’t want to do it twice in the same notebook.."
-  },
-  {
-    "objectID": "d1-01-intro.html#importing",
-    "href": "d1-01-intro.html#importing",
-    "title": "Introduction",
-    "section": "Importing",
-    "text": "Importing\nA lot of talk about how this works …\n\ntx <- read_csv(\"data-raw/tx.csv\") |> clean_names()\n\nRows: 94475 Columns: 10\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr  (2): STATION, NAME\ndbl  (7): PRCP, SNOW, SNWD, TAVG, TMAX, TMIN, TOBS\ndate (1): DATE\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\ntx |> glimpse()\n\nRows: 94,475\nColumns: 10\n$ station <chr> \"USW00012918\", \"USW00012918\", \"USW00012918\", \"USW00012918\", \"U…\n$ name    <chr> \"HOUSTON WILLIAM P HOBBY AIRPORT, TX US\", \"HOUSTON WILLIAM P H…\n$ date    <date> 1930-08-01, 1930-08-02, 1930-08-03, 1930-08-04, 1930-08-05, 1…\n$ prcp    <dbl> 3.00, 0.09, NA, 0.02, 0.12, NA, NA, NA, 0.00, 0.00, 0.00, NA, …\n$ snow    <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ snwd    <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ tavg    <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ tmax    <dbl> 99, 97, 95, 95, 92, 92, 96, 97, 94, 92, 99, 99, 98, 98, 98, 97…\n$ tmin    <dbl> 75, 79, 78, 79, 76, 74, 71, 71, 75, 72, 70, 71, 78, 72, 73, 70…\n$ tobs    <dbl> 86, 89, 89, 85, 83, 89, 83, 82, 85, 85, 87, 86, 86, 85, 86, 84…\n\n\n\nOYO: Import\nInsert a new code block here and import the weather data from a different state from the data-raw/ folder.\n\nThe challenge here is the page will stop rendering if they get an error, but hopefully we’ll work through that since it will be an issue in any event."
-  },
-  {
-    "objectID": "d1-01-intro.html#select-columns",
-    "href": "d1-01-intro.html#select-columns",
-    "title": "Introduction",
-    "section": "Select columns",
-    "text": "Select columns\nInfo about doing it. Example with Texas.\n\nOYO: Select\nDirections to do on your own with another state."
-  },
-  {
-    "objectID": "p1-intro.html",
-    "href": "p1-intro.html",
-    "title": "Practice Intro",
-    "section": "",
-    "text": "This would be a different data set, and this notebook would ONLY have directions, no pre-written code."
+    "text": "Libraries\nLibraries are a collections of pre-written functions that we download to our computer so we can us them in our code.\nThe Tidyverse has several libraries that are designed to work together, like dplyr to manipulate data, and ggplot to make charts."
   },
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "CHJ test",
+    "title": "CHJR Part 1",
     "section": "",
-    "text": "CHJ test\nTest from README.\n\nTo the first lessson\nTo a slide deck"
+    "text": "With these lessons we’ll learn about:\n\nBasics of R, RStudio and Quarto\nImporting, cleaning and exporting data\nBasic data wrangling\nProject management\n\n\n\n\nYou can find the installers here. You need both R and RStudio.\n\nIf on a Mac, make sure you move RStudio into your Applications folder.\n\n\nThere is a chance we might have to install Quarto CLI, but don’t worry about it unless we need it.\n\n\n\nNow we’ll download the course materials for the first couple of days of class. They are stored on Github.\n\nFrom this page, click on the big green Code button and choose Download zip\nFind the downloaded file and unzip the folder. Mac: Double-click on it. PC directions here\nMove the unzipped folder to your Desktop (or some other place you can find it).\nGo back to RStudio and go to File &gt; Open Project. Go find your folder and open the file chjr-part1.Rproj.\n\n\n\n\nWe’ll use web-published versions of the lessons to read as we work through practice notebooks in the project.\n\nMain page\nIntroduction\nImporting and cleaning\nData wrangling\n\n\n\n\nI might have some, but most is probably the pages above."
   },
   {
-    "objectID": "slides/01-slide-test.html#can-view-online",
-    "href": "slides/01-slide-test.html#can-view-online",
-    "title": "Slide explainers",
-    "section": "Can view online",
-    "text": "Can view online\nThese slides get published to Docs and we can use them online from Github Pages. Plenty O’ features with Quarto."
-  },
-  {
-    "objectID": "slides/01-slide-test.html#can-also-render-locally",
-    "href": "slides/01-slide-test.html#can-also-render-locally",
-    "title": "Slide explainers",
-    "section": "Can also render locally",
-    "text": "Can also render locally\nStudents have the slides and can render locally, but not at same time as documents."
-  },
-  {
-    "objectID": "slides/01-slide-test.html#dinner",
-    "href": "slides/01-slide-test.html#dinner",
-    "title": "Slide explainers",
-    "section": "Dinner",
-    "text": "Dinner\n\nEat spaghetti\nDrink wine"
-  },
-  {
-    "objectID": "slides/01-slide-test.html#going-to-sleep",
-    "href": "slides/01-slide-test.html#going-to-sleep",
-    "title": "Slide explainers",
-    "section": "Going to sleep",
-    "text": "Going to sleep\n\nGet in bed\nCount sheep"
-  },
-  {
-    "objectID": "d1-02-import.html",
-    "href": "d1-02-import.html",
-    "title": "Importing data",
+    "objectID": "index.html#install-r-and-rstudio",
+    "href": "index.html#install-r-and-rstudio",
+    "title": "CHJR Part 1",
     "section": "",
-    "text": "Thingy."
+    "text": "You can find the installers here. You need both R and RStudio.\n\nIf on a Mac, make sure you move RStudio into your Applications folder.\n\n\nThere is a chance we might have to install Quarto CLI, but don’t worry about it unless we need it."
   },
   {
-    "objectID": "lessons/d1-03-wrangle.html",
-    "href": "lessons/d1-03-wrangle.html",
-    "title": "Importing data",
+    "objectID": "index.html#download-this-repo",
+    "href": "index.html#download-this-repo",
+    "title": "CHJR Part 1",
     "section": "",
-    "text": "Thingy."
+    "text": "Now we’ll download the course materials for the first couple of days of class. They are stored on Github.\n\nFrom this page, click on the big green Code button and choose Download zip\nFind the downloaded file and unzip the folder. Mac: Double-click on it. PC directions here\nMove the unzipped folder to your Desktop (or some other place you can find it).\nGo back to RStudio and go to File &gt; Open Project. Go find your folder and open the file chjr-part1.Rproj."
+  },
+  {
+    "objectID": "index.html#lessons",
+    "href": "index.html#lessons",
+    "title": "CHJR Part 1",
+    "section": "",
+    "text": "We’ll use web-published versions of the lessons to read as we work through practice notebooks in the project.\n\nMain page\nIntroduction\nImporting and cleaning\nData wrangling"
+  },
+  {
+    "objectID": "index.html#slides",
+    "href": "index.html#slides",
+    "title": "CHJR Part 1",
+    "section": "",
+    "text": "I might have some, but most is probably the pages above."
+  },
+  {
+    "objectID": "lesson-day2-01-analysis.html",
+    "href": "lesson-day2-01-analysis.html",
+    "title": "Data Wrangling",
+    "section": "",
+    "text": "FIRST DRAFT DONE. NEED TO CHECK AGAINST SOLUTIONS. THEN MAKE PRACTICE FILE."
+  },
+  {
+    "objectID": "lesson-day2-01-analysis.html#goals-of-this-lesson",
+    "href": "lesson-day2-01-analysis.html#goals-of-this-lesson",
+    "title": "Data Wrangling",
+    "section": "Goals of this lesson",
+    "text": "Goals of this lesson\nFor this lesson we’ll learn about data wrangling functions, many of them from dplyr. These are the functions that are much like you do in spreadsheets, like filtering, pivoting and the like. Most of these skills are necessary to prepare data before you make charts.\nFunction we will learn about include: arrange(), filter(), slice(), group_by() and summarize().\nWe’ll use these to find several findings from our data, including:\n\nThe coldest and warmest days\nThe rainiest and snowiest days\nYears with most snow days\nYears with most 100+ days\nYears with most rain\nEarliest day to reach 100+ each year\n\nTo perhaps avoid some confusion we’ll use just the Texas data for this lesson.\n(You theoretically could use a different state, but would need to adjust your code to import the right data, use valid cities, etc.)"
+  },
+  {
+    "objectID": "lesson-day2-01-analysis.html#clean-up-our-workspace",
+    "href": "lesson-day2-01-analysis.html#clean-up-our-workspace",
+    "title": "Data Wrangling",
+    "section": "Clean up our workspace",
+    "text": "Clean up our workspace\nAgain I have a practice notebook ready for you to fill in to keep you on track. Let’s open the file and clean up our environment before we get going.\n\nOpen your chjr-part1 project if it isn’t already.\nOpen the file practice-day1-analysis.qmd.\nUnder run, choose “Restart R and Clear Output”.\nCheck your Enfironment tab. If there is anything listed there, click on the broom icon to clear it out.\n\nWe do this so we don’t have any leftovers from our previous notebook. Each notebook should run independently. That’s also necessary to Render pages within a project."
+  },
+  {
+    "objectID": "lesson-day2-01-analysis.html#add-your-setup-chunk",
+    "href": "lesson-day2-01-analysis.html#add-your-setup-chunk",
+    "title": "Data Wrangling",
+    "section": "Add your setup chunk",
+    "text": "Add your setup chunk\nI’m going to include the whole setup chunk code here again so you get the execution options.\n\n```{r}\n#| label: setup\n#| message: false\n\nlibrary(tidyverse)\n```\n\nWe only need the tidyverse library for this one."
+  },
+  {
+    "objectID": "lesson-day2-01-analysis.html#import-our-cleaned-data",
+    "href": "lesson-day2-01-analysis.html#import-our-cleaned-data",
+    "title": "Data Wrangling",
+    "section": "Import our cleaned data",
+    "text": "Import our cleaned data\nNow to reap the benefit our the hard work from last lesson, let’s import our cleaned data.\n\nIn the import section of the notebook, add a code chunk.\nAdd the read_rds() function below and fill out the path to your cleaned data, as indicated.\nSave that data into a new object called tx_clean.\n\n\ntx_clean &lt;- read_rds(\"data-processed/tx_clean.rds\")"
+  },
+  {
+    "objectID": "lesson-day2-01-analysis.html#arrange",
+    "href": "lesson-day2-01-analysis.html#arrange",
+    "title": "Data Wrangling",
+    "section": "Arrange",
+    "text": "Arrange\nThe arrange() function is what we use to sort our data. We can use this function to find a couple of answers were looking for, like what are the hottest and coldest days in our data.\nThe function is pretty simple, just feed it the data (usually from a pipe) and then add the column you want to sort on. By default it is in “ascending” order: low to high or alphabetically. If you want the opposite (and journalists usually do) you have to wrap the column in another function, desc().\n\nIn the arrange section, add a code chunk for the “Coldest day” section.\nStart with your data, the pipe into arrange() and add the tmin() column.\nRun the chunk so you can see the result. Note the data is ordered by the tmin column, but it’s hard to see. Let’s add a select() function to focus on what we care about.\nPipe into select() adding the city, date and tmin columns.\n\n\ntx_clean |&gt; \n  arrange(tmin) |&gt; \n  select(city, date, tmin)\n\n\n\n  \n\n\n\nGlad I as not in Austin in 1949. Now to find the hottest days.\n\nAfter the “Hottest day” header add a new code chunk.\nUse arrange to find the highest tmax value. Run the chunk to make sure it worked.\nUse select to clean up the fields.\n\n\ntx_clean |&gt;\n  arrange(desc(tmax)) |&gt; \n  select(city, date, tmax)\n\n\n\n  \n\n\n\nUgh, I was in Austin in 2011.\n\nOYO: Most rain\nUsing the same tools, find:\n\nThe days with the most rain\nThe days with the most snow"
+  },
+  {
+    "objectID": "lesson-day2-01-analysis.html#filter",
+    "href": "lesson-day2-01-analysis.html#filter",
+    "title": "Data Wrangling",
+    "section": "Filter",
+    "text": "Filter\nWe use the filter() function when we want to specify rows based on a condition. This is the equivalent of clicking on the Filter tool in Excel and choosing values to keep or exclude, but we do it with code that can be fixed and repeated.\nWe’ll use this function to build to some of our answers, like which years had the most 100+ degree days. We need to work on this skill here first, as there are nuances.\nThe function works like this:\n# this is psuedo code. don't add it\ndata |&gt; \n  filter(variable comparison value)\n\n# example\ntx_clean |&gt; \n  filter(city == \"Austin\")\nThe filter() function typically works in this order:\n\nWhat is the variable (or column) you are searching in.\nWhat is the comparison you want to do. Equal to? Greater than?\nWhat is the observation (or value in the data) you are looking for?\n\nNote the two equals signs == in our Austin example above. It is important to use two of them when you are asking if a value is “true” or “equal to”, as a single = typically means you are assigning a value to something.\n\nComparisons: Logical tests\nThere are a number of these logical tests for the comparison:\n\n\n\nOperator\nDefinition\n\n\n\n\nx &lt; y\nLess than\n\n\nx &gt; y\nGreater than\n\n\nx == y\nEqual to\n\n\nx &lt;= y\nLess than or equal to\n\n\nx &gt;= y\nGreater than or equal to\n\n\nx != y\nNot equal to\n\n\nx %in% c(y,z)\nIn a group\n\n\nis.na(x)\nIs NA (missing values)\n\n\n!is.na(x)\nIs not NA\n\n\n\nWhere you apply a filter matters. If we want to consider only certain data before other operations, then we need to do the filter first. In other cases we may filter after all our calculations just to clean up the result to show rows of interest.\n\n\nSingle condition\nLet’s find days that are 100+.\n\nIn the ## Filter section in the part about 100+ days, add a code chunk.\nStart with the data, the pipe into filter\nFor the condition, look in the tmax column using &gt;= to find values “greater or equal to” 100\nRun the code to make sure it works.\nUse select() to focuse on the variables of interest.\n\n\ntx_clean |&gt; \n  filter(tmax &gt;= 100) |&gt; \n  select(city, date, tmax)\n\n\n\n  \n\n\n\n\n\nMultiple “and” conditions\nOK, that’s fine, but our list is not long enough to see the days in Dallas. Let’s do this again, but add a second condition to test. When you use a comma , or ampersand & between conditions, both conditions must be true to keep the rows.\n\nIn the Dallas 100+ section, start a new code chunk.\nDo the same code as above and run it to make sure it still works.\nUse a comma after the first condition to add a second one: city == \"Dallas\".\n\n\ntx_clean |&gt; \n  filter(tmax &gt;= 100, city == \"Dallas\") |&gt; \n  select(city, date, tmax)\n\n\n\n  \n\n\n\n\n\nMultiple “or” conditions\nBut what if we have an “either or” case where one of two conditions could be true. This would be the case if we wanted to find days where it either a) snowed that day, or b) there was snow left on the ground from a previous day. This is a true snow day, right?\nYou can use the | operator for an “or” condition. That character is the shift of the \\ key just above your return/enter key.\n\nIn the section about snow days, add a chunk.\nAdd the code, but run after adding the first condition, before you add the second, so you can compare them when you are done.\n\n\ntx_clean |&gt; \n  filter(snow &gt; 0 | snwd &gt; 0) |&gt; \n  select(city, date, snow, snwd)\n\n\n\n  \n\n\n\n\n\nBut I need “and” and “or”\nYou can mix “and” and “or” conditions, but note the order of them might matter depending on what you are doing.\n\n\nOYO: Real snow days in Dallas\nIn your notebook, start with the snow days we had above, but add a new condition to it that\n\n\nFiltering text\nOur data here doesn’t lend itself well to explaining this, but we can use filter to find parts of words as well. There are many ways, but the one I use the most is str_detect().\n\ntx_clean |&gt; \n1  filter(str_detect(city, \"st\")) |&gt;\n  distinct(city)\n\n\n1\n\nInside the filter, we start with str_detect(). The first argument it needs is which column in our data to look at, so we fed it city. The second argument (after a comma) is the string of text we are looking for in the column, which is st in our case.\n\n\n\n\n\n\n  \n\n\n\nThe code above found both “Houston” and “Austin” because they have “st” in them. It didn’t capture “Dallas”."
+  },
+  {
+    "objectID": "lesson-day2-01-analysis.html#slice",
+    "href": "lesson-day2-01-analysis.html#slice",
+    "title": "Data Wrangling",
+    "section": "Slice",
+    "text": "Slice\nAnother way to pick out specific rows of data based on a condition is to use slice variables like slice_max(), slice_min(). I mainly want to show this so you can understand our next function better.\nLet’s use slice_min() to find the coldest day in our data.\n\nIn the slice section of the notebook about coldest day, add the following:\n\n\ntx_clean |&gt; \n  slice_min(tmin) |&gt; \n  select(city, date, tmin)\n\n\n\n  \n\n\n\nWe get one result, the coldest day in the data. But what if we want the coldest day for each city? We will introduce group_by() to solve that."
+  },
+  {
+    "objectID": "lesson-day2-01-analysis.html#group-by",
+    "href": "lesson-day2-01-analysis.html#group-by",
+    "title": "Data Wrangling",
+    "section": "Group by",
+    "text": "Group by\nThe group_by() function goes behind the scenes to organize your data into groups, and any function that follows it gets executed within those groups.\nThe columns you feed into group_by() determine the groups. If we do group_by(city) then all the “Austin” rows are grouped together, then all the “Dallas” rows, then all the “Houston” rows.\nI sometimes think of these groups as piles of data, separate from each other. We would have three piles of date, one for each city. Functions that follow happen independently on each pile."
+  },
+  {
+    "objectID": "lesson-day2-01-analysis.html#group-and-slice",
+    "href": "lesson-day2-01-analysis.html#group-and-slice",
+    "title": "Data Wrangling",
+    "section": "Group and slice",
+    "text": "Group and slice\nIf we add our group_by(city) before slice, then it works within each group. Like this:\n\ntx_clean |&gt; \n  group_by(city) |&gt; \n  slice_min(tmin) |&gt; \n  select(city, date, tmin)\n\n\n\n  \n\n\n\nLook at the difference in this result. Now we get a result for each city, because the rows we “grouped” the data before performing the slice. Since there are three cities, we get three results."
+  },
+  {
+    "objectID": "lesson-day2-01-analysis.html#multiple-groupings",
+    "href": "lesson-day2-01-analysis.html#multiple-groupings",
+    "title": "Data Wrangling",
+    "section": "Multiple groupings",
+    "text": "Multiple groupings\nWe can also group by multiple columns. What that does is create a group (or pile!) of data for each matching combination of values.\nSo, if we group_by(city, yr) then we will get a pile for each year of Austin (85 piles because there are 85 years of data for Austin), then a pile for each year in Houston, etc.\nIf we were to find the hottest day in each of those piles, it would look like this:\n\nCreate a new chunk and add this to your notebook.\nTry it with and without the distinct() at the end and think about why you got those results.\n\n\ntx_clean |&gt; \n  group_by(yr, city) |&gt; \n  slice_max(tmax) |&gt; \n  select(city, tmax) |&gt; \n  distinct()\n\nAdding missing grouping variables: `yr`\n\n\n\n\n  \n\n\n\nI added distinct the distinct() there to remove some ties where there were multiple days in a year with that high temperature."
+  },
+  {
+    "objectID": "lesson-day2-01-analysis.html#summarize",
+    "href": "lesson-day2-01-analysis.html#summarize",
+    "title": "Data Wrangling",
+    "section": "Summarize",
+    "text": "Summarize\nWhile slice is nice, we really went through this exercise to understand group_by so we can use it with summarize, which allows us to summarize data much like a pivot table in Excel.\n\n\n\n\n\n\nTip\n\n\n\nsummarise() and summarize() are the same function. The creator of tidyverse is from New Zealand so he has both spellings. I tend to use them both by whim, though the “s” version comes first in type-assist.\n\n\nIf there are no group_by variables, the output will be a single row summarizing all observations in the input. If we have groups, it will contain one column for each grouping variable and one column for each summary statistic we specify.\nLet’s do one without groups.\n\nIn the Summarize section, add the following chunk and code.\n\n\ntx_clean |&gt; \n  summarize(\n    e_date = min(date),\n    l_date = max(date),\n    cnt = n()\n  )\n\n\n\n  \n\n\n\nWe have no groups here, so we just get the stats we as for … the earliest date in our data, the latest date in our data and the number of rows.\n\nAdd city as a group\n\nJust use the copy-to-clipboard tool to add this to your notebook and run it to see it.\n\n\ntx_clean |&gt; \n1  group_by(city) |&gt;\n  summarise(\n    e_date = min(date),\n    l_date = max(date),\n    cnt = n()\n  )\n\n\n1\n\nThis is where we add the group.\n\n\n\n\n\n\n  \n\n\n\n\n\nAdd both city and yr as a group\n\ntx_clean |&gt; \n1  group_by(city, yr) |&gt;\n  summarise(\n    e_date = min(date),\n    l_date = max(date),\n    cnt = n()\n  )\n\n\n1\n\nThis is where we add the second group to get both city and yr.\n\n\n\n\n`summarise()` has grouped output by 'city'. You can override using the\n`.groups` argument.\n\n\n\n\n  \n\n\n\n\n\nCommon summarize stats\nThere are a number of statistics we can find about our data within summarize.\n\nn() counts the number of rows\nn_distinct() counts the number of distinct values in the column\nmin() gives the smallest value\nmax() gives the largest value\n\nSome math operators might need the argument na.rm = TRUE to ignore NA (empty) values.\n\nsum() adds values together.\nmean() gives the mean (or average) value.\nmedian() gives the median or middle value\n\nThere are other useful ones in the summarise documentation."
+  },
+  {
+    "objectID": "lesson-day2-01-analysis.html#group-and-summarize-count",
+    "href": "lesson-day2-01-analysis.html#group-and-summarize-count",
+    "title": "Data Wrangling",
+    "section": "Group and summarize: Count",
+    "text": "Group and summarize: Count\nA very typical workflow to answer a data-driven question is to count records. Often the logic is to:\n\nDo we need to consider all the data or just some of it?\nGroup the records by variables of interest, like categories or dates.\nCount the number of records in each group.\n\nWe’ll use these general steps to answer this question: What years have had the most 100+ degree days. We’ll start with Austin with careful consideration, then generally show how do it for all the cities.\nHere are the steps I used to do this, along with my though process. In some cases I’m editing the code as I go along but all we show is the end result below.\n\nI started with a new code chunk with the tx_clean data.\nI then filtered it to Austin and ran it to check it. I saved that result into a new object, atx.\nI added a line that used summary() to check the dates of the atx data. It looks like the data starts in June 1938 and there could have been days before that that were 100, so I amended my filter to cut out 1938. The latest date is Sept. 30. 2023. Since this is our current year and there are typically few 100+ days in October, I’ll keep this year, but I’ll note it if I use this in a chart.\nI glimpse it again just for convenience to see the column names.\n\nHere is the code:\n\n# get Austin data\natx &lt;- tx_clean |&gt; filter(city == \"Austin\", yr &gt; 1938)\n\n# check dates\natx$date |&gt; summary()\n\n        Min.      1st Qu.       Median         Mean      3rd Qu.         Max. \n\"1939-01-01\" \"1960-03-09\" \"1981-05-16\" \"1981-05-16\" \"2002-07-23\" \"2023-09-30\" \n\n# peek\natx |&gt; glimpse()\n\nRows: 30,954\nColumns: 10\n$ city &lt;chr&gt; \"Austin\", \"Austin\", \"Austin\", \"Austin\", \"Austin\", \"Austin\", \"Aust…\n$ date &lt;date&gt; 1939-01-01, 1939-01-02, 1939-01-03, 1939-01-04, 1939-01-05, 1939…\n$ rain &lt;dbl&gt; 0.00, 0.00, 0.01, 0.14, 0.00, 0.00, 0.00, 0.12, 0.41, 0.00, 0.34,…\n$ snow &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…\n$ snwd &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…\n$ tmax &lt;dbl&gt; 69, 73, 74, 73, 70, 72, 72, 69, 73, 66, 58, 49, 54, 58, 53, 55, 6…\n$ tmin &lt;dbl&gt; 32, 37, 56, 49, 41, 39, 52, 54, 53, 48, 46, 43, 35, 42, 34, 29, 4…\n$ yr   &lt;dbl&gt; 1939, 1939, 1939, 1939, 1939, 1939, 1939, 1939, 1939, 1939, 1939,…\n$ mn   &lt;ord&gt; Jan, Jan, Jan, Jan, Jan, Jan, Jan, Jan, Jan, Jan, Jan, Jan, Jan, …\n$ yd   &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19…\n\n\nWith my prepped data I can now do my calculations:\n\nI start with the atx data and filter to get days where tmax was 100+. I Run the chunk to check it.\nThen I grouped the records by yr.\nThen I summarize to get the count using n(), but with a descriptive column name, hot_days.\nThen I arranged the results to show the most hot_days at the top.\nThen I added a filter to cut off the list at a logical place, years with 50 days or more.\n\n\natx |&gt; \n  filter(tmax &gt;= 100) |&gt; \n  group_by(yr) |&gt; \n  summarize(hot_days = n()) |&gt; \n  arrange(desc(hot_days)) |&gt; \n  filter(hot_days &gt;= 50)\n\n\n\n  \n\n\n\nHere is what that looks like if I try to do it with all the cities. The difference here is I’m not taking as much care with the dates so there might be partial years that are undercounted, but they should at least be lower.\n\ntx_clean |&gt; \n  filter(tmax &gt;= 100) |&gt; \n  group_by(yr, city) |&gt; \n  summarize(hot_days = n()) |&gt; \n  arrange(desc(hot_days)) |&gt; \n  filter(hot_days &gt;= 30)\n\n`summarise()` has grouped output by 'yr'. You can override using the `.groups`\nargument.\n\n\n\n\n  \n\n\n\nApparently the Houston Hobby Airport just doesn’t have that many 100+ degree days compared to Austin and Dallas. That humidity, though …\n\nOYO: Most snow days by city each year\nIf there is time, you could try to do something similar to count the number of days with it snowed."
+  },
+  {
+    "objectID": "lesson-day2-01-analysis.html#group-and-summarize-math",
+    "href": "lesson-day2-01-analysis.html#group-and-summarize-math",
+    "title": "Data Wrangling",
+    "section": "Group and Summarize: Math",
+    "text": "Group and Summarize: Math\nThe next question we want to answer: In each city, which years had the most rain and which had the least? Let’s walk through our questions againL\nDo we need to consider all the data?\nIn this case we definitely want only whole years. We calculated the first date of all the data earlier, and it looks like we’ll have to start with 1940. We’ll also lop off 2023.\nDo we need to consider our data in any groups?\nWe need to add together values in each city and year, so Austin for 1940, then ’41, etc. We’ll group our data by city and yr.\nWhat do we need to calculate?\nWe need to add together the inches of rain, so we can sum() the rain column.\nWork through this in your practice notebook step by step:\n\nIn the “Group and Summarize: Math” section, add a code chunk.\nStart with our data, then filter it to start after 1939 and before 2023. Run the chunk to make sure it works. You might even pipe into a slice_max() to test if it worked (but then remove it after you have checked.)\nGroup your data by city and yr.\nSummarize your data using sum() on the rain column. You probably have to add an argument na.rm = TRUE to make this work because some days there were no rain and sum() doesn’t know what to do with those blank values.\nArrange the values first by city, then by the summed rain in descending order.\nSave your result into an object and then print it back out so you can see it.\n\n\ntx_yr_rain &lt;- tx_clean |&gt; \n  filter(yr &gt; 1939, yr &lt; 2023) |&gt;\n  group_by(city, yr) |&gt; \n  summarise(tot_rain = sum(rain, na.rm = TRUE)) |&gt; \n  arrange(city, desc(tot_rain))\n\n`summarise()` has grouped output by 'city'. You can override using the\n`.groups` argument.\n\ntx_yr_rain\n\n\n\n  \n\n\n\nAt this point we have all the values, through they are hard to read. Some directions we could take to get more clarity:\n\nWe could take our new object and build new blocks to filter by city and arrange by most or least rain. Six new code chunks. Very clear.\nWe could maybe use group and slice_max to find highest values within each city, and then again with slice_min. There is an option to set the number of returns.\nWe could plot this on a chart (a lesson for another day!).\n\nHere is the group and slice method where I use the n = argument to set how many records I want in the slice.\n\ntx_yr_rain |&gt; \n  group_by(city) |&gt; \n  slice_max(tot_rain, n = 3)\n\n\n\n  \n\n\n\nHere is the least rain:\n\ntx_yr_rain |&gt; \n  group_by(city) |&gt; \n  slice_min(tot_rain, n = 3)\n\n\n\n  \n\n\n\n\nOYO: Years with most snow\nTry to do the same to fine the years with the most snow in each city."
+  },
+  {
+    "objectID": "lesson-day2-01-analysis.html#working-through-logic",
+    "href": "lesson-day2-01-analysis.html#working-through-logic",
+    "title": "Data Wrangling",
+    "section": "Working through logic",
+    "text": "Working through logic\nHere is a question that takes a couple of steps to accomplish: What is the average monthly rainfall for each city? i.e., How much rain should we expect each month, based on history?\nDo we need to consider all our data? Again, we want just full years, so 1940 through 2022.\nDo we need to consider data in groups? This is tricky. We can’t just group by month and get the average because then we would be averaging the rain each day within a month. We have to total the rain within a month for each year, then we can get the average.\nWhat calculations do we need? Kinda answered that in that we need two calculations: One to total the rain within each month/year, and another to get the averages across those months.\nWe could do the code all in one chunk, but you wouldn’t see the result of the first group and sum, so we’ll do it in two.\n\ntx_mn_yr_rain &lt;- tx_clean |&gt; \n1  filter(yr &gt;= 1940, yr &lt;= 2022) |&gt;\n2  group_by(city, mn, yr) |&gt;\n3  summarize(mn_yr_rain = sum(rain, na.rm = TRUE))\n\n\n1\n\nWe filter to get our full years\n\n2\n\nWe group by three things so we can add the rain in each city for each month of each year.\n\n3\n\nWe then sum the rain with a nice name. We use na.rm = TRUE because there were cases where the rain value was blank instead of 0.0. Perhaps the station was down? Would need to do some reporting to figure that out.\n\n\n\n\n`summarise()` has grouped output by 'city', 'mn'. You can override using the\n`.groups` argument.\n\ntx_mn_yr_rain  \n\n\n\n  \n\n\n\n\ncity_avg_rain &lt;- tx_mn_yr_rain |&gt; \n1  group_by(city, mn) |&gt;\n2  summarise(avg_mn_rain = mean(mn_yr_rain))\n\n\n1\n\nWe take the result from above and group now by each city and each month, so we can work with all the “Austin in Jan” to get our average.\n\n2\n\nNow we can get the average mean() of those months.\n\n\n\n\n`summarise()` has grouped output by 'city'. You can override using the\n`.groups` argument.\n\ncity_avg_rain\n\n\n\n  \n\n\n\nAnd to tease you into what is in store for you tomorrow, let’s plot those results:\n\ncity_avg_rain |&gt; \n  ggplot(aes(x = mn, y = avg_mn_rain, group = city)) +\n  geom_line(aes(color = city)) +\n  ylim(0,6) +\n  labs(\n    title = \"Average monthly rainfall, 1940-2022\",\n    x = \"\", y = \"Average monthly rain\",\n    color = \"City\"\n  )"
+  },
+  {
+    "objectID": "lesson-day2-01-analysis.html#challenge-earliest-100-day-each-city",
+    "href": "lesson-day2-01-analysis.html#challenge-earliest-100-day-each-city",
+    "title": "Data Wrangling",
+    "section": "Challenge: Earliest 100+ day each city",
+    "text": "Challenge: Earliest 100+ day each city\nFind the earliest date in each city where it reached at least 100 degrees. Here is a hint: We have the yd field that is the number of days into a year."
+  },
+  {
+    "objectID": "lesson-day2-01-analysis.html#what-do-you-want-to-learn-about-the-weather",
+    "href": "lesson-day2-01-analysis.html#what-do-you-want-to-learn-about-the-weather",
+    "title": "Data Wrangling",
+    "section": "What do you want to learn about the weather?",
+    "text": "What do you want to learn about the weather?\nDream up a question and answer it. Maybe import your own state’s data and find something there. The earliest snowfall. The snowiest month on average. The first freeze. The last freeze. Or more challenge, the average day of the last freeze (i.e., when can I plan my garden!)."
+  },
+  {
+    "objectID": "resources/leftovers.html",
+    "href": "resources/leftovers.html",
+    "title": "Leftovers",
+    "section": "",
+    "text": "Some thing we probably don’t have time for but might be useful."
+  },
+  {
+    "objectID": "resources/leftovers.html#about-r-chunks",
+    "href": "resources/leftovers.html#about-r-chunks",
+    "title": "Leftovers",
+    "section": "About R chunks",
+    "text": "About R chunks\nWhile you used the R console above to interact with R (yes, that is what you were doing), we will mostly add code to our notebooks using code chunks.\n\nIn this RStudio notebook in the code chunk below, click on the green play button to run the code in the chunk.\nYou should get a response something like [1] 2 which is a row number [1] and the answer to the match equation 2.\n\n\n1 + 1\n\n[1] 2\n\n\nThere is a keyboard command to run a line of code, and it is among five key commands we really suggest you use. Presented for Mac:\n\nCmd-return runs a single line of code that your cursor is on.\nCmd-shift-return runs all the lines in the code chunk where your cursor is.\n\nAll of these options are also in the Run menu at the top of the document.\n\nOYO: Insert a code chunk\nThe best way to insert a new code chunk is to use the keyboard command Cmd-option-i. That said, there is also a green +c button above the document near that Run menu.\n\nIn the space below this direction but before the next headline, add a new code chunk using the keyboard command Cmd-option-i.\n\nNotice it adds all the characters needed and then puts your cursor inside so you are ready to type.\n\nInside that code chunk, add 2 + 2 and then run the chunk to see the answer.\n\n\n\nData frames and plots\nThere is a sample data set in R called cars that has the stopping distance of cars as measured some time in history. We’ll use it to show a couple more things about code blocks.\nThe code chunk below has two lines of code:\n\nThe first just says cars, which prints out the data.\nThe second line is a function called plot() with cars inside of it. That function acts on the cars data to create a scatter plot.\n\n\nRun the code below.\n\n\ncars\n\n\n\n  \n\n\nplot(cars)\n\n\n\n\nSince we have two lines with two different outputs, the Quarto notebook shows them as panes you can swap back and forth. The rendered page shows each line of code, then its output.\n\nThe data.frame part is printing out data. There is a lot of information available in that printout, including the number of rows (we call them observations) and columns (we call them variables), the names of those columns/variables, the data types of each variable, and then their values. We call data like this a “data frame” or “tibble”. It’s like a highly structured spreadsheet.\nThe second pane is a chart (or plot as we call them). The function plot() took the only two variables in the data and, well, plotted them.\n\nYes, it can be that easy to visualize data in R. But not usually.\n\n\nRender your first document\n\nWith this document open in R Studio, look at the toolbar directly above the writing and look for the Render button with the blue arrow next to it. Click on that word.\nThis will create (or render) a “publishable” version of this document in HTML and present it in the Viewer page (or perhaps in a new window, which we can fix).\n\nYou can read this lesson text there, but realize that rendered page doesn’t update with edits in the Quarto document unless you tell it to.\nKeep this in mind:\n\nThere are keyboard commands to render a document: Cmd-shift-k.\nWe can also easily publish the same work in other formats, like PDF, Word or even a slide show.\nWe can also choose NOT to “publish” our work. We don’t have to share our work on the internet, we are just ready if we want to.\n\n\n\nOYO: Re-render this page one last time\nNow that you’ve been introduced to how a Quarto document is written, go ahead and re-render this page by using the ."
+  },
+  {
+    "objectID": "resources/functions.html",
+    "href": "resources/functions.html",
+    "title": "R Functions",
+    "section": "",
+    "text": "An opinionated list of the most common data wrangling functions. It leans heavily into the Tidyverse.\n\n\n\nread_csv() imports data from a CSV file. (It handles data types better than the base R read.csv()). Also write_csv() when you need export as CSV. Example: read_csv(\"path/to/file.csv\").\nwrite_rds to save a data frame as an .rds R data data file. This preserves all the data types. read_rds() to import R data. Example: read_rds(\"path/to/file.rds\").\nreadxl is a package we didn’t use, but it has read_excel() that allows you to import from an Excel file, including specified sheets and ranges.\nclean_names() from the library(janitor) package standardizes column names.\n\n\n\n\n\nselect() to select columns. Example: select(col01, col02) or select(-excluded_col).\nrename() to rename a column. Example: rename(new_name = old_name).\nfilter() to filter rows of data. Example: filter(column_name == \"value\").\n\nSee Relational Operators like ==, &gt;, &gt;= etc.\nSee Logical operators like &, | etc.\nSee is.na tests if a value is missing.\n\ndistinct() will filter rows down to the unique values of the columns given.\narrange() sorts data based on values in a column. Use desc() to reverse the order. Example: arrange(col_name %&gt;% desc())\nmutate() changes and existing column or creates a new one. Example: mutate(new_col = (col01 / col02)).\nround() is a base R function that can round a number to a set decimal point. Often used within a mutate() function.\nrecode(), if_else() and case_when() are all functions that can be used with mutate() to create new categorizations with your data.\npivot_longer() “lengthens” data, increasing the number of rows and decreasing the number of columns. Example: pivot_longer(cols = 3:5, names_to = \"new_key_col_name\", values_to = \"new_val_col_name\") will take the third through the fifth columns and turn each value into a new row of data. It will put them into two columns: The first column will have the name you give it in names_to and contain the old column name that corresponds to each value pivoted. The second column will have the name of whatever you set in values_to and will contain all the values from each of the columns.\npivot_wider() is the opposite of pivot_longer(). Example: pivot_wider(names_from = col_of_key_values, values_from = col_with_values). See the link.\n\n\n\n\n\ngroup_by() and summarize() often come together. When you use group_by(), every function after it is broken down by that grouping. We often add arrange() to these, calling this our GSA functions. Example: group_by(song, artist) %&gt;% summarize(weeks = n(), top_chart_position = min(peak_position)). To break or remove groupings, use ungroup().\ncount() is a shortcut for GSA that count the number rows based on variable groups you feed it.\n\n\n\n\nThese are the function often used within summarize():\n\nn() to count the number of rows. n_distinct() counts the unique values.\nsum() to add things together.\nmean() to get an average.\nmedian() to get the median.\nmin() to get the smallest value. max() for the largest.\n+, -, *, / are math operators similar to a calculator."
+  },
+  {
+    "objectID": "resources/functions.html#importexport",
+    "href": "resources/functions.html#importexport",
+    "title": "R Functions",
+    "section": "",
+    "text": "read_csv() imports data from a CSV file. (It handles data types better than the base R read.csv()). Also write_csv() when you need export as CSV. Example: read_csv(\"path/to/file.csv\").\nwrite_rds to save a data frame as an .rds R data data file. This preserves all the data types. read_rds() to import R data. Example: read_rds(\"path/to/file.rds\").\nreadxl is a package we didn’t use, but it has read_excel() that allows you to import from an Excel file, including specified sheets and ranges.\nclean_names() from the library(janitor) package standardizes column names."
+  },
+  {
+    "objectID": "resources/functions.html#data-manipulation",
+    "href": "resources/functions.html#data-manipulation",
+    "title": "R Functions",
+    "section": "",
+    "text": "select() to select columns. Example: select(col01, col02) or select(-excluded_col).\nrename() to rename a column. Example: rename(new_name = old_name).\nfilter() to filter rows of data. Example: filter(column_name == \"value\").\n\nSee Relational Operators like ==, &gt;, &gt;= etc.\nSee Logical operators like &, | etc.\nSee is.na tests if a value is missing.\n\ndistinct() will filter rows down to the unique values of the columns given.\narrange() sorts data based on values in a column. Use desc() to reverse the order. Example: arrange(col_name %&gt;% desc())\nmutate() changes and existing column or creates a new one. Example: mutate(new_col = (col01 / col02)).\nround() is a base R function that can round a number to a set decimal point. Often used within a mutate() function.\nrecode(), if_else() and case_when() are all functions that can be used with mutate() to create new categorizations with your data.\npivot_longer() “lengthens” data, increasing the number of rows and decreasing the number of columns. Example: pivot_longer(cols = 3:5, names_to = \"new_key_col_name\", values_to = \"new_val_col_name\") will take the third through the fifth columns and turn each value into a new row of data. It will put them into two columns: The first column will have the name you give it in names_to and contain the old column name that corresponds to each value pivoted. The second column will have the name of whatever you set in values_to and will contain all the values from each of the columns.\npivot_wider() is the opposite of pivot_longer(). Example: pivot_wider(names_from = col_of_key_values, values_from = col_with_values). See the link."
+  },
+  {
+    "objectID": "resources/functions.html#aggregation",
+    "href": "resources/functions.html#aggregation",
+    "title": "R Functions",
+    "section": "",
+    "text": "group_by() and summarize() often come together. When you use group_by(), every function after it is broken down by that grouping. We often add arrange() to these, calling this our GSA functions. Example: group_by(song, artist) %&gt;% summarize(weeks = n(), top_chart_position = min(peak_position)). To break or remove groupings, use ungroup().\ncount() is a shortcut for GSA that count the number rows based on variable groups you feed it."
+  },
+  {
+    "objectID": "resources/functions.html#math",
+    "href": "resources/functions.html#math",
+    "title": "R Functions",
+    "section": "",
+    "text": "These are the function often used within summarize():\n\nn() to count the number of rows. n_distinct() counts the unique values.\nsum() to add things together.\nmean() to get an average.\nmedian() to get the median.\nmin() to get the smallest value. max() for the largest.\n+, -, *, / are math operators similar to a calculator."
+  },
+  {
+    "objectID": "lesson-day1-01-intro.html",
+    "href": "lesson-day1-01-intro.html",
+    "title": "Introduction",
+    "section": "",
+    "text": "I still need to rework this a bit to include downloading the repo. Some other updates as well.\n\nThe purpose of this first module is to:\n\nGet you familiar with RStudio, the program we use to write R code.\nGet the first two days of material onto your computer.\nIntroduce Quarto documents, which allow you to write notes and code together in the same document, just like this document that you are reading."
+  },
+  {
+    "objectID": "lesson-day1-01-intro.html#welcome-to-the-center-for-health-journalism-r-course.",
+    "href": "lesson-day1-01-intro.html#welcome-to-the-center-for-health-journalism-r-course.",
+    "title": "Introduction",
+    "section": "",
+    "text": "I still need to rework this a bit to include downloading the repo. Some other updates as well.\n\nThe purpose of this first module is to:\n\nGet you familiar with RStudio, the program we use to write R code.\nGet the first two days of material onto your computer.\nIntroduce Quarto documents, which allow you to write notes and code together in the same document, just like this document that you are reading."
+  },
+  {
+    "objectID": "lesson-day1-01-intro.html#about-quarto-r-and-scripted-journalism",
+    "href": "lesson-day1-01-intro.html#about-quarto-r-and-scripted-journalism",
+    "title": "Introduction",
+    "section": "About Quarto, R and scripted journalism",
+    "text": "About Quarto, R and scripted journalism\nBefore we dive into RStudio and programming and all that, I want to show you where we are heading, so you can “visualize success”. We are teaching a method for data journalism that is repeatable, transparent and annotated. When you do your work, you should intersperse notes and code, creating a document your future self can easily catch up on, or that you can share with others. The best way to explain this is to show you an example.\n\nGo to this link in a new browser window: Major League Soccer salaries.\n\nThis is a website with all the code from a data journalism project. If you click on the navigation link for Cleaning you can read where the data come from and see all the steps I went through – with code and explanation – to process the data so I could work with it. And in the Analysis 2023 notebook you’ll see I set out with some questions for the data, and then I wrote the code to find my answers. Along with the way I wrote explanations of how and why I did what I did.\n\n\n\nQuarto Pub page\n\n\nThis website was created using Quarto and R, and the tool I used to write everything was RStudio.\nThis document you are reading is also a Quarto document. These lessons have explanations, instructions and code you can run right on your computer. You’ll also write and run some on your own code.\n\nThe written words and explanations are written in a syntax called Markdown. It’s a common language used by programmers to create documentation. It’s understandable as text, but also easily converted to other formats.\nThe programming code for data is writing in R in code chunks. We’ll introduce those in a moment."
+  },
+  {
+    "objectID": "lesson-day1-01-intro.html#installing-the-software",
+    "href": "lesson-day1-01-intro.html#installing-the-software",
+    "title": "Introduction",
+    "section": "Installing the software",
+    "text": "Installing the software\nYou need to have both R and RStudio Desktop installed on your computer. Hopefully this is already done.\n\nYou can find the installers here. You need both R and RStudio.\nIf on a Mac, make sure you install RStudio into your Applications folder.\n\nThere is a chance we might have to install Quarto CLI, but don’t worry about it unless we need it."
+  },
+  {
+    "objectID": "lesson-day1-01-intro.html#rstudio-tour",
+    "href": "lesson-day1-01-intro.html#rstudio-tour",
+    "title": "Introduction",
+    "section": "RStudio tour",
+    "text": "RStudio tour\nWhen you launch RStudio, you get a screen that looks like this:\n\n\n\nRStudio launch screen\n\n\nSome things of note here:\n\nAt the top-right of your RStudio window is a Project menu that should show the name of this project that you have open. If you click on the dropdown, you’ll see other options.\n\nWe always want to be working in a project, which is basically a folder to hold your documents and data.\n\nNote the quadrant on the bottom right that includes the Files, Help and Viewer panes. You’ll likely be flipping back and forth among those.\n\nThe Files pane shows all the documents in your project. This is where you go to open new documents in your project.\nThe Help pane allows us to search for help using R.\nThe Viewer pane is where our rendered documents display."
+  },
+  {
+    "objectID": "lesson-day1-01-intro.html#updating-preferences",
+    "href": "lesson-day1-01-intro.html#updating-preferences",
+    "title": "Introduction",
+    "section": "Updating preferences",
+    "text": "Updating preferences\nThere are some preferences in RStudio that I would like you to change. By default, the program wants to save the state of your work (all the variables and such) when you close a project, but that is typically not good practice. We’ll change that.\n\nGo to the Tools menu and choose Global Options.\nUnder the General tab, uncheck the first four boxes.\nOn the option “Save Workspace to .Rdata on exit”, change that to Never.\nClick Apply to save the change (but don’t close the box yet).\n\n\n\n\nRStudio preferences\n\n\nNext we will set some value is the Code pane.\n\nOn the left options, click on the Code pane.\nCheck the box for Use native pipe operator, |&gt;.\nClick OK to save and close the box.\n\n\n\n\nNative pipe preference\n\n\nWe’ll get into why we did this part later."
+  },
+  {
+    "objectID": "lesson-day1-01-intro.html#the-r-package-environment",
+    "href": "lesson-day1-01-intro.html#the-r-package-environment",
+    "title": "Introduction",
+    "section": "The R Package environment",
+    "text": "The R Package environment\nR is an open-source language, which means that other programmers can contribute to how it works. It is what makes R beautiful.\nWhat happens is developers will find it difficult to do a certain task, so they will write code that solves that problem and save it into an R “package” so they can use it later. They share that code with the community, and suddenly the R garage has an “ultimate set of tools” that would make Spicoli’s dad proud.\nOne set of these tools is the tidyverse developed by Hadley Wickham and his team at Posit. It’s a set of R packages for data science that are designed to work together. I highly recommend Wickham’s book R for data science, which is free.\nThere are also a series of useful tidyverse cheatsheets that can help you as you use the packages and functions from the tidyverse. We’ll refer to these throughout the course.\n\nInstall packages we’ll use\n\nCopy the code below and paste it into Console of RStudio (The left pane). Hit return to run the code.\n\ninstall.packages(c(\"quarto\", \"rmarkdown\", \"tidyverse\", \"janitor\"))\nYou’ll see a bunch of response fly by in the Console. It’s probably all fine unless it ends the last response with an error.\nThis installs R software packages onto your computer we’ll use later. You only have to install these packages once."
+  },
+  {
+    "objectID": "lesson-day1-01-intro.html#download-part-1-course-materials",
+    "href": "lesson-day1-01-intro.html#download-part-1-course-materials",
+    "title": "Introduction",
+    "section": "Download Part 1 Course materials",
+    "text": "Download Part 1 Course materials\nNow we’ll download the course materials for the first couple of days of class. They are stored on Github.\n\nGo to this link: github.com/utdata/chjr-part1.\nClick on the big green Code button and choose Download zip\nFind the downloaded file and unzip the folder. Mac: Double-click on it. PC directions here\nMove the unzipped folder to your Desktop (or some other place you can find it).\nGo back to RStudio and go to File &gt; Open Project. Go find your folder and open the file chjr-part1.Rproj."
+  },
+  {
+    "objectID": "lesson-day1-01-intro.html#go-to-the-next-chapter",
+    "href": "lesson-day1-01-intro.html#go-to-the-next-chapter",
+    "title": "Introduction",
+    "section": "Go to the next chapter",
+    "text": "Go to the next chapter\nWe’re moving on to the next chapter: Importing & Cleaning"
+  },
+  {
+    "objectID": "practice-day1-clean.html",
+    "href": "practice-day1-clean.html",
+    "title": "Practice Day 1",
+    "section": "",
+    "text": "This is the notebook fellows will work through on the first day of the Center for Health Journalism Hands-On R course.\nYou will be using daily weather summaries that have been downloaded from Climate Data Online. The explanations use Texas, but there are files for Arkansas, California, New York and North Carolina for practice."
+  },
+  {
+    "objectID": "practice-day1-clean.html#goals",
+    "href": "practice-day1-clean.html#goals",
+    "title": "Practice Day 1",
+    "section": "Goals",
+    "text": "Goals\nOur goals are to:\n\nImport our data.\nCheck all the column data types.\nAdd some new columns based on the date.\nRecode some values in our data.\nRemove some unnecessary variables/columns.\nExport our cleaned data."
+  },
+  {
+    "objectID": "practice-day1-clean.html#setup",
+    "href": "practice-day1-clean.html#setup",
+    "title": "Practice Day 1",
+    "section": "Setup",
+    "text": "Setup\nAdd the entire code block for libraries.\n\nlibrary(tidyverse)\nlibrary(janitor)"
+  },
+  {
+    "objectID": "practice-day1-clean.html#import",
+    "href": "practice-day1-clean.html#import",
+    "title": "Practice Day 1",
+    "section": "Import",
+    "text": "Import\nFollow the directions in the lesson to import the Texas data, starting with adding a new code block:\n\nOYO: Import a different state\nGo through all the steps above, but with different a different state."
+  },
+  {
+    "objectID": "practice-day1-clean.html#peeking-at-data",
+    "href": "practice-day1-clean.html#peeking-at-data",
+    "title": "Practice Day 1",
+    "section": "Peeking at data",
+    "text": "Peeking at data\nUse head, tail, glimpse and summary to look at the Texas data.\nLook at the top of your data:\nLook at 8 lines of the bottom of your data:\nUse glimpse to see all your columns:\nUse summary to learn about all your variables:\n\nOYO: Peek at your state’s data\nUse those same functions above to look at your state’s data."
+  },
+  {
+    "objectID": "practice-day1-clean.html#create-or-change-data",
+    "href": "practice-day1-clean.html#create-or-change-data",
+    "title": "Practice Day 1",
+    "section": "Create or change data",
+    "text": "Create or change data\nCreate year, month values based on the date. This is a multi-step process:\n\nOYO: Make date parts\nMake the same date parts, but with your own state data:"
+  },
+  {
+    "objectID": "practice-day1-clean.html#recoding-values",
+    "href": "practice-day1-clean.html#recoding-values",
+    "title": "Practice Day 1",
+    "section": "Recoding values",
+    "text": "Recoding values\nUse distinct so you can see the station names:\n\nUse mutate to recode\nUse recode to create a new column of short city names:\nNow check your results using distinct on name and city:\n\n\nOYO: Recode your cities\nMake similar short names, but for your state."
+  },
+  {
+    "objectID": "practice-day1-clean.html#select",
+    "href": "practice-day1-clean.html#select",
+    "title": "Practice Day 1",
+    "section": "Select",
+    "text": "Select\nCreate a new version of your data with only the columns you need, in the order you want them:\n\nOYO: Select your cols\nGo through the same process as above, but with your own state data."
+  },
+  {
+    "objectID": "practice-day1-clean.html#export",
+    "href": "practice-day1-clean.html#export",
+    "title": "Practice Day 1",
+    "section": "Export",
+    "text": "Export\nWrite the file out as “rds” to the data-processed folder:\n\nOYO: Export your state\nWrite your data to the data-processed folder. Make sure you use a name for your state."
+  },
+  {
+    "objectID": "practice-day1-clean.html#checking-your-notebooks",
+    "href": "practice-day1-clean.html#checking-your-notebooks",
+    "title": "Practice Day 1",
+    "section": "Checking your notebooks",
+    "text": "Checking your notebooks\nClear out your notebook and rerun all the code. Render the HTML page."
+  },
+  {
+    "objectID": "solution-day1-clean.html",
+    "href": "solution-day1-clean.html",
+    "title": "Solutions Day 1",
+    "section": "",
+    "text": "This is the notebook fellows will work through on the first day of the Center for Health Journalism Hands-On R course.\nYou will be using daily weather summaries that have been downloaded from Climate Data Online. The explanations use Texas, but there are files for Arkansas, California, New York and North Carolina for practice."
+  },
+  {
+    "objectID": "solution-day1-clean.html#goals",
+    "href": "solution-day1-clean.html#goals",
+    "title": "Solutions Day 1",
+    "section": "Goals",
+    "text": "Goals\nOur goals are to:\n\nImport our data.\nCheck all the column data types.\nAdd some new columns based on the date.\nRecode some values in our data.\nRemove some unnecessary variables/columns.\nExport our cleaned data."
+  },
+  {
+    "objectID": "solution-day1-clean.html#setup",
+    "href": "solution-day1-clean.html#setup",
+    "title": "Solutions Day 1",
+    "section": "Setup",
+    "text": "Setup\nAdd the entire code block for libraries.\n\nlibrary(tidyverse)\nlibrary(janitor)"
+  },
+  {
+    "objectID": "solution-day1-clean.html#import",
+    "href": "solution-day1-clean.html#import",
+    "title": "Solutions Day 1",
+    "section": "Import",
+    "text": "Import\nFollow the directions in the lesson to import the Texas data, starting with adding a new code block:\n\ntx_raw &lt;- read_csv(\"data-raw/tx.csv\") |&gt; clean_names()\n\nRows: 94503 Columns: 10\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr  (2): STATION, NAME\ndbl  (7): PRCP, SNOW, SNWD, TAVG, TMAX, TMIN, TOBS\ndate (1): DATE\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\ntx_raw\n\n\n\n  \n\n\n\n\nOYO: Import a different state\nGo through all the steps above, but with different a different state."
+  },
+  {
+    "objectID": "solution-day1-clean.html#peeking-at-data",
+    "href": "solution-day1-clean.html#peeking-at-data",
+    "title": "Solutions Day 1",
+    "section": "Peeking at data",
+    "text": "Peeking at data\nUse head, tail, glimpse and summary to look at the Texas data.\nLook at the top of your data:\n\ntx_raw |&gt; head()\n\n\n\n  \n\n\n\nLook at 8 lines of the bottom of your data:\n\ntx_raw |&gt; tail(8)\n\n\n\n  \n\n\n\nUse glimpse to see all your columns:\n\ntx_raw |&gt; glimpse()\n\nRows: 94,503\nColumns: 10\n$ station &lt;chr&gt; \"USW00012918\", \"USW00012918\", \"USW00012918\", \"USW00012918\", \"U…\n$ name    &lt;chr&gt; \"HOUSTON WILLIAM P HOBBY AIRPORT, TX US\", \"HOUSTON WILLIAM P H…\n$ date    &lt;date&gt; 1930-08-01, 1930-08-02, 1930-08-03, 1930-08-04, 1930-08-05, 1…\n$ prcp    &lt;dbl&gt; 3.00, 0.09, NA, 0.02, 0.12, NA, NA, NA, 0.00, 0.00, 0.00, NA, …\n$ snow    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ snwd    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ tavg    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ tmax    &lt;dbl&gt; 99, 97, 95, 95, 92, 92, 96, 97, 94, 92, 99, 99, 98, 98, 98, 97…\n$ tmin    &lt;dbl&gt; 75, 79, 78, 79, 76, 74, 71, 71, 75, 72, 70, 71, 78, 72, 73, 70…\n$ tobs    &lt;dbl&gt; 86, 89, 89, 85, 83, 89, 83, 82, 85, 85, 87, 86, 86, 85, 86, 84…\n\n\nUse summary to learn about all your variables:\n\ntx_raw |&gt; summary()\n\n   station              name                date                 prcp        \n Length:94503       Length:94503       Min.   :1930-08-01   Min.   : 0.0000  \n Class :character   Class :character   1st Qu.:1959-01-12   1st Qu.: 0.0000  \n Mode  :character   Mode  :character   Median :1980-08-05   Median : 0.0000  \n                                       Mean   :1980-06-04   Mean   : 0.1121  \n                                       3rd Qu.:2002-03-09   3rd Qu.: 0.0000  \n                                       Max.   :2023-09-30   Max.   :12.0700  \n                                                            NA's   :1867     \n      snow            snwd            tavg            tmax       \n Min.   :0.000   Min.   :0.000   Min.   : 0.0    Min.   : 13.00  \n 1st Qu.:0.000   1st Qu.:0.000   1st Qu.:60.0    1st Qu.: 69.00  \n Median :0.000   Median :0.000   Median :73.0    Median : 81.00  \n Mean   :0.003   Mean   :0.004   Mean   :70.2    Mean   : 78.56  \n 3rd Qu.:0.000   3rd Qu.:0.000   3rd Qu.:82.0    3rd Qu.: 91.00  \n Max.   :7.800   Max.   :7.000   Max.   :98.0    Max.   :112.00  \n NA's   :15369   NA's   :15463   NA's   :78843   NA's   :16      \n      tmin            tobs      \n Min.   :-2.00   Min.   :24.00  \n 1st Qu.:47.00   1st Qu.:61.00  \n Median :61.00   Median :72.00  \n Mean   :58.65   Mean   :69.65  \n 3rd Qu.:72.00   3rd Qu.:80.00  \n Max.   :93.00   Max.   :99.00  \n NA's   :16      NA's   :91914  \n\n\n\ntx_raw$date |&gt; summary()\n\n        Min.      1st Qu.       Median         Mean      3rd Qu.         Max. \n\"1930-08-01\" \"1959-01-12\" \"1980-08-05\" \"1980-06-04\" \"2002-03-09\" \"2023-09-30\" \n\n\n\nOYO: Peek at your state’s data"
+  },
+  {
+    "objectID": "solution-day1-clean.html#create-or-change-data",
+    "href": "solution-day1-clean.html#create-or-change-data",
+    "title": "Solutions Day 1",
+    "section": "Create or change data",
+    "text": "Create or change data\nCreate year, month values based on the date.\n\ntx_dates &lt;- tx_raw |&gt; \n  mutate(\n    yr = year(date),\n    mn = month(date, label = TRUE),\n    yd = yday(date)\n  )\n\ntx_dates |&gt; glimpse()\n\nRows: 94,503\nColumns: 13\n$ station &lt;chr&gt; \"USW00012918\", \"USW00012918\", \"USW00012918\", \"USW00012918\", \"U…\n$ name    &lt;chr&gt; \"HOUSTON WILLIAM P HOBBY AIRPORT, TX US\", \"HOUSTON WILLIAM P H…\n$ date    &lt;date&gt; 1930-08-01, 1930-08-02, 1930-08-03, 1930-08-04, 1930-08-05, 1…\n$ prcp    &lt;dbl&gt; 3.00, 0.09, NA, 0.02, 0.12, NA, NA, NA, 0.00, 0.00, 0.00, NA, …\n$ snow    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ snwd    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ tavg    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ tmax    &lt;dbl&gt; 99, 97, 95, 95, 92, 92, 96, 97, 94, 92, 99, 99, 98, 98, 98, 97…\n$ tmin    &lt;dbl&gt; 75, 79, 78, 79, 76, 74, 71, 71, 75, 72, 70, 71, 78, 72, 73, 70…\n$ tobs    &lt;dbl&gt; 86, 89, 89, 85, 83, 89, 83, 82, 85, 85, 87, 86, 86, 85, 86, 84…\n$ yr      &lt;dbl&gt; 1930, 1930, 1930, 1930, 1930, 1930, 1930, 1930, 1930, 1930, 19…\n$ mn      &lt;ord&gt; Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Au…\n$ yd      &lt;dbl&gt; 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 22…\n\n\n\nOYO: Make date parts\nMake the same date parts, but with your own state data:"
+  },
+  {
+    "objectID": "solution-day1-clean.html#recoding-values",
+    "href": "solution-day1-clean.html#recoding-values",
+    "title": "Solutions Day 1",
+    "section": "Recoding values",
+    "text": "Recoding values\nUse distinct so you can see the station names:\n\ntx_dates |&gt; distinct(name)\n\n\n\n  \n\n\n\n\nUse mutate to recode\nUse recode to create a new column of short city names:\n\ntx_names &lt;- tx_dates |&gt; \n  mutate(\n    city = recode(\n      name,\n      \"HOUSTON WILLIAM P HOBBY AIRPORT, TX US\" = \"Houston\",\n      \"AUSTIN CAMP MABRY, TX US\" = \"Austin\",\n      \"DALLAS FAA AIRPORT, TX US\" = \"Dallas\"\n    )\n  )\n\ntx_names |&gt; glimpse()\n\nRows: 94,503\nColumns: 14\n$ station &lt;chr&gt; \"USW00012918\", \"USW00012918\", \"USW00012918\", \"USW00012918\", \"U…\n$ name    &lt;chr&gt; \"HOUSTON WILLIAM P HOBBY AIRPORT, TX US\", \"HOUSTON WILLIAM P H…\n$ date    &lt;date&gt; 1930-08-01, 1930-08-02, 1930-08-03, 1930-08-04, 1930-08-05, 1…\n$ prcp    &lt;dbl&gt; 3.00, 0.09, NA, 0.02, 0.12, NA, NA, NA, 0.00, 0.00, 0.00, NA, …\n$ snow    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ snwd    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ tavg    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ tmax    &lt;dbl&gt; 99, 97, 95, 95, 92, 92, 96, 97, 94, 92, 99, 99, 98, 98, 98, 97…\n$ tmin    &lt;dbl&gt; 75, 79, 78, 79, 76, 74, 71, 71, 75, 72, 70, 71, 78, 72, 73, 70…\n$ tobs    &lt;dbl&gt; 86, 89, 89, 85, 83, 89, 83, 82, 85, 85, 87, 86, 86, 85, 86, 84…\n$ yr      &lt;dbl&gt; 1930, 1930, 1930, 1930, 1930, 1930, 1930, 1930, 1930, 1930, 19…\n$ mn      &lt;ord&gt; Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Au…\n$ yd      &lt;dbl&gt; 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 22…\n$ city    &lt;chr&gt; \"Houston\", \"Houston\", \"Houston\", \"Houston\", \"Houston\", \"Housto…\n\n\nNow check your results using distinct on name and city.\n\ntx_names |&gt; distinct(name, city)\n\n\n\n  \n\n\n\n\n\nOYO: Recode your cities\nMake similar short names, but for your state."
+  },
+  {
+    "objectID": "solution-day1-clean.html#select",
+    "href": "solution-day1-clean.html#select",
+    "title": "Solutions Day 1",
+    "section": "Select",
+    "text": "Select\nCreate a new version of your data with only the columns you need, in the order you want them.\n\ntx_tight &lt;- tx_names |&gt; \n  select(\n    city,\n    date,\n    rain = prcp,\n    snow,\n    snwd,\n    tmax,\n    tmin,\n    yr,\n    mn,\n    yd\n  )\n\ntx_tight |&gt; glimpse()\n\nRows: 94,503\nColumns: 10\n$ city &lt;chr&gt; \"Houston\", \"Houston\", \"Houston\", \"Houston\", \"Houston\", \"Houston\",…\n$ date &lt;date&gt; 1930-08-01, 1930-08-02, 1930-08-03, 1930-08-04, 1930-08-05, 1930…\n$ rain &lt;dbl&gt; 3.00, 0.09, NA, 0.02, 0.12, NA, NA, NA, 0.00, 0.00, 0.00, NA, NA,…\n$ snow &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…\n$ snwd &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…\n$ tmax &lt;dbl&gt; 99, 97, 95, 95, 92, 92, 96, 97, 94, 92, 99, 99, 98, 98, 98, 97, 9…\n$ tmin &lt;dbl&gt; 75, 79, 78, 79, 76, 74, 71, 71, 75, 72, 70, 71, 78, 72, 73, 70, 7…\n$ yr   &lt;dbl&gt; 1930, 1930, 1930, 1930, 1930, 1930, 1930, 1930, 1930, 1930, 1930,…\n$ mn   &lt;ord&gt; Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, …\n$ yd   &lt;dbl&gt; 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, …\n\n\n\nOYO: Select your cols\nGo through the same process as above, but with your own state data."
+  },
+  {
+    "objectID": "solution-day1-clean.html#export",
+    "href": "solution-day1-clean.html#export",
+    "title": "Solutions Day 1",
+    "section": "Export",
+    "text": "Export\nWrite the file out as “rds” to the data-processed folder.\n\ntx_tight |&gt; write_rds(\"data-processed/tx_clean.rds\")\n\n\nOYO: Export your state\nWrite your data to the data-processed folder. Make sure you use a name for your state."
+  },
+  {
+    "objectID": "solution-day1-clean.html#checking-your-notebooks",
+    "href": "solution-day1-clean.html#checking-your-notebooks",
+    "title": "Solutions Day 1",
+    "section": "Checking your notebooks",
+    "text": "Checking your notebooks\nClear out your notebook and rerun all the code. Render the HTML page."
+  },
+  {
+    "objectID": "resources/homework.html",
+    "href": "resources/homework.html",
+    "title": "Homework",
+    "section": "",
+    "text": "Go through the projects video\nCreate a new quarto project or website\nImport our Skittles data (link TK)\nFind the answers to the following questions:\n\nWho got the most candy? Who the least?\nWhat is the average number of candies per bag?\nOn average, which color candy is most prevalent"
+  },
+  {
+    "objectID": "resources/projects.html",
+    "href": "resources/projects.html",
+    "title": "Managing a project",
+    "section": "",
+    "text": "Using RStudio projects make it straightforward to collect related work into its own folder. All your data, notebooks and related documents can be stored together. It saves you from some R-related hassles of setting working directories.\nWith the addition of Quarto, you can turn your notebooks into readable documents for others, including your future self. While you don’t have to publish your work, it makes it easy to do so using Quarto Pub, or Github if you are already using source control.\nMy favorite default configuration for projects is the Quarto Website. With one extra configuration file you can tie all your notebooks together into a linked website. There are other bells and whistles, but that’s the gist.\nIn the video below, I go through the process of creating and configuring a Quarto Website. It’s not perfect, but you may find it useful.\n\n\nSome things I do are for personal preference, but they are usually based on some logic. One thing I can say for sure: The more consistent you are setting up your projects, easier it is for your future self and collaborators.\n\n\n\n\nI create two data folders: data-raw for my original data, and data-processed for anything I generate. I don’t want to write over original data, which should not be changed. It doesn’t stop me from making mistakes, but I’m less likely to make them.\nI do my data cleaning in its own notebook, then export the cleaned data as an RDS file that preserves data types and the like. (I start any analysis from this cleaned data.) This helps avoid repetition in cleaning the same data over and over, and possibly in different ways. It’s not unusual for me to be doing an analysis and realize I need to back into my cleaning notebook and fix or add something. I just do that and re-run everything so all future notebooks have the fix.\nI name my notebooks in the order they should be run, like 01-cleaning.qmd needs to be run before 02-analysis.qmd. This might be overkill, but it is what I do. Also, when I export data from a notebook, I include that number or notebook name so I know where it came from.\nI sometimes have a resources folder where I might store data dictionaries or documents related to my source data.\nI use the index.qmd file of the Quarto website as my “about this project” page. I explain there what the project is about and link to the source of my data. Depending on the need I might have notes about how I downloaded or processed the data (though that might be in my cleaning notebook.) I include links to stories born from the project once they publish.\nI don’t use the default about.qmd page created with a Quarto website. I just rename that as my cleaning notebook.\n\n\n\n\n\nThe Quarto Website documentation is pretty good. It explains different configurations and navigation options you can use in the _quarto.yml file.\nOne thing I always add to _quarto.yml is df-print: paged. It makes your table output much nicer on the rendered pages. You can read about it here.\n\n\n\n\nhttps://quartopub.com/ is a website where you can publish your notebooks for free through a simple command. You have to install the Quarto CLI and use the Terminal to push the files, but it is just a simple two-word command.\n\n\n\nIf you use git and Github, you can take advantage of Github Pages to publish rendered pages along with your project.\n\nYou can update the _quarto.yml to change the output directory to use docs. This allows you to use Github Pages to publish your html for free right with your code. Directions are here.\nIf you use gitignore.io to create your gitignore file, be sure to comment out or remove the line about the docs folder. By default that configuration excludes pushing docs, but you want it if you are using Github Pages.\nYou can using Quarto includes to pull your standard README.md into your index page. I guild a regular README and then in my index I put one line: {{&lt; include README.md &gt;}}. This way your README works on Github, but also serves as the index of your project website. You just can’t use fancy Quarto stuff like callouts, but regular Markdown is fine."
+  },
+  {
+    "objectID": "resources/projects.html#preference-vs-convention",
+    "href": "resources/projects.html#preference-vs-convention",
+    "title": "Managing a project",
+    "section": "",
+    "text": "Some things I do are for personal preference, but they are usually based on some logic. One thing I can say for sure: The more consistent you are setting up your projects, easier it is for your future self and collaborators."
+  },
+  {
+    "objectID": "resources/projects.html#file-and-folder-management",
+    "href": "resources/projects.html#file-and-folder-management",
+    "title": "Managing a project",
+    "section": "",
+    "text": "I create two data folders: data-raw for my original data, and data-processed for anything I generate. I don’t want to write over original data, which should not be changed. It doesn’t stop me from making mistakes, but I’m less likely to make them.\nI do my data cleaning in its own notebook, then export the cleaned data as an RDS file that preserves data types and the like. (I start any analysis from this cleaned data.) This helps avoid repetition in cleaning the same data over and over, and possibly in different ways. It’s not unusual for me to be doing an analysis and realize I need to back into my cleaning notebook and fix or add something. I just do that and re-run everything so all future notebooks have the fix.\nI name my notebooks in the order they should be run, like 01-cleaning.qmd needs to be run before 02-analysis.qmd. This might be overkill, but it is what I do. Also, when I export data from a notebook, I include that number or notebook name so I know where it came from.\nI sometimes have a resources folder where I might store data dictionaries or documents related to my source data.\nI use the index.qmd file of the Quarto website as my “about this project” page. I explain there what the project is about and link to the source of my data. Depending on the need I might have notes about how I downloaded or processed the data (though that might be in my cleaning notebook.) I include links to stories born from the project once they publish.\nI don’t use the default about.qmd page created with a Quarto website. I just rename that as my cleaning notebook."
+  },
+  {
+    "objectID": "resources/projects.html#quarto-yaml-configurations",
+    "href": "resources/projects.html#quarto-yaml-configurations",
+    "title": "Managing a project",
+    "section": "",
+    "text": "The Quarto Website documentation is pretty good. It explains different configurations and navigation options you can use in the _quarto.yml file.\nOne thing I always add to _quarto.yml is df-print: paged. It makes your table output much nicer on the rendered pages. You can read about it here."
+  },
+  {
+    "objectID": "resources/projects.html#quarto-pub",
+    "href": "resources/projects.html#quarto-pub",
+    "title": "Managing a project",
+    "section": "",
+    "text": "https://quartopub.com/ is a website where you can publish your notebooks for free through a simple command. You have to install the Quarto CLI and use the Terminal to push the files, but it is just a simple two-word command."
+  },
+  {
+    "objectID": "resources/projects.html#github-specific-tricks",
+    "href": "resources/projects.html#github-specific-tricks",
+    "title": "Managing a project",
+    "section": "",
+    "text": "If you use git and Github, you can take advantage of Github Pages to publish rendered pages along with your project.\n\nYou can update the _quarto.yml to change the output directory to use docs. This allows you to use Github Pages to publish your html for free right with your code. Directions are here.\nIf you use gitignore.io to create your gitignore file, be sure to comment out or remove the line about the docs folder. By default that configuration excludes pushing docs, but you want it if you are using Github Pages.\nYou can using Quarto includes to pull your standard README.md into your index page. I guild a regular README and then in my index I put one line: {{&lt; include README.md &gt;}}. This way your README works on Github, but also serves as the index of your project website. You just can’t use fancy Quarto stuff like callouts, but regular Markdown is fine."
+  },
+  {
+    "objectID": "resources/wx-testing.html",
+    "href": "resources/wx-testing.html",
+    "title": "Weather testing",
+    "section": "",
+    "text": "Los Angeles - Downtown USC\nSacramento - Metro airport\nSan Francisco - Downtown"
+  },
+  {
+    "objectID": "resources/wx-testing.html#california---r",
+    "href": "resources/wx-testing.html#california---r",
+    "title": "Weather testing",
+    "section": "",
+    "text": "Los Angeles - Downtown USC\nSacramento - Metro airport\nSan Francisco - Downtown"
+  },
+  {
+    "objectID": "resources/wx-testing.html#north-carolina---r",
+    "href": "resources/wx-testing.html#north-carolina---r",
+    "title": "Weather testing",
+    "section": "North Carolina - R",
+    "text": "North Carolina - R\n\nCharlotte Douglas Airport\nRaleigh Durham International Airport\nWilmington International Airport Texas\nHouston William P Hobby\nDallas FAA\nAustin - Mabry"
+  },
+  {
+    "objectID": "resources/wx-testing.html#arkansas",
+    "href": "resources/wx-testing.html#arkansas",
+    "title": "Weather testing",
+    "section": "Arkansas",
+    "text": "Arkansas\n\nLittle Rock\nFort Smith\nHot Springs"
+  },
+  {
+    "objectID": "resources/wx-testing.html#new-york--r",
+    "href": "resources/wx-testing.html#new-york--r",
+    "title": "Weather testing",
+    "section": "New York -R",
+    "text": "New York -R\n\nNY City Central Park\nAlbany International Airport\nBuffalo"
+  },
+  {
+    "objectID": "resources/wx-testing.html#stations",
+    "href": "resources/wx-testing.html#stations",
+    "title": "Weather testing",
+    "section": "Stations",
+    "text": "Stations\nI really only need TX, CA & NC\n\nAR: GHCND:USW00013963, GHCND:USC00033466, GHCND:USW00013964\nCA: GHCND:USW00093134, GHCND:USW00093225, GHCND:USW00023272\nNC: GHCND:USW00013881, GHCND:USW00013748, GHCND:USW00013722\nTX: GHCND:USW00013960, GHCND:USW00012918, GHCND:USW00013958\nNY: GHCND:USW00094728, GHCND:USW00014735, GHCND:USW00014733\n\n\nCA notes\nDAPR = Number of days included in the multiday precipitation total (MDPR) MDPR = Multiday precipitation total (mm or inches as per user preference; use with DAPR and DWPR, if available)\nTesting the weather data\n\nlibrary(tidyverse)\nlibrary(janitor)"
+  },
+  {
+    "objectID": "resources/wx-testing.html#import",
+    "href": "resources/wx-testing.html#import",
+    "title": "Weather testing",
+    "section": "Import",
+    "text": "Import\n\nca_raw &lt;- read_csv(\"../data-raw/ca.csv\") |&gt; clean_names()\n\nWarning: One or more parsing issues, call `problems()` on your data frame for details,\ne.g.:\n  dat &lt;- vroom(...)\n  problems(dat)\n\n\nRows: 87046 Columns: 12\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr  (2): STATION, NAME\ndbl  (7): PRCP, SNOW, SNWD, TAVG, TMAX, TMIN, TOBS\nlgl  (2): DAPR, MDPR\ndate (1): DATE\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\ntx_raw &lt;- read_csv(\"../data-raw/tx.csv\") |&gt; clean_names()\n\nRows: 94503 Columns: 10\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr  (2): STATION, NAME\ndbl  (7): PRCP, SNOW, SNWD, TAVG, TMAX, TMIN, TOBS\ndate (1): DATE\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\nnc_raw &lt;- read_csv(\"../data-raw/nc.csv\") |&gt; clean_names()\n\nRows: 87400 Columns: 9\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr  (2): STATION, NAME\ndbl  (6): PRCP, SNOW, SNWD, TAVG, TMAX, TMIN\ndate (1): DATE\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\n\n\nca &lt;- ca_raw |&gt; select(\n  name, date, prcp, snow, snwd, tmax, tmin\n)\n\ntx &lt;- tx_raw |&gt; select(\n  name, date, prcp, snow, snwd, tmax, tmin\n)\n\nnc &lt;- nc_raw |&gt; select(\n  name, date, prcp, snow, snwd, tmax, tmin\n)"
+  },
+  {
+    "objectID": "lesson-day1-02-clean.html",
+    "href": "lesson-day1-02-clean.html",
+    "title": "Importing & Cleaning",
+    "section": "",
+    "text": "In this second lesson we will work through building a notebook where you import data, manipulate it and do some analysis. While you may be viewing these lessons online, know they are also in the project folder all starting with lesson-. You’ll build your notebook in another file in practice-day1.qmd where you’ll be given some pre-written code with explanations of what it does. You’ll also write your own code with mini on-your-own quests.\nIn the end, we are creating a cleaned data set and exporting it to use later.\nFor this lesson we’ll be using daily weather summaries from Climate Data Online – daily temperature and precipitation readings.\n\n\n\n\n\n\nTip\n\n\n\nWithin a project I typically have one notebook for downloading and cleaning my data, and then another notebook for analyzing my data. Since this is a guided training, the organization of this project is a little different. We’ll walk through building a new project later."
+  },
+  {
+    "objectID": "lesson-day1-02-clean.html#goals-of-this-lesson",
+    "href": "lesson-day1-02-clean.html#goals-of-this-lesson",
+    "title": "Importing & Cleaning",
+    "section": "",
+    "text": "In this second lesson we will work through building a notebook where you import data, manipulate it and do some analysis. While you may be viewing these lessons online, know they are also in the project folder all starting with lesson-. You’ll build your notebook in another file in practice-day1.qmd where you’ll be given some pre-written code with explanations of what it does. You’ll also write your own code with mini on-your-own quests.\nIn the end, we are creating a cleaned data set and exporting it to use later.\nFor this lesson we’ll be using daily weather summaries from Climate Data Online – daily temperature and precipitation readings.\n\n\n\n\n\n\nTip\n\n\n\nWithin a project I typically have one notebook for downloading and cleaning my data, and then another notebook for analyzing my data. Since this is a guided training, the organization of this project is a little different. We’ll walk through building a new project later."
+  },
+  {
+    "objectID": "lesson-day1-02-clean.html#open-the-practice-file",
+    "href": "lesson-day1-02-clean.html#open-the-practice-file",
+    "title": "Importing & Cleaning",
+    "section": "Open the practice file",
+    "text": "Open the practice file\nLet’s get started.\n\nMake sure the Files page is open in the bottom right pane of RStudio.\nClick on the gear icon and choose Go To Working Directory. This takes the file explorer to our project folder so we know where everything is.\nClick and open the practice-day1.qmd file.\n\nOur notebooks start with metadata at the top that includes the title listing, like this one, written in YAML and bracketed by the three dashes. There is other configuration you can do in the metadata, but we won’t here.\nBelow the metadata you’ll want to explain the goals of what you are doing in this notebook. We write these notes in Markdown in between our code."
+  },
+  {
+    "objectID": "lesson-day1-02-clean.html#packages-and-libraries",
+    "href": "lesson-day1-02-clean.html#packages-and-libraries",
+    "title": "Importing & Cleaning",
+    "section": "Packages and libraries",
+    "text": "Packages and libraries\nAfter the goals in a notebook, the next thing to have is the libraries you’ll use. While there is a lot of functionality baked into R, users can also write and package pre-written code into libraries. Different libraries have different “functions” that we use to manipulate our data in some way. Learning how to use these functions IS programming.\nWe almost always load the tidyverse library which is actually a collection of libraries, including:\n\nreadr has functions that import and export data\ndplyr has functions to manipulate data, like sorting and filtering\nstringr helps us work with text\ntidyr helps us shape data for different purposes\nggplot helps us visualize data through charts\n\nWe’ll use functions from all of these libraries, but they come in the one big toolbox, tidyverse.\nWe’ll use another function from another library, janitor to standardize some column names.\nHere is how we set up the libraries. It is usually the first code chunk you’ll have in your notebook.\n\n\n\n\n\n\nTip\n\n\n\nThe code block below is displayed online in a special way to show you the tick marks, language designation and some execution options that are explained below. Usually the online directions only show the code inside the block.\n\n\nThis code chunk below has two special execution options that affect how the code works.\n\nlabel: setup gives this chunk a special name that tells RStudio to run this block before any other if it hasn’t been run already.\nmessage: false suppresses the usual messages we see in our notebook after loading libraries. With most code chunks we want to see these messages, but not this one because they are standard. Plus, I wanted to show you how the options work.\n\nExecution options are not required, but those two are useful for our libraries chunk. That’s often the only place I use any.\n\n```{r}\n#| label: setup\n#| message: false\n\nlibrary(tidyverse)\nlibrary(janitor)\n```\n\n\nIn your practice notebook after the ## Libraries headline.\nUse the copy icon at top-right to copy the contents of the code block listed above and paste it into your notebook.\nRun the code block above using either the play button inside your Quarto document, or by placing your cursor in the code chunk and using Cmd-shift-return on your keyboard.\n\nYou’ll see a flash of green but you won’t see any feedback in your notebook because we suppressed it."
+  },
+  {
+    "objectID": "lesson-day1-02-clean.html#functions",
+    "href": "lesson-day1-02-clean.html#functions",
+    "title": "Importing & Cleaning",
+    "section": "Functions",
+    "text": "Functions\nThose library() commands used above are what we call a function in R, and it is similar to formulas in a spreadsheet. They are the “verbs” of R where all the action happens.\nInside the parenthesis of the function we add arguments. In that library function it needed to know which package to load. Usually the first argument what data we are inserting into the function. There can be other options to control the function.\nfunction(data, option_name = \"value\")\nWe can also string these functions together, taking the result of one and piping it into the next function. We’ll do that soon."
+  },
+  {
+    "objectID": "lesson-day1-02-clean.html#importing-data",
+    "href": "lesson-day1-02-clean.html#importing-data",
+    "title": "Importing & Cleaning",
+    "section": "Importing data",
+    "text": "Importing data\nWe use functions from the readr library to import our data. We choose which function based on the format of the data we are trying to import.\nThe data I have prepared for you here is in “csv” format, or comma separated values. In this project we have two data folders, data-raw where we put our original data, and data-processed where we put anything we export out. Our aim here is to avoid changing our original raw data.\n\n\n\n\n\n\nImportant\n\n\n\nFrom now on you’ll mostly create your own chunks in your practice notebook and type in the code indicated in the book. While it is possible to copy/paste the code easily, I implore you to type all the code here so you get used to using the RStudio editor.\n\n\n\nAfter the ## Import headline and description there, insert a new code chunk. You can use the keyboard command Cmd+option+i or the green +C icon in the notebook toolbar.\nType in read_csv() into the code chunk. You’ll see type-assist trying to help you.\nOnce that is there, put your cursor in between the parenthesis (if it isn’t already) and type in an opening quote \". You’ll see that the closing quote is automatically added and your cursor is again put in the middle of them.\nType in data-raw/ and then hit tab on your keyboard. You should see a menu pop up with the available files. Choose the tx.csv file.\nOnce your code looks like what I have below, run the chunk. (Use Cmd-shift-return from inside the chunk).\n\n\nread_csv(\"data-raw/tx.csv\")\n\nRows: 94503 Columns: 10\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr  (2): STATION, NAME\ndbl  (7): PRCP, SNOW, SNWD, TAVG, TMAX, TMIN, TOBS\ndate (1): DATE\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\n\n\n\n  \n\n\n\nWe get two outputs here in our notebook:\n\nThe R Console pane shows messages about our import.\nThe second pane shows our data. The data construct here is called a data frame or tibble.\n\n\nMore about readr\nThere is a cheatsheet in the readr documentation that outlines functions to import different kinds of data. There are also options for things like skipping lines, renaming columns and other common challenges."
+  },
+  {
+    "objectID": "lesson-day1-02-clean.html#the-pipe",
+    "href": "lesson-day1-02-clean.html#the-pipe",
+    "title": "Importing & Cleaning",
+    "section": "The pipe",
+    "text": "The pipe\nTo provide some consistency and save from having to use the shift key so much, we are going to run our data through a function called clean_names() after we read it in. As we do this we’ll learn about the “pipe” which moves the result of an object or function into a new function.\n\nEdit your import chunk to add the code below: |&gt; clean_names().\n\n\n\n\n\n\n\nTip\n\n\n\nYou can use Cmd+shift+m inside a code block to type a pipe. If you get %&gt;% instead, don’t fret. Keep reading.\n\n\n\nread_csv(\"data-raw/tx.csv\") |&gt; clean_names()\n\nRows: 94503 Columns: 10\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr  (2): STATION, NAME\ndbl  (7): PRCP, SNOW, SNWD, TAVG, TMAX, TMIN, TOBS\ndate (1): DATE\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\n\n\n\n  \n\n\n\nOur result now comes in two “tabs” for lack of a better word:\n\nThe first tab called “R Console” has the output from the read_csv() function.\nThe second tab called “spec_tbl_df” has output from the clean_names() function.\n\n\nAbout clean_names()\nThe clean_names() function is from the janitor package, and it standardizes the names of our columns, which we call “variables” in R. (Our rows are called “observations”.)\n\nIt lowercases all the variable names.\nIt standardizes the text, removing special characters, etc.\nIf the variable names have more than one word, it will put an underscore between them: birth_date.\n\nUsing clean_names() is a preference and you don’t have to do it. I almost always do. It can save keyboard strokes later and makes it easy to copy/paste the variable names.\n\n\nAbout the pipe |&gt;\nThe pipe is a construct that takes the result of an object or function and passes it into another function. Think of it like a sentence that says “AND THEN” the next thing.\nLike this:\nI woke up |&gt; \n  got out of bed |&gt;\n  dragged a comb across my head\nYou can’t start a new line with a pipe. If you are breaking your code into multiple lines, then the |&gt; needs to be at the end of a line and the next line should be indented so there is a visual clue it is related to line above it, like this:\nread_csv(\"data-raw/tx.csv\") |&gt; \n  clean_names()\nIt might look like there are no arguments inside clean_names(), but what we are actually doing is passing the imported data frame into it like this:\nclean_names(read_csv(\"data-raw/tx.csv\"))\nFor a lot of functions in R the first argument is “what data are you taking about?” The pipe allows us to say “hey, take the data we just mucked with (i.e., the code before the pipe) and use that in this new function.”\nYou can see from the nested example that code without the pipe can get confusing. Using the pipe makes our code much more readable.\n\nA rabbit dives into a pipe\nThe concept of the pipe was first introduced by tidyverse developers in 2014 in a package called magrittr. They used the symbol %&gt;% as the pipe. It was so well received the concept was written directly into base R in 2021, but using the symbol |&gt;. Hadley Wickham’s 2022 rewriting of R for Data Science uses the base R pipe |&gt; by default, so we are too. We configured which version to use in RStudio when we updated preferences.\nThis switch to |&gt; is quite recent so you will still see %&gt;% used in our training and in documentation online. Assume |&gt; and %&gt;% are interchangeable."
+  },
+  {
+    "objectID": "lesson-day1-02-clean.html#objects",
+    "href": "lesson-day1-02-clean.html#objects",
+    "title": "Importing & Cleaning",
+    "section": "Objects",
+    "text": "Objects\nWhile we have data printing to our screen, it hasn’t been saved and we can’t reuse it. That’s next.\nTo save something in our R environment to reuse it, we create an “object”. An object can be made from vector (a list of one or more like items), a data frame (a collection of vectors, like a structured spreadsheet) or even a plot. In short, it is how we save things in our environment (in memory) to reuse later.\nBy convention we name the object first, then use &lt;- to fill it with our data. Think of it like this: You must have a bucket first before you can fill it with water. The arrow shows you which way the water is flowing.\n\nEdit your import code block to add the tx_raw &lt;- part shown below\nRe-run the chunk. Again, Cmd+shift+return will run the entire chunk.\n\n\ntx_raw &lt;- read_csv(\"data-raw/tx.csv\") |&gt; clean_names()\n\nRows: 94503 Columns: 10\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr  (2): STATION, NAME\ndbl  (7): PRCP, SNOW, SNWD, TAVG, TMAX, TMIN, TOBS\ndate (1): DATE\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\n\n\nWe still get messages about our input\nBut instead of printing our data to the screen, we have saved it into tx_raw.\nIf you look at your Environment pane at the top-right of RStudio, you’ll see your saved object listed there.\n\n\n\n\n\n\n\nTip\n\n\n\nYou can use Option+i in a code chunk to type in &lt;-.\n\n\nLet’s print the data out again so we can see it.\n\nEdit your import chunk to add two returns after our line of code and then type out our object so it will display again.\n\n\ntx_raw &lt;- read_csv(\"data-raw/tx.csv\") |&gt; clean_names()\n\nRows: 94503 Columns: 10\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr  (2): STATION, NAME\ndbl  (7): PRCP, SNOW, SNWD, TAVG, TMAX, TMIN, TOBS\ndate (1): DATE\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n\ntx_raw\n\n\n\n  \n\n\n\nLet’s talk about this output a little because there is a lot of useful information here and it looks different in your notebook vs a rendered page.\n\n\n\nTibble display\n\n\n\nOYO: Import new data\nHere I want you to import weather data from a different state and save it into an object. You can look in the data-raw folder to see the files to choose from, perhaps from your state.\n\nAfter these directions but before the next headline, add a new code chunk.\nUse the read_csv() command to read in your data and run it to make sure it works.\nEdit that same chunk to save your data into a new object. Make sure you see it in your Environment tab.\nAdd a new line with your new object so it will print out so you can see it.\nAdd some notes in text to tell your future self what you’ve done."
+  },
+  {
+    "objectID": "lesson-day1-02-clean.html#peeking-at-data",
+    "href": "lesson-day1-02-clean.html#peeking-at-data",
+    "title": "Importing & Cleaning",
+    "section": "Peeking at data",
+    "text": "Peeking at data\nThere are a number of ways to look at your data. We’ll tour through some.\n\nHead, Tail\nWith head() and tail() you can look at the “top” and “bottom” of your data. The default is to show six lines of data, but you can add an argument to do more.\n\nWhere indicated after the ## Peeking headline, add a new chunk.\nStart with your tx_raw data and pipe into head() like below.\n\n\ntx_raw |&gt; head()\n\n\n\n  \n\n\n\n\nAs indicated in the Peeking section, add a chunk and get 8 lines from the bottom of your data.\n\n\ntx_raw |&gt; tail(8)\n\n\n\n  \n\n\n\n\n\nGlimpse\nThe glimpse() function allows you to look at your data in another way … to see all the variables and their data types, no matter how many there are.\n\nAs indicated in the practice notebook, add a chunk and glimpse your data like below.\n\n\ntx_raw |&gt; glimpse()\n\nRows: 94,503\nColumns: 10\n$ station &lt;chr&gt; \"USW00012918\", \"USW00012918\", \"USW00012918\", \"USW00012918\", \"U…\n$ name    &lt;chr&gt; \"HOUSTON WILLIAM P HOBBY AIRPORT, TX US\", \"HOUSTON WILLIAM P H…\n$ date    &lt;date&gt; 1930-08-01, 1930-08-02, 1930-08-03, 1930-08-04, 1930-08-05, 1…\n$ prcp    &lt;dbl&gt; 3.00, 0.09, NA, 0.02, 0.12, NA, NA, NA, 0.00, 0.00, 0.00, NA, …\n$ snow    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ snwd    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ tavg    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ tmax    &lt;dbl&gt; 99, 97, 95, 95, 92, 92, 96, 97, 94, 92, 99, 99, 98, 98, 98, 97…\n$ tmin    &lt;dbl&gt; 75, 79, 78, 79, 76, 74, 71, 71, 75, 72, 70, 71, 78, 72, 73, 70…\n$ tobs    &lt;dbl&gt; 86, 89, 89, 85, 83, 89, 83, 82, 85, 85, 87, 86, 86, 85, 86, 84…\n\n\nThis is super handy to have because you can see all your variable names in the same screen. I use it all the time.\n\n\nSummary\nThe summary() function loops through all your variables and gives you some basic information about them, especially when they are numbers or dates.\n\nAt the indicated spot in the notebook, add a chunk and get a summary of your data like this below:\n\n\ntx_raw |&gt; summary()\n\n   station              name                date                 prcp        \n Length:94503       Length:94503       Min.   :1930-08-01   Min.   : 0.0000  \n Class :character   Class :character   1st Qu.:1959-01-12   1st Qu.: 0.0000  \n Mode  :character   Mode  :character   Median :1980-08-05   Median : 0.0000  \n                                       Mean   :1980-06-04   Mean   : 0.1121  \n                                       3rd Qu.:2002-03-09   3rd Qu.: 0.0000  \n                                       Max.   :2023-09-30   Max.   :12.0700  \n                                                            NA's   :1867     \n      snow            snwd            tavg            tmax       \n Min.   :0.000   Min.   :0.000   Min.   : 0.0    Min.   : 13.00  \n 1st Qu.:0.000   1st Qu.:0.000   1st Qu.:60.0    1st Qu.: 69.00  \n Median :0.000   Median :0.000   Median :73.0    Median : 81.00  \n Mean   :0.003   Mean   :0.004   Mean   :70.2    Mean   : 78.56  \n 3rd Qu.:0.000   3rd Qu.:0.000   3rd Qu.:82.0    3rd Qu.: 91.00  \n Max.   :7.800   Max.   :7.000   Max.   :98.0    Max.   :112.00  \n NA's   :15369   NA's   :15463   NA's   :78843   NA's   :16      \n      tmin            tobs      \n Min.   :-2.00   Min.   :24.00  \n 1st Qu.:47.00   1st Qu.:61.00  \n Median :61.00   Median :72.00  \n Mean   :58.65   Mean   :69.65  \n 3rd Qu.:72.00   3rd Qu.:80.00  \n Max.   :93.00   Max.   :99.00  \n NA's   :16      NA's   :91914  \n\n\nThis is super useful to get basic stats like the lowest, highest, average and median values.\nYou can also do this for a specific column, like to check a date range within your data:\n\ntx_raw$date |&gt; summary()\n\n        Min.      1st Qu.       Median         Mean      3rd Qu.         Max. \n\"1930-08-01\" \"1959-01-12\" \"1980-08-05\" \"1980-06-04\" \"2002-03-09\" \"2023-09-30\" \n\n\n\n\nOYO: Peek at your own data\n\nAt the place indicated in your practice notebook, use these “peeking” functions to look at the data in your state. At least try glimpse() and summary()."
+  },
+  {
+    "objectID": "lesson-day1-02-clean.html#create-or-change-data",
+    "href": "lesson-day1-02-clean.html#create-or-change-data",
+    "title": "Importing & Cleaning",
+    "section": "Create or change data",
+    "text": "Create or change data\nA little later in our analysis we will want to do some calculations in our data based on the year and month of our data. If we were doing this analysis for the first time we might not realize that yet and would end up coming back to this notebook to do this, but we have the knowledge of foresight here.\nWe’ll use the mutate() function here to create a new column based on other columns. As the name implies, mutate() changes or creates data.\nLet’s explain how mutate works first:\n# This is just explanatory psuedo code\n# You don't need this in your notebook\ndata |&gt; \n  mutate(\n    newcol = new_stuff_from_math_or_whatever\n  )\nThat new value could be arrived at through math or any combination of other functions. In our case, we will be plucking out parts of our date variable to create some other useful variables. The first one we’ll build is to get the “year” from our date.\n\nBuild the machine\nWe are going to build this code chunk piece by piece, like we would if we were figuring it out for the first time. I want you to see the logic of working through a task like this.\n\nWhere indicated in ## Mutate section, add a new code chunk to create your date parts.\nType the code I have below and run the chunk. I’ll explain it afterward.\n\n\ntx_dates &lt;- tx_raw\n\ntx_dates |&gt; glimpse()\n\nRows: 94,503\nColumns: 10\n$ station &lt;chr&gt; \"USW00012918\", \"USW00012918\", \"USW00012918\", \"USW00012918\", \"U…\n$ name    &lt;chr&gt; \"HOUSTON WILLIAM P HOBBY AIRPORT, TX US\", \"HOUSTON WILLIAM P H…\n$ date    &lt;date&gt; 1930-08-01, 1930-08-02, 1930-08-03, 1930-08-04, 1930-08-05, 1…\n$ prcp    &lt;dbl&gt; 3.00, 0.09, NA, 0.02, 0.12, NA, NA, NA, 0.00, 0.00, 0.00, NA, …\n$ snow    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ snwd    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ tavg    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ tmax    &lt;dbl&gt; 99, 97, 95, 95, 92, 92, 96, 97, 94, 92, 99, 99, 98, 98, 98, 97…\n$ tmin    &lt;dbl&gt; 75, 79, 78, 79, 76, 74, 71, 71, 75, 72, 70, 71, 78, 72, 73, 70…\n$ tobs    &lt;dbl&gt; 86, 89, 89, 85, 83, 89, 83, 82, 85, 85, 87, 86, 86, 85, 86, 84…\n\n\nWhat are doing here is creating a machine of sorts that we will continue to tinker with.\n\nWe are creating a new object called tx_dates and then filling it with tx_raw.\nWe then glimpse the new tx_dates object so we can see all the columns and some of the values.\n\nRight now there is no difference between tx_dates and tx_raw but we’ll fix that. Doing it this way allows us to see all our columns at once with glimpse.\n\n\nAdd on the mutate\n\nEdit your code chunk to add a pipe at the end of the first line, then hit return.\nType in the mutate function, then add a return in the middle so we can add multiple arguments in a clean way.\nAdd the line yr = year(date) inside the mutate.\nRun the code and inspect the bottom of the glimpse.\n\n\ntx_dates &lt;- tx_raw |&gt; \n  mutate(\n    yr = year(date)\n  )\n\ntx_dates |&gt; glimpse()\n\nRows: 94,503\nColumns: 11\n$ station &lt;chr&gt; \"USW00012918\", \"USW00012918\", \"USW00012918\", \"USW00012918\", \"U…\n$ name    &lt;chr&gt; \"HOUSTON WILLIAM P HOBBY AIRPORT, TX US\", \"HOUSTON WILLIAM P H…\n$ date    &lt;date&gt; 1930-08-01, 1930-08-02, 1930-08-03, 1930-08-04, 1930-08-05, 1…\n$ prcp    &lt;dbl&gt; 3.00, 0.09, NA, 0.02, 0.12, NA, NA, NA, 0.00, 0.00, 0.00, NA, …\n$ snow    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ snwd    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ tavg    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ tmax    &lt;dbl&gt; 99, 97, 95, 95, 92, 92, 96, 97, 94, 92, 99, 99, 98, 98, 98, 97…\n$ tmin    &lt;dbl&gt; 75, 79, 78, 79, 76, 74, 71, 71, 75, 72, 70, 71, 78, 72, 73, 70…\n$ tobs    &lt;dbl&gt; 86, 89, 89, 85, 83, 89, 83, 82, 85, 85, 87, 86, 86, 85, 86, 84…\n$ yr      &lt;dbl&gt; 1930, 1930, 1930, 1930, 1930, 1930, 1930, 1930, 1930, 1930, 19…\n\n\nDo you see the new column added at the end? That is our new column that just has the year from each date. Some notes about this:\n\nWithin the mutate I started with the name of the new column first: yr. I called the new variable “yr” instead of “year” because there actually is a year() function that we use in that same line and I don’t want to get confused. FWIW, R wouldn’t care, but we are human.\nThe year(date) code is using the year() function to pluck those four numbers out of each filed in the date column. Since we are creating a new column to put this in, we aren’t changing our original data at all.\n\nThis is the equivalent of adding a new column to a spreadsheet, and then using a formula that builds from other columns in the spreadsheet and then copying it all the way down the sheet.\nIf you want to see this in a table view, you can highlight just the tx_dates object in the last line of the code chunk and do Cmd+return on your keyboard to print it to your screen. You could then page over to see the new column. I like using glimpse instead so I can see all the columns at once, but it takes some getting used to.\n\n\nAdd more components\nWe’ll add two more columns to our spreadsheet within the same mutate() function.\n\nEdit your code chunk to add two new arguments to the code chunk as noted below. I explain them after.\n\n\ntx_dates &lt;- tx_raw |&gt; \n  mutate(\n    yr = year(date),\n    mn = month(date, label = TRUE),\n    yd = yday(date)\n  )\n\ntx_dates |&gt; glimpse()\n\nRows: 94,503\nColumns: 13\n$ station &lt;chr&gt; \"USW00012918\", \"USW00012918\", \"USW00012918\", \"USW00012918\", \"U…\n$ name    &lt;chr&gt; \"HOUSTON WILLIAM P HOBBY AIRPORT, TX US\", \"HOUSTON WILLIAM P H…\n$ date    &lt;date&gt; 1930-08-01, 1930-08-02, 1930-08-03, 1930-08-04, 1930-08-05, 1…\n$ prcp    &lt;dbl&gt; 3.00, 0.09, NA, 0.02, 0.12, NA, NA, NA, 0.00, 0.00, 0.00, NA, …\n$ snow    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ snwd    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ tavg    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ tmax    &lt;dbl&gt; 99, 97, 95, 95, 92, 92, 96, 97, 94, 92, 99, 99, 98, 98, 98, 97…\n$ tmin    &lt;dbl&gt; 75, 79, 78, 79, 76, 74, 71, 71, 75, 72, 70, 71, 78, 72, 73, 70…\n$ tobs    &lt;dbl&gt; 86, 89, 89, 85, 83, 89, 83, 82, 85, 85, 87, 86, 86, 85, 86, 84…\n$ yr      &lt;dbl&gt; 1930, 1930, 1930, 1930, 1930, 1930, 1930, 1930, 1930, 1930, 19…\n$ mn      &lt;ord&gt; Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Au…\n$ yd      &lt;dbl&gt; 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 22…\n\n\nThis added two new columns to our date, one for the month and one for “day of the year”.\n\nThe month(date, label = TRUE) function gives us what is called an “ordered factor” with an abbreviation of our month name. Factors are text strings that understand order, so this field knows that “Jan” comes before “Feb” instead of ordering things alphabetically. If this were a string &lt;chr&gt; then “Apr” would come first when we sorted it. If we didn’t include the part , label = TRUE then we would’ve gotten a number fo the date, like 8 for August.\nThe yday(date) function is getting us how many days into the year this date falls. So if it were February 1st it would give us “32” since there are 31 days in January. This is probably overkill to create this, but I have a challenge for you later that needs it.\n\n\n\nAbout Lubridate\nThe functions we used above to get those date components comes from the lubridate package, which gets loaded with our tidyverse library. It is a package designed to ease the friction of working with dates (get it?), which can be a challenge in programming. You can use it to convert text into dates, get date components, adjust time zones and all kinds of things. I use the cheatsheet from this package a lot, usually to “parse date-times” or “get and set components”.\n\n\nOYO: Create new date compoents\nOn your own, create date components with your state’s data like we did above. Follow the same steps to build the machine like we did in the example instead of copy/pasting."
+  },
+  {
+    "objectID": "lesson-day1-02-clean.html#recoding-values",
+    "href": "lesson-day1-02-clean.html#recoding-values",
+    "title": "Importing & Cleaning",
+    "section": "Recoding values",
+    "text": "Recoding values\nIn our weather data we have the name column that has the name of the station the reading came from. Those names are pretty long and will get unwieldy later, so let’s create more simple names for the cities, like “Austin”, “Houston” and “Dallas”.\n\nFind distinct values\nIt would be nice to see the station names easily so we can spell them correctly. We’ll use a function called distinct() to find the unique values for name.\n\nIn the ## Recoding values section of your notebok, add a code chunk after the prompt about distinct.\nAdd the code below and run it.\n\n\ntx_dates |&gt; distinct(name)\n\n\n\n  \n\n\n\nWe are taking our data AND THEN finding the “distinct” values in our name column.\nWe don’t need to save this into a new object or anything. It’s just to help us copy/paste the names of the stations in the next step.\n\n\nUse mutate to recode\nNow we’ll create a new column called city that we build based off the original names above. We use a more complicated version of mutate to do this because in the end we are creating new data.\nIn the interest of time we’ll provide the finished code with an explanation vs building it piece by piece.\n\nAdd a new code chunk for the recode.\nUse the copy-to-clipboard button (top right of chunk) to copy the code then paste it into your chunk and run it.\n\n\n1tx_names &lt;- tx_dates |&gt;\n  mutate(\n2    city = recode(\n3      name,\n4      \"HOUSTON WILLIAM P HOBBY AIRPORT, TX US\" = \"Houston\",\n      \"AUSTIN CAMP MABRY, TX US\" = \"Austin\",\n      \"DALLAS FAA AIRPORT, TX US\" = \"Dallas\"\n    )\n  )\n\n5tx_names |&gt; glimpse()\n\n\n1\n\nWe start with our new object and then start filling it with our tx_dates data. We pipe into the mutate on the next line.\n\n2\n\nInside the mutate function we start with the name of the new column, city, and then set that equal to the values that come from our recode() function.\n\n3\n\nThe first argument of recode is what column we are looking into for our original values. For us this is the name column.\n\n4\n\nFor each line here, we start with our existing value (which we get from the step above) and then set it to our new value. (This construction is counter to the way R normally works where we usually put our new thing before the old thing.)\n\n5\n\nOn the last line we glimpse our new object so we can see if it worked.\n\n\n\n\nRows: 94,503\nColumns: 14\n$ station &lt;chr&gt; \"USW00012918\", \"USW00012918\", \"USW00012918\", \"USW00012918\", \"U…\n$ name    &lt;chr&gt; \"HOUSTON WILLIAM P HOBBY AIRPORT, TX US\", \"HOUSTON WILLIAM P H…\n$ date    &lt;date&gt; 1930-08-01, 1930-08-02, 1930-08-03, 1930-08-04, 1930-08-05, 1…\n$ prcp    &lt;dbl&gt; 3.00, 0.09, NA, 0.02, 0.12, NA, NA, NA, 0.00, 0.00, 0.00, NA, …\n$ snow    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ snwd    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ tavg    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…\n$ tmax    &lt;dbl&gt; 99, 97, 95, 95, 92, 92, 96, 97, 94, 92, 99, 99, 98, 98, 98, 97…\n$ tmin    &lt;dbl&gt; 75, 79, 78, 79, 76, 74, 71, 71, 75, 72, 70, 71, 78, 72, 73, 70…\n$ tobs    &lt;dbl&gt; 86, 89, 89, 85, 83, 89, 83, 82, 85, 85, 87, 86, 86, 85, 86, 84…\n$ yr      &lt;dbl&gt; 1930, 1930, 1930, 1930, 1930, 1930, 1930, 1930, 1930, 1930, 19…\n$ mn      &lt;ord&gt; Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Au…\n$ yd      &lt;dbl&gt; 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 22…\n$ city    &lt;chr&gt; \"Houston\", \"Houston\", \"Houston\", \"Houston\", \"Houston\", \"Housto…\n\n\n\n\nCheck our work\nSince we can’t see all the cities, it is a good idea to check our data to make sure this worked the way we wanted. We can use the distinct() function again but with both name and city.\n\nAdd a new chunk in the indicated place.\nAdd the code to check your results using distinct on name and city.\n\n\ntx_names |&gt; distinct(name, city)\n\n\n\n  \n\n\n\nLooks good.\n\n\nOYO: Recode station names for your state\nWe might be pressed for time by this point, but if possible recode your own state’s data with the proper city. Check your work with distinct, as well."
+  },
+  {
+    "objectID": "lesson-day1-02-clean.html#select-columns",
+    "href": "lesson-day1-02-clean.html#select-columns",
+    "title": "Importing & Cleaning",
+    "section": "Select columns",
+    "text": "Select columns\nDifferent weather stations can offer different data, and we are just concerned with some specific variables in or data. We can use the select() command to keep or drop columns.\nTo make decisions what to keep, we would normally spend time with the documentation for the data to make sure we know what is what.\nIn the interest of time, I’ve done that for you and I’ve made a list. In short we are saving the date, rain, snow and high/low temperature values, plus the columns we created. We don’t need TOBS or TAVG, and in some states they have others we don’t need.\nAlso in the interest of time, we’ll copy/paste this instead of typing it all in.\n\nIn the ## Select columns section of your notebook, add a code chunk.\nUse the copy-to-clipboard button to copy this code and paste it into your chunk. Run it.\n\nExplanations follow.\n\n1tx_tight &lt;- tx_names |&gt;\n  select(\n2    city,\n    date,\n3    rain = prcp,\n    snow,\n    snwd,\n    tmax,\n    tmin,\n    yr,\n    mn,\n    yd\n  )\n\n4tx_tight |&gt; glimpse()\n\n\n1\n\nWe start with our new object and pour into it our tx_names data with its piped changes.\n\n2\n\nInside select we list the variables we want to keep in the order we want them.\n\n3\n\nFor the prcp column, we are also renaming the variable to the more familiar rain. It’s easier to type. In typical R fashion the new name comes first.\n\n4\n\nLastly we glimpse the data so we can check if we got what we wanted.\n\n\n\n\nRows: 94,503\nColumns: 10\n$ city &lt;chr&gt; \"Houston\", \"Houston\", \"Houston\", \"Houston\", \"Houston\", \"Houston\",…\n$ date &lt;date&gt; 1930-08-01, 1930-08-02, 1930-08-03, 1930-08-04, 1930-08-05, 1930…\n$ rain &lt;dbl&gt; 3.00, 0.09, NA, 0.02, 0.12, NA, NA, NA, 0.00, 0.00, 0.00, NA, NA,…\n$ snow &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…\n$ snwd &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…\n$ tmax &lt;dbl&gt; 99, 97, 95, 95, 92, 92, 96, 97, 94, 92, 99, 99, 98, 98, 98, 97, 9…\n$ tmin &lt;dbl&gt; 75, 79, 78, 79, 76, 74, 71, 71, 75, 72, 70, 71, 78, 72, 73, 70, 7…\n$ yr   &lt;dbl&gt; 1930, 1930, 1930, 1930, 1930, 1930, 1930, 1930, 1930, 1930, 1930,…\n$ mn   &lt;ord&gt; Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, Aug, …\n$ yd   &lt;dbl&gt; 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, …\n\n\n\nOYO: Select\nAgain, if we have time you could do the same for your state."
+  },
+  {
+    "objectID": "lesson-day1-02-clean.html#export-your-data",
+    "href": "lesson-day1-02-clean.html#export-your-data",
+    "title": "Importing & Cleaning",
+    "section": "Export your data",
+    "text": "Export your data\nAfter all that, we finally have the data the way we want it. I do all this work in a separate notebook like this so I don’t have to rerun all the steps when I’m doing analysis (tomorrow!). It is not unusual that during my analysis I come back to this cleaning notebook, fix things and then rerun all the code. That way the fixes are available to all other notebooks using the data.\nOK, how to do we get this data out? We’ll use another readr function called write_rds() to save our data to our computer. We use the .rds file (which stands for “R data store”?) because unlike CSVs it saves all our data types. That’s often the purpose of cleaning to fix data types like converting text to a date, or a ZIP code to text.\n\nIn the ## Export your data section of your notebook add a new code chunk.\nTake your most recent object and pipe it into write_rds() as indicated below.\nAs you type in the path (inside the quotes) note you can type a few letters and then use tab to complete the path. Write the path for to the data-processed folder and name the file tx_clean.rds, as indicated below.\n\n\ntx_tight |&gt; write_rds(\"data-processed/tx_clean.rds\")\n\n\nOYO: Write out your data\nUse the same methods as above to write out your state’s data."
+  },
+  {
+    "objectID": "lesson-day1-02-clean.html#check-your-notebook",
+    "href": "lesson-day1-02-clean.html#check-your-notebook",
+    "title": "Importing & Cleaning",
+    "section": "Check your notebook",
+    "text": "Check your notebook\nLast thing … we haven’t talked yet about the projects, Quarto and rendering notebooks, but let’s take a brief moment to do two things to make sure our notebooks are working properly.\n\nGo under the Run menu and choose Restart R and Clear Output. This cleans out everything in your notebook.\nGo back under Run and choose Run All. This will run all the chunks in your notebook from the top to the bottom.\nCheck closely through the whole thing for errors. If you have them, you might have feedback in your Console, and in your notebook the code chunk will have a red bar along the left edge.\n\nIf there are errors you’ll need to fix them. It is not unusual, especially if you are going up and down the notebook as you work."
+  },
+  {
+    "objectID": "lesson-day1-02-clean.html#render-the-notebook",
+    "href": "lesson-day1-02-clean.html#render-the-notebook",
+    "title": "Importing & Cleaning",
+    "section": "Render the notebook",
+    "text": "Render the notebook\nNow that everything is working, you can click the Render button at the top of the notebook RStudio will format your notebook as an HTML page and how it in your Viewer in bottom-right pane.\nYou’ll notice that rendered version has navigation that can get you to other notebooks in this project, including these lessons you’ve been reading. We’ll talk about how to set these projects up later."
+  },
+  {
+    "objectID": "slides/sd1-01-intro.html#install-r-rstudio",
+    "href": "slides/sd1-01-intro.html#install-r-rstudio",
+    "title": "Quarto, R & RStudio",
+    "section": "Install R & RStudio",
+    "text": "Install R & RStudio\nYou’ll need to go to https://posit.co/downloads/ and click on the big Download RStudio button there. There are two parts:\n\nInstall the R language\nInstall the RStudio Desktop program\n\nMake sure you run the installer or copy into your Applications folder as noted.\nThe R language gets installed on your machine, but you never launch it like a regular program."
+  },
+  {
+    "objectID": "slides/sd1-01-intro.html#install-quarto",
+    "href": "slides/sd1-01-intro.html#install-quarto",
+    "title": "Quarto, R & RStudio",
+    "section": "Install Quarto",
+    "text": "Install Quarto\n\nGo to quarto.org/ and then click the Getting Started link.\nDownload and install the software for your machine."
+  },
+  {
+    "objectID": "slides/sd1-01-intro.html#launch-rstudio",
+    "href": "slides/sd1-01-intro.html#launch-rstudio",
+    "title": "Quarto, R & RStudio",
+    "section": "Launch RStudio",
+    "text": "Launch RStudio\n\nFrom your Applications folder (or through your Start menu) launch the program called RStudio\n\n\nlauncher"
+  },
+  {
+    "objectID": "slides/sd1-01-intro.html#about-rstudio-desktop",
+    "href": "slides/sd1-01-intro.html#about-rstudio-desktop",
+    "title": "Quarto, R & RStudio",
+    "section": "About RStudio Desktop",
+    "text": "About RStudio Desktop\nWe’ll orient a bit in class.\n\nRStudio Desktop"
+  },
+  {
+    "objectID": "slides/sd1-01-intro.html#look-for-the-console",
+    "href": "slides/sd1-01-intro.html#look-for-the-console",
+    "title": "Quarto, R & RStudio",
+    "section": "Look for the console",
+    "text": "Look for the console\nWe need you to run some commands in the RStudio Console. We’ll provide code to copy/paste.\nInstall packages\nThis will take some time to run, depending on the internet.\ninstall.packages(c(\"usethis\", \"tidyverse\", \"quarto\", \"rmarkdown\", \"janitor\"))\nDownload, open the material\nAs you are asked questions, choose the default answers or ones that make the most sense.\nusethis::use_course(\"https://github.com/r-journalism/chjr/archive/master.zip\")"
+  },
+  {
+    "objectID": "slides/sd1-01-intro.html#using-projects",
+    "href": "slides/sd1-01-intro.html#using-projects",
+    "title": "Quarto, R & RStudio",
+    "section": "Using projects",
+    "text": "Using projects\n\n\nR needs to know where things live on your computer so it can find them.\nWe use projects to organize our work. One folder for each project, with everything you need."
+  },
+  {
+    "objectID": "slides/sd1-01-intro.html#open-our-first-lesson",
+    "href": "slides/sd1-01-intro.html#open-our-first-lesson",
+    "title": "Quarto, R & RStudio",
+    "section": "Open our first lesson",
+    "text": "Open our first lesson\n\nIn the Files pane, find our first file in lessons/d1-01-intro.qmd and open it.\nThis should open in your pane to the left, with the Console below it.\n\nWe’ll work from there now."
+  },
+  {
+    "objectID": "slides/sd1-01-intro.html#tour-of-our-project",
+    "href": "slides/sd1-01-intro.html#tour-of-our-project",
+    "title": "Quarto, R & RStudio",
+    "section": "Tour of our project",
+    "text": "Tour of our project"
+  },
+  {
+    "objectID": "solution-day2-analysis.html",
+    "href": "solution-day2-analysis.html",
+    "title": "Solutions Day 2",
+    "section": "",
+    "text": "I NEED TO GO OVER THIS ONE MORE TIME VS THE LESSON TO MAKE SURE THEY MATCH."
+  },
+  {
+    "objectID": "solution-day2-analysis.html#goals",
+    "href": "solution-day2-analysis.html#goals",
+    "title": "Solutions Day 2",
+    "section": "Goals",
+    "text": "Goals\nTo learn about: arrange, filter, slice, group_by, summarize\nTo find several values from our data:\n\nThe coldest and warmest days\nThe rainiest and snowiest days\nYears with most snow days\nYears with most 100+ days\nYears with most rain\nEarliest day to reach 100+ each year\n\nWith this lesson we’ll just use Texas data. (You theoretically could use a different state, but would need to adjust your code to import the right data, use valid cities, etc.)"
+  },
+  {
+    "objectID": "solution-day2-analysis.html#setup",
+    "href": "solution-day2-analysis.html#setup",
+    "title": "Solutions Day 2",
+    "section": "Setup",
+    "text": "Setup\n\nlibrary(tidyverse)"
+  },
+  {
+    "objectID": "solution-day2-analysis.html#import",
+    "href": "solution-day2-analysis.html#import",
+    "title": "Solutions Day 2",
+    "section": "Import",
+    "text": "Import\nImport your cleaned data using read_rds() and save it into an object:\n\ntx_clean &lt;- read_rds(\"data-processed/tx_clean.rds\")"
+  },
+  {
+    "objectID": "solution-day2-analysis.html#arrange",
+    "href": "solution-day2-analysis.html#arrange",
+    "title": "Solutions Day 2",
+    "section": "Arrange",
+    "text": "Arrange\nFind the coldest day, warmest day, most snow, most rain.\n\nColdest day\n\ntx_clean |&gt; \n  arrange(tmin) |&gt; \n  select(city, date, tmin)\n\n\n\n  \n\n\n\n\n\nHotest day\n\ntx_clean |&gt; \n  arrange(desc(tmax)) |&gt; \n  select(city, date, tmax)\n\n\n\n  \n\n\n\n\n\nOYO: Most rain\nFind the days with the most rain.\n\ntx_clean |&gt; \n  arrange(desc(rain)) |&gt; \n  select(city, date, rain)\n\n\n\n  \n\n\n\n\n\nOYO: Most snow\nFind the days with the most snow.\n\ntx_clean |&gt; \n  arrange(desc(snow)) |&gt; \n  select(city, date, snow)"
+  },
+  {
+    "objectID": "solution-day2-analysis.html#filter",
+    "href": "solution-day2-analysis.html#filter",
+    "title": "Solutions Day 2",
+    "section": "Filter",
+    "text": "Filter\nFind days that are 100+.\n\ntx_clean |&gt; \n  filter(tmax &gt;= 100) |&gt; \n  select(city, date, tmax)\n\n\n\n  \n\n\n\nFilter for days in Dallas that are 100+\n\ntx_clean |&gt; \n  filter(tmax &gt;= 100, city == \"Dallas\") |&gt; \n  select(city, date, tmax)\n\n\n\n  \n\n\n\nFind days where it snowed, or there is snow still on the ground.\n\ntx_clean |&gt; \n  filter(snow &gt; 0 | snwd &gt; 0) |&gt; \n  select(city, date, snow, snwd)\n\n\n\n  \n\n\n\n\nOYO: Snow days in Dallas\nFind days where it snowed or there is snow on the ground, but only in Dallas.\n\ntx_clean |&gt; \n  filter(snow &gt; 0 | snwd &gt; 0, city == \"Dallas\") |&gt; \n  select(city, date, snow, snwd)"
+  },
+  {
+    "objectID": "solution-day2-analysis.html#slice",
+    "href": "solution-day2-analysis.html#slice",
+    "title": "Solutions Day 2",
+    "section": "Slice",
+    "text": "Slice\nUse slice_min to find the coldest day in our data.\n\ntx_clean |&gt; \n  slice_min(tmin) |&gt; \n  select(city, date, tmin)"
+  },
+  {
+    "objectID": "solution-day2-analysis.html#group-and-slice",
+    "href": "solution-day2-analysis.html#group-and-slice",
+    "title": "Solutions Day 2",
+    "section": "Group and slice",
+    "text": "Group and slice\nAdd group_by to find the coldest day in each city.\n\ntx_clean |&gt; \n  group_by(city) |&gt; \n  slice_min(tmin) |&gt; \n  select(city, date, tmin)\n\n\n\n  \n\n\n\n\nOYO: Hottest day in each city\nUse group_by and slice_max to find the hottest days in each city. Note there might be some ties.\n\ntx_clean |&gt; \n  group_by(city) |&gt; \n  slice_max(tmax) |&gt; \n  select(city, date, tmax)\n\n\n\n  \n\n\n\n\n\nMultiple groups\nHottest day each year in each city\n\ntx_clean |&gt; \n  group_by(yr, city) |&gt; \n  slice_max(tmax) |&gt; \n  select(city, tmax) |&gt; \n  distinct()\n\nAdding missing grouping variables: `yr`"
+  },
+  {
+    "objectID": "solution-day2-analysis.html#summarize",
+    "href": "solution-day2-analysis.html#summarize",
+    "title": "Solutions Day 2",
+    "section": "Summarize",
+    "text": "Summarize\nSummarize to find our first date, last date and number of rows.\n\ntx_clean |&gt; \n  summarize(\n    e_date = min(date),\n    l_date = max(date),\n    cnt = n()\n  )"
+  },
+  {
+    "objectID": "solution-day2-analysis.html#group-and-summarize",
+    "href": "solution-day2-analysis.html#group-and-summarize",
+    "title": "Solutions Day 2",
+    "section": "Group and summarize",
+    "text": "Group and summarize\nGroup the data by city and find the first date, last date and number of rows.\n\ntx_clean |&gt; \n  group_by(city) |&gt; \n  summarise(\n    e_date = min(date),\n    l_date = max(date),\n    cnt = n()\n  )\n\n\n\n  \n\n\n\nAdd city and yr as a group:\n\ntx_clean |&gt; \n  group_by(city, yr) |&gt; \n  summarise(\n    e_date = min(date),\n    l_date = max(date),\n    cnt = n()\n  )\n\n`summarise()` has grouped output by 'city'. You can override using the\n`.groups` argument."
+  },
+  {
+    "objectID": "solution-day2-analysis.html#group-and-summarize-count",
+    "href": "solution-day2-analysis.html#group-and-summarize-count",
+    "title": "Solutions Day 2",
+    "section": "Group and summarize: Count",
+    "text": "Group and summarize: Count\nFind the number of days in Austin that were 100+.\n\ntx_clean |&gt; \n  filter(city == \"Austin\", tmax &gt;= 100) |&gt; \n  group_by(yr) |&gt; \n  summarize(hot_days = n()) |&gt; \n  arrange(desc(hot_days))\n\n\n\n  \n\n\n\nFind the years with the most 100+ degree days in each city.\n\ntx_clean |&gt; \n  filter(tmax &gt;= 100) |&gt; \n  group_by(city, yr) |&gt; \n  summarize(hot_days = n()) |&gt; \n  arrange(desc(hot_days))\n\n`summarise()` has grouped output by 'city'. You can override using the\n`.groups` argument.\n\n\n\n\n  \n\n\n\n\nOYO: Most snow days by city each year\nCount only the days that where it snowed.\n\ntx_clean |&gt; \n  filter(snow &gt; 0) |&gt; \n  group_by(city, yr) |&gt; \n  summarise(snow_days = n()) |&gt; \n  arrange(desc(snow_days))\n\n`summarise()` has grouped output by 'city'. You can override using the\n`.groups` argument."
+  },
+  {
+    "objectID": "solution-day2-analysis.html#group-and-summarize-math",
+    "href": "solution-day2-analysis.html#group-and-summarize-math",
+    "title": "Solutions Day 2",
+    "section": "Group and Summarize: Math",
+    "text": "Group and Summarize: Math\nYears with most rain in each city.\n\ntx_yr_rain &lt;- tx_clean |&gt; \n  filter(yr &gt; 1939, yr &lt; 2023) |&gt;\n  group_by(city, yr) |&gt; \n  summarise(tot_rain = sum(rain, na.rm = TRUE)) |&gt; \n  arrange(city, desc(tot_rain))\n\n`summarise()` has grouped output by 'city'. You can override using the\n`.groups` argument.\n\ntx_yr_rain\n\n\n\n  \n\n\n\nThe most rain in each city, sliced:\n\ntx_yr_rain |&gt; \n  group_by(city) |&gt; \n  slice_max(tot_rain, n = 3)\n\n\n\n  \n\n\n\nThe least rain in each city, sliced:\n\ntx_yr_rain |&gt; \n  group_by(city) |&gt; \n  slice_min(tot_rain, n = 3)\n\n\n\n  \n\n\n\n\nOYO: Years with most snow\nFind the years with the most total snow in each city\n\ntx_yr_snow &lt;- tx_clean |&gt; \n  group_by(city, yr) |&gt; \n  summarize(tot_snow = sum(snow)) |&gt; \n  arrange(city, desc(tot_snow))\n\n`summarise()` has grouped output by 'city'. You can override using the\n`.groups` argument.\n\ntx_yr_snow\n\n\n\n  \n\n\n\nMost snow, sliced:\n\ntx_yr_snow |&gt; \n  group_by(city) |&gt; \n  slice_max(tot_snow, n = 3)"
+  },
+  {
+    "objectID": "solution-day2-analysis.html#working-through-logic",
+    "href": "solution-day2-analysis.html#working-through-logic",
+    "title": "Solutions Day 2",
+    "section": "Working through logic",
+    "text": "Working through logic\nGetting average monthly rain for each city.\nFirst get the total rain for each month/year:\n\ntx_mn_yr_rain &lt;- tx_clean |&gt; \n  filter(yr &gt;= 1940, yr &lt;= 2022) |&gt;\n  group_by(city, mn, yr) |&gt;\n  summarize(mn_yr_rain = sum(rain, na.rm = TRUE))\n\n`summarise()` has grouped output by 'city', 'mn'. You can override using the\n`.groups` argument.\n\ntx_mn_yr_rain  \n\n\n\n  \n\n\n\nThen calculate the average for the months in each city:\n\ncity_avg_rain &lt;- tx_mn_yr_rain |&gt; \n  group_by(city, mn) |&gt;\n  summarise(avg_mn_rain = mean(mn_yr_rain))\n\n`summarise()` has grouped output by 'city'. You can override using the\n`.groups` argument.\n\ncity_avg_rain\n\n\n\n  \n\n\n\nAnd as a tease, we plot it:\n\ncity_avg_rain |&gt; \n  ggplot(aes(x = mn, y = avg_mn_rain, group = city)) +\n  geom_line(aes(color = city)) +\n  ylim(0,6) +\n  labs(\n    title = \"Average monthly rainfall, 1940-2022\",\n    x = \"\", y = \"Average monthly rain\",\n    color = \"City\"\n  )"
+  },
+  {
+    "objectID": "solution-day2-analysis.html#challenge-earliest-100-day-each-city",
+    "href": "solution-day2-analysis.html#challenge-earliest-100-day-each-city",
+    "title": "Solutions Day 2",
+    "section": "Challenge: Earliest 100+ day each city",
+    "text": "Challenge: Earliest 100+ day each city\nFor each city, find the earliest day of a year in which it reached 100 degrees.\n\ntx_clean |&gt; \n  filter(tmax &gt;= 100) |&gt; \n  group_by(city) |&gt; \n  slice_min(yd) |&gt; \n  select(city, date, tmax)"
   }
 ]
