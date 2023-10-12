@@ -1,6 +1,9 @@
 project:
   type: website
   output-dir: docs
+  render:
+    - "*.qmd"
+    - "!practice*.qmd"
 
 website:
   sidebar:
@@ -16,10 +19,6 @@ website:
           - lesson-day1-01-intro.qmd
           - lesson-day1-02-clean.qmd
           - lesson-day2-01-analysis.qmd
-      - section: "Practice"
-        contents:
-          - practice-day1-clean.qmd
-          - practice-day2-analysis.qmd
       - section: "Solutions"
         contents:
           - solution-day1-clean.qmd
@@ -28,6 +27,7 @@ website:
         contents:
           - resources/functions.qmd
           - resources/projects.qmd
+          - resources/homework.qmd
 
 format:
   html:
