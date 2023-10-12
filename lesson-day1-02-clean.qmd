@@ -3,6 +3,8 @@ title: "Importing & Cleaning"
 author: "Christian McDonald"
 ---
 
+> Perhaps needs a last edit with check vs solutions. There is at least one unfinished sentence somewhere.
+
 ## Goals of this lesson
 
 In this second lesson we will work through building a notebook where you import data, manipulate it and do some analysis. While you may be viewing these lessons online, know they are also in the project folder all starting with `lesson-`. You'll build your notebook in another file in `practice-day1.qmd` where you'll be given some pre-written code with explanations of what it does. You'll also write your own code with mini on-your-own quests.

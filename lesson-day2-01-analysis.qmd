@@ -3,7 +3,7 @@ title: "Data Wrangling"
 author: "Christian McDonald"
 ---
 
-> FIRST DRAFT DONE. NEED TO CHECK AGAINST SOLUTIONS. THEN MAKE PRACTICE FILE.
+> FIRST DRAFT DONE. NEED TO CHECK AGAINST SOLUTIONS.
 
 ## Goals of this lesson
 

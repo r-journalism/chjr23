@@ -3,9 +3,9 @@ title: "Introduction"
 author: "Christian McDonald"
 ---
 
-## Welcome to the Center for Health Journalism R course.
+> Perhaps needs a last edit
 
-> I still need to rework this a bit to include downloading the repo. Some other updates as well.
+## Welcome to the Center for Health Journalism R course.
 
 The purpose of this first module is to:
 

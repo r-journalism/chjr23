@@ -2,45 +2,32 @@
 title: "Weather testing"
 ---
 
+## About this notebook
 
-## California - R
-- Los Angeles - Downtown USC
-- Sacramento - Metro airport
-- San Francisco - Downtown
+Here we look at all the weather data gathered here, checking the dates and such.
 
-## North Carolina - R
-- Charlotte Douglas Airport
-- Raleigh Durham International Airport
-- Wilmington International Airport
-Texas
-- Houston William P Hobby
-- Dallas FAA
-- Austin - Mabry
-
-## Arkansas
-- Little Rock
-- Fort Smith
-- Hot Springs
-
-## New York -R
-- NY City Central Park
-- Albany International Airport
-- Buffalo
+The data are [Global Historical Climate Network Daily Summaries](https://www.ncei.noaa.gov/cdo-web/search?datasetid=GHCND).
 
 ## Stations
 
-I really only need TX, CA & NC
+These are the station identifiers:
 
-- AR: GHCND:USW00013963, GHCND:USC00033466, GHCND:USW00013964
-- CA: GHCND:USW00093134, GHCND:USW00093225, GHCND:USW00023272
-- NC: GHCND:USW00013881, GHCND:USW00013748, GHCND:USW00013722
-- TX: GHCND:USW00013960, GHCND:USW00012918, GHCND:USW00013958
-- NY: GHCND:USW00094728, GHCND:USW00014735, GHCND:USW00014733
+- AR: USW00013963, USC00033466, USW00013964
+- CA: USW00093134, USW00023271, USW00023272
+- NC: USW00013881, USW00013748, USW00013722
+- TX: USW00013960, USW00012918, USW00013958
+- NY: USW00094728, USW00014735, USW00014733
 
-### CA notes
+I really only need TX, CA & NC, I think.
 
-DAPR = Number of days included in the multiday precipitation total (MDPR)
-MDPR = Multiday precipitation total (mm or inches as per user preference; use with DAPR and DWPR, if available)
+### Extra column notes
+
+- DAPR = Number of days included in the multiday precipitation total (MDPR)
+- MDPR = Multiday precipitation total (mm or inches as per user preference; use with DAPR and DWPR, if available)
+- DASF = Number of days included in the multiday snowfall total (MDSF)
+- MDSF = Multiday snowfall total (mm or inches as per user preference)
+- TOBS = Temperature at the time of observation (Fahrenheit or Celsius as per user preference)
+- TAVG = Average of hourly values
 
 Testing the weather data
 
@@ -58,23 +45,98 @@ library(janitor)
 ca_raw <- read_csv("../data-raw/ca.csv") |> clean_names()
 tx_raw <- read_csv("../data-raw/tx.csv") |> clean_names()
 nc_raw <- read_csv("../data-raw/nc.csv") |> clean_names()
+ny_raw <- read_csv("../data-raw/ny.csv") |> clean_names()
+ar_raw <- read_csv("../data-raw/ar.csv") |> clean_names()
+```
+
+## Bind data
+
+```{r}
+wx_raw <- ar_raw |> 
+  bind_rows(ca_raw, nc_raw, ny_raw, tx_raw)
+
+wx_raw |> glimpse()
+```
+
+## Add state
+
+Get the state name from the station name.
+
+```{r}
+wx_states <- wx_raw |> 
+  mutate(
+    state = str_sub(name, -5, -3)
+  )
+
+wx_states |> glimpse()
+```
+
+## Recode for city
+
+Get the names:
+
+```{r}
+wx_states |> 
+  distinct(name)
+```
+
+Recode for city names
+
+```{r}
+wx_cities <- wx_states |> 
+  mutate(city = recode(
+    name,
+    "FORT SMITH REGIONAL AIRPORT, AR US" = "Fort Smith",
+    "LITTLE ROCK AIRPORT ADAMS FIELD, AR US" = "Little Rock",
+    "HOT SPRINGS 1 NNE, AR US" = "Hot Springs",
+    "SAN FRANCISCO DOWNTOWN, CA US" = "San Francisco",
+    "LOS ANGELES DOWNTOWN USC, CA US" = "Los Angeles",
+    "SACRAMENTO 5 ESE, CA US" = "Sacramento",
+    "CHARLOTTE DOUGLAS AIRPORT, NC US" = "Charlotte",
+    "WILMINGTON INTERNATIONAL AIRPORT, NC US" = "Wilmington",
+    "RALEIGH DURHAM INTERNATIONAL AIRPORT, NC US" = "Raleigh",
+    "NY CITY CENTRAL PARK, NY US" = "New York City",
+    "BUFFALO NIAGARA INTERNATIONAL, NY US" = "Buffalo",
+    "ALBANY INTERNATIONAL AIRPORT, NY US" = "Albany",
+    "HOUSTON WILLIAM P HOBBY AIRPORT, TX US" = "Houston",
+    "AUSTIN CAMP MABRY, TX US" = "Austin",
+    "DALLAS FAA AIRPORT, TX US" = "Dallas",
+  ))
+
+wx_cities |> distinct(name, city)
 ```
 
 
 
+## Select cols
+
 ```{r}
-ca <- ca_raw |> select(
-  name, date, prcp, snow, snwd, tmax, tmin
-)
+wx_tight <- wx_cities |> 
+  select(
+    name,
+    city,
+    state,
+    date,
+    prcp,
+    snow,
+    snwd,
+    tmax,
+    tmin
+  )
 
-tx <- tx_raw |> select(
-  name, date, prcp, snow, snwd, tmax, tmin
-)
+wx_tight |> glimpse()
+```
 
-nc <- nc_raw |> select(
-  name, date, prcp, snow, snwd, tmax, tmin
-)
+## Check the dates
 
-
+```{r}
+wx_tight |> 
+  group_by(city, state) |> 
+  summarise(
+    f_date = min(date),
+    l_date = max(date),
+    cnt = n()
+  ) |> 
+  arrange(state, f_date)
 ```
 
