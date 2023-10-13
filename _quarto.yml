@@ -20,11 +20,15 @@ website:
           - lesson-day1-01-intro.qmd
           - lesson-day1-02-clean.qmd
           - lesson-day2-01-analysis.qmd
+          - lesson-day3-01-wrangling.qmd
+          - lesson-day4-01-visualizing.qmd
           - resources/homework.qmd
       - section: "Solutions"
         contents:
           - solution-day1-clean.qmd
           - solution-day2-analysis.qmd
+          - solution-day3-wrangling.qmd
+          - solution-day4-visualizing.qmd
       - section: "Resources"
         contents:
           - resources/functions.qmd

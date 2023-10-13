@@ -1,0 +1,344 @@
+---
+title: "Visualizing data"
+author: "Andrew Ba Tran"
+---
+
+
+Render, dammit!
+
+
+```{r warning=F, message=F}
+library(tidyverse)
+library(lubridate)
+```
+
+
+---
+
+```{r, echo=F, fig.retina=TRUE, out.width=600}
+knitr::include_graphics("images/ggplot2_exploratory.png")
+```
+---
+
+
+ggplot2 is based on the **grammar of graphics**, the idea that you can build every graph from the same components: a **data** set, a **coordinate system**, and **geoms**—visual marks that represent data points
+
+```{r, echo=F, fig.retina=TRUE, out.width=700}
+knitr::include_graphics("images/coords.png")
+```
+
+---
+
+To display values, map variables in the data to visual properties of the geom (aesthetics) like size, color, and x and y locations.
+
+
+```{r, echo=F, fig.retina=TRUE, out.width=700}
+knitr::include_graphics("images/coords2.png")
+```
+
+
+---
+
+You only need two lines of code, really. 
+
+The rest is just extra customization.
+
+
+```{r, echo=F, fig.retina=TRUE, out.width=700}
+knitr::include_graphics("images/coords3.png")
+```
+
+
+---
+
+```{r bobsog}
+
+burgers <- data.frame(employee=c("Bob", "Gene",
+                              "Linda", "Louise",
+                              "Tina"),
+                   time=c(25, 30, 60, 20, 50),
+                   age=c(42, 11, 39, 9, 13),
+                   interest=c("cooking", "music", "wine", "chaos", "horses"))
+
+burgers
+
+burgers <- burgers |> 
+  mutate(where="front")
+
+burgers
+```
+
+
+---
+
+```{r bobs, warning=F, message=F, include=T, fig.height=3}
+burgers
+
+ggplot(burgers, aes(x=where, y=time, fill=employee)) + 
+  geom_col(position="stack") 
+```
+
+
+---
+
+```{r bobs2, warning=F, message=F, include=T, fig.height=3}
+burgers
+
+ggplot(burgers, aes(x=employee, y=time, fill=employee)) + 
+  geom_col(position="stack")
+```
+
+---
+
+### Layers
+
+```{r, echo=F, fig.retina=TRUE, out.width=600}
+knitr::include_graphics("images/ggplot1a.png")
+```
+
+### Aesthetics
+
+```{r, echo=F, fig.retina=TRUE, out.width=600}
+knitr::include_graphics("images/ggplot2a.png")
+```
+
+```{r bobs3a, warning=F, message=F, include=T}
+  ggplot(burgers) + 
+    geom_point(aes(x=employee, y=time))
+```
+
+
+```{r bobs3b, warning=F, message=F, include=T}
+  ggplot(burgers) + 
+    geom_point(aes(x=employee, y=time, fill=employee))
+```
+
+
+
+```{r bobs3c, warning=F, message=F, include=T}
+  ggplot(burgers) + 
+    geom_point(aes(x=employee, y=time, fill=employee, color=employee)) 
+```
+
+
+
+```{r bobs3d, warning=F, message=F, include=T}
+  ggplot(burgers) + 
+    geom_point(aes(x=employee, y=time, fill=employee, color=employee, size=age))  
+```
+
+
+### geoms
+
+
+Many more [geom types](https://twitter.com/search?q=geom_%20%23rstats&src=typed_query&f=image) for different visualizations. 
+
+
+```{r, echo=F, fig.retina=TRUE, out.width=600}
+knitr::include_graphics("images/ggplot3a.png")
+```
+
+### Your turn
+
+**practice-day4-visualizing.qmd**
+
+
+```{r bobs4, warning=F, message=F, include=T}
+  ggplot(burgers) + 
+    geom_col(aes(x=employee, y=time), stat="identity") 
+
+```
+
+
+
+```{r bobs4b, warning=F, message=F, include=T}
+  ggplot(burgers) + 
+    geom_col(aes(x=time, y=employee), stat="identity") 
+
+```
+
+
+```{r disney2}
+disney <- read_csv("data-raw/disney_movies_total_gross.csv")
+
+glimpse(disney)
+```
+
+
+```{r adjust}
+disney <- disney |> 
+  mutate(release_date=mdy(release_date),
+         total_gross=parse_number(total_gross),
+         inflation_adjusted_gross=parse_number(inflation_adjusted_gross)) 
+
+glimpse(disney)
+```
+
+
+
+```{r disney3, warning=F, message=F, include=T}
+disney |> 
+  ggplot(aes(x=release_date, 
+             y=inflation_adjusted_gross,
+             color=genre)) +
+  geom_point() 
+```
+
+
+### layers
+
+```{r, echo=F, fig.retina=TRUE, out.width=600}
+knitr::include_graphics("images/ggplot4a.png")
+```
+
+
+---
+
+
+```{r disney4, warning=F, message=F, include=T}
+disney |> 
+  ggplot(aes(x=release_date, 
+             y=inflation_adjusted_gross, 
+             color=genre)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"), ymd("2020-01-01")))
+```
+
+---
+
+```{r disney5, warning=F, message=F, include=T}
+disney |> 
+  ggplot(aes(x=release_date, 
+             y=inflation_adjusted_gross, 
+             color=genre)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"), 
+                              ymd("2020-01-01"))) +
+  scale_y_continuous(limits=c(0, 1000000000)) 
+
+```
+
+---
+
+```{r disney6, warning=F, message=F, include=T}
+disney |> 
+  ggplot(aes(x=release_date, 
+             y=inflation_adjusted_gross, 
+             color=genre)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"), 
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+  scale_y_continuous(limits=c(0, 1000000000),
+                     labels=scales::dollar_format()) 
+
+```
+
+
+---
+
+### Your turn
+
+**practice-day4-visualizing.qmd**
+
+Go through Exercise 2!
+
+
+---
+
+
+### facets
+
+(also known as small multiples)
+
+
+---
+
+```{r disney7, warning=F, message=F, include=T}
+disney |> 
+  ggplot(aes(x=release_date, 
+             y=inflation_adjusted_gross)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"), 
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+  scale_y_continuous(limits=c(0, 1000000000),
+                     labels=scales::dollar_format()) +
+  facet_wrap(~genre)
+
+```
+
+
+---
+
+### Your turn
+
+4_a_viz
+
+**practice-day4-visualizing.qmd**
+
+Go through the two exercises in the **Facets** section.
+
+### labels
+
+```{r disney7a, warning=F, message=F, include=T}
+disney |> 
+  ggplot(aes(x=release_date, 
+             y=inflation_adjusted_gross)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"), 
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+  scale_y_continuous(limits=c(0, 1000000000),
+                     labels=scales::dollar_format()) +
+  facet_wrap(~genre) +
+  labs(title="Disney animated movie gross profit") +
+  labs(subtitle="Adjusted for inflation") +
+  labs(y="", x="") +
+  labs(caption="Data: Source Goes Here")
+
+```
+
+### Your turn
+
+
+**practice-day4-visualizing.qmd**
+
+Go through the **Labels** section.
+
+
+### themes
+
+
+
+```{r disney8, warning=F, message=F, include=T}
+disney |> 
+  ggplot(aes(x=release_date, 
+             y=inflation_adjusted_gross)) +
+  geom_point() +
+  scale_x_date(limits=c(ymd("1980-01-01"), 
+                              ymd("2020-01-01")),
+                     labels=scales::date_format("%Y")) +
+  scale_y_continuous(limits=c(0, 1000000000),
+                     labels=scales::dollar_format()) +
+  facet_wrap(~genre) +
+  labs(title="Disney animated movie gross profit") +
+  labs(subtitle="Adjusted for inflation") +
+  labs(y="", x="") +
+  labs(caption="Data: Source Goes Here") +
+  theme(strip.background = element_rect(colour = "black", fill = "white")) +
+  theme(legend.key = element_rect(fill = "white", colour = "black")) +
+  theme_minimal()
+```
+
+
+
+### Your turn
+
+**practice-day4-visualizing.qmd**
+
+Go through the **Themes** section.
+
+```{r, echo=F, fig.retina=TRUE, out.width=600}
+knitr::include_graphics("images/ggplot2_masterpiece.png")
+```
