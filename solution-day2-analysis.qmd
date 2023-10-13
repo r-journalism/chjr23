@@ -2,7 +2,7 @@
 title: "Solutions Day 2"
 ---
 
-> I NEED TO GO OVER THIS ONE MORE TIME VS THE LESSON TO MAKE SURE THEY MATCH.
+These is a completed notebook from the second day of the Center for Health Journalism Data Fellowship.
 
 ## Goals
 
@@ -201,14 +201,28 @@ tx_clean |>
 
 ## Group and summarize: Count
 
-Find the number of days in Austin that were 100+.
+Find the number of days in Austin that were 100+. Start first with prepping the data to get the date ranges we need:
 
 ```{r}
-tx_clean |> 
-  filter(city == "Austin", tmax >= 100) |> 
+# get Austin data
+atx <- tx_clean |> filter(city == "Austin", yr > 1938)
+
+# check dates
+atx$date |> summary()
+
+# peek
+atx |> glimpse()
+```
+
+Then do the calculation to get hot days:
+
+```{r}
+atx |> 
+  filter(tmax >= 100) |> 
   group_by(yr) |> 
   summarize(hot_days = n()) |> 
-  arrange(desc(hot_days))
+  arrange(desc(hot_days)) |> 
+  filter(hot_days >= 50)
 ```
 
 Find the years with the most 100+ degree days in each city.
@@ -216,9 +230,10 @@ Find the years with the most 100+ degree days in each city.
 ```{r}
 tx_clean |> 
   filter(tmax >= 100) |> 
-  group_by(city, yr) |> 
+  group_by(yr, city) |> 
   summarize(hot_days = n()) |> 
-  arrange(desc(hot_days))
+  arrange(desc(hot_days)) |> 
+  filter(hot_days >= 30)
 ```
 
 ### OYO: Most snow days by city each year
@@ -292,6 +307,8 @@ Getting average monthly rain for each city.
 First get the total rain for each month/year:
 
 ```{r}
+#| message: false
+
 tx_mn_yr_rain <- tx_clean |> 
   filter(yr >= 1940, yr <= 2022) |>
   group_by(city, mn, yr) |>

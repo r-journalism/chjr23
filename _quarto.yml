@@ -19,6 +19,7 @@ website:
           - lesson-day1-01-intro.qmd
           - lesson-day1-02-clean.qmd
           - lesson-day2-01-analysis.qmd
+          - resources/homework.qmd
       - section: "Solutions"
         contents:
           - solution-day1-clean.qmd
@@ -27,7 +28,7 @@ website:
         contents:
           - resources/functions.qmd
           - resources/projects.qmd
-          - resources/homework.qmd
+          - resources/keyboard-shortcuts.qmd
 
 format:
   html:

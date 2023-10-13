@@ -19,17 +19,30 @@ An opinionated list of the most common data wrangling functions. It leans heavil
   - See [is.na](https://www.rdocumentation.org/packages/base/topics/NA) tests if a value is missing.
 - [`distinct()`](https://dplyr.tidyverse.org/reference/distinct.html) will filter rows down to the unique values of the columns given.
 - [`arrange()`](https://dplyr.tidyverse.org/reference/arrange.html) sorts data based on values in a column. Use `desc()` to reverse the order. **Example:** `arrange(col_name %>% desc())`
-- [`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html) changes and existing column or creates a new one. **Example:** `mutate(new_col = (col01 / col02))`.
+- [`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html) changes an existing column or creates a new one. **Example:** `mutate(new_col = (col01 / col02))`.
 - [`round()`](https://www.rdocumentation.org/packages/base/topics/Round) is a base R function that can round a number to a set decimal point. Often used within a `mutate()` function.
 - [`recode()`](https://dplyr.tidyverse.org/reference/recode.html), [`if_else()`](https://dplyr.tidyverse.org/reference/if_else.html) and [`case_when()`](https://dplyr.tidyverse.org/reference/case_when.html) are all functions that can be used with `mutate()` to create new categorizations with your data.
-- [`pivot_longer()`](https://tidyr.tidyverse.org/reference/pivot_longer.html) "lengthens" data, increasing the number of rows and decreasing the number of columns. **Example:** `pivot_longer(cols = 3:5, names_to = "new_key_col_name", values_to = "new_val_col_name")` will take the third through the fifth columns and turn each value into a new row of data. It will put them into two columns: The first column will have the name you give it in `names_to` and contain the old column name that corresponds to each value pivoted. The second column will have the name of whatever you set in `values_to` and will contain all the values from each of the columns.
-- [`pivot_wider()`](https://tidyr.tidyverse.org/reference/pivot_wider.html) is the opposite of `pivot_longer()`.  **Example:** `pivot_wider(names_from = col_of_key_values, values_from = col_with_values)`. See the link. 
+- [`pivot_longer()`](https://tidyr.tidyverse.org/reference/pivot_longer.html) "lengthens" data, increasing the number of rows and decreasing the number of columns.
+- [`pivot_wider()`](https://tidyr.tidyverse.org/reference/pivot_wider.html) is the opposite of `pivot_longer()`. 
 
 
 ## Aggregation
 
-- [`group_by()`](https://dplyr.tidyverse.org/reference/group_by.html) and [`summarize()`](https://dplyr.tidyverse.org/reference/summarise.html) often come together. When you use `group_by()`, every function after it is broken down by that grouping. We often add [`arrange()`](https://dplyr.tidyverse.org/reference/arrange.html) to these, calling this our GSA functions. **Example:** `group_by(song, artist) %>% summarize(weeks = n(), top_chart_position = min(peak_position))`. To break or remove groupings, use `ungroup()`.
-- [`count()`](https://dplyr.tidyverse.org/reference/count.html) is a shortcut for GSA that count the number rows based on variable groups you feed it.
+- [`group_by()`](https://dplyr.tidyverse.org/reference/group_by.html) and [`summarize()`](https://dplyr.tidyverse.org/reference/summarise.html) often come together. When you use `group_by()`, every function after it is broken down by that grouping. We often add [`arrange()`](https://dplyr.tidyverse.org/reference/arrange.html) to these, calling this our GSA functions.
+- To break or remove groupings, use `ungroup()`.
+- [`count()`](https://dplyr.tidyverse.org/reference/count.html) is a shortcut for GSA that counts the number rows based on variable groups you feed it.
+
+A group_by/summarize/arrange example that would find the songs with the most weeks on the Billboard Hot 100, along with the "top" position the song reached on the chart:
+
+```r
+hot100 |> 
+  group_by(song, artist) |> 
+  summarize(
+    weeks = n(),
+    top_chart_position = min(peak_position)
+  ) |> 
+  arrange(desc(weeks))
+```
 
 ## Math
 

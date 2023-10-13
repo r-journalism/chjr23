@@ -174,6 +174,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Data Wrangling</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./resources/homework.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -222,8 +228,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./resources/homework.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Homework</span></a>
+  <a href="./resources/keyboard-shortcuts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Keyboard commands</span></a>
   </div>
 </li>
       </ul>
@@ -293,9 +299,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<blockquote class="blockquote">
-<p>I NEED TO GO OVER THIS ONE MORE TIME VS THE LESSON TO MAKE SURE THEY MATCH.</p>
-</blockquote>
+<p>These is a completed notebook from the second day of the Center for Health Journalism Data Fellowship.</p>
 <section id="goals" class="level2">
 <h2 class="anchored" data-anchor-id="goals">Goals</h2>
 <p>To learn about: arrange, filter, slice, group_by, summarize</p>
@@ -595,38 +599,68 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="group-and-summarize-count" class="level2">
 <h2 class="anchored" data-anchor-id="group-and-summarize-count">Group and summarize: Count</h2>
-<p>Find the number of days in Austin that were 100+.</p>
+<p>Find the number of days in Austin that were 100+. Start first with prepping the data to get the date ranges we need:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>tx_clean <span class="sc">|&gt;</span> </span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(city <span class="sc">==</span> <span class="st">"Austin"</span>, tmax <span class="sc">&gt;=</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(yr) <span class="sc">|&gt;</span> </span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">hot_days =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(hot_days))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get Austin data</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>atx <span class="ot">&lt;-</span> tx_clean <span class="sc">|&gt;</span> <span class="fu">filter</span>(city <span class="sc">==</span> <span class="st">"Austin"</span>, yr <span class="sc">&gt;</span> <span class="dv">1938</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># check dates</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>atx<span class="sc">$</span>date <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        Min.      1st Qu.       Median         Mean      3rd Qu.         Max. 
+"1939-01-01" "1960-03-09" "1981-05-16" "1981-05-16" "2002-07-23" "2023-09-30" </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># peek</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>atx <span class="sc">|&gt;</span> <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 30,954
+Columns: 10
+$ city &lt;chr&gt; "Austin", "Austin", "Austin", "Austin", "Austin", "Austin", "Aust…
+$ date &lt;date&gt; 1939-01-01, 1939-01-02, 1939-01-03, 1939-01-04, 1939-01-05, 1939…
+$ rain &lt;dbl&gt; 0.00, 0.00, 0.01, 0.14, 0.00, 0.00, 0.00, 0.12, 0.41, 0.00, 0.34,…
+$ snow &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+$ snwd &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+$ tmax &lt;dbl&gt; 69, 73, 74, 73, 70, 72, 72, 69, 73, 66, 58, 49, 54, 58, 53, 55, 6…
+$ tmin &lt;dbl&gt; 32, 37, 56, 49, 41, 39, 52, 54, 53, 48, 46, 43, 35, 42, 34, 29, 4…
+$ yr   &lt;dbl&gt; 1939, 1939, 1939, 1939, 1939, 1939, 1939, 1939, 1939, 1939, 1939,…
+$ mn   &lt;ord&gt; Jan, Jan, Jan, Jan, Jan, Jan, Jan, Jan, Jan, Jan, Jan, Jan, Jan, …
+$ yd   &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19…</code></pre>
+</div>
+</div>
+<p>Then do the calculation to get hot days:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>atx <span class="sc">|&gt;</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(tmax <span class="sc">&gt;=</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(yr) <span class="sc">|&gt;</span> </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">hot_days =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(hot_days)) <span class="sc">|&gt;</span> </span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(hot_days <span class="sc">&gt;=</span> <span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["yr"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["hot_days"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"2011","2":"90"},{"1":"2023","2":"80"},{"1":"2009","2":"68"},{"1":"2022","2":"68"},{"1":"2019","2":"57"},{"1":"2018","2":"52"},{"1":"2008","2":"50"},{"1":"2020","2":"49"},{"1":"2000","2":"42"},{"1":"2013","2":"42"},{"1":"2017","2":"42"},{"1":"1963","2":"40"},{"1":"2001","2":"40"},{"1":"1998","2":"38"},{"1":"2012","2":"35"},{"1":"1956","2":"34"},{"1":"2006","2":"34"},{"1":"1951","2":"33"},{"1":"1980","2":"32"},{"1":"1954","2":"31"},{"1":"2015","2":"24"},{"1":"2016","2":"24"},{"1":"1999","2":"23"},{"1":"1952","2":"22"},{"1":"1967","2":"22"},{"1":"1993","2":"22"},{"1":"2010","2":"22"},{"1":"1948","2":"21"},{"1":"1953","2":"21"},{"1":"1990","2":"21"},{"1":"1994","2":"21"},{"1":"2005","2":"21"},{"1":"2014","2":"21"},{"1":"1982","2":"20"},{"1":"1957","2":"19"},{"1":"1962","2":"19"},{"1":"1985","2":"19"},{"1":"1984","2":"18"},{"1":"1989","2":"17"},{"1":"1996","2":"17"},{"1":"1986","2":"16"},{"1":"1939","2":"15"},{"1":"1969","2":"15"},{"1":"2021","2":"12"},{"1":"2003","2":"11"},{"1":"1944","2":"10"},{"1":"1958","2":"10"},{"1":"1988","2":"10"},{"1":"1943","2":"8"},{"1":"1960","2":"8"},{"1":"1940","2":"7"},{"1":"1947","2":"7"},{"1":"1955","2":"7"},{"1":"1964","2":"7"},{"1":"1970","2":"7"},{"1":"1974","2":"6"},{"1":"1977","2":"6"},{"1":"1978","2":"6"},{"1":"1991","2":"6"},{"1":"1941","2":"5"},{"1":"1949","2":"5"},{"1":"1945","2":"4"},{"1":"1938","2":"3"},{"1":"2007","2":"3"},{"1":"1950","2":"2"},{"1":"1959","2":"2"},{"1":"1971","2":"2"},{"1":"1976","2":"2"},{"1":"1995","2":"2"},{"1":"2002","2":"2"},{"1":"2004","2":"2"},{"1":"1942","2":"1"},{"1":"1946","2":"1"},{"1":"1961","2":"1"},{"1":"1965","2":"1"},{"1":"1966","2":"1"},{"1":"1972","2":"1"},{"1":"1981","2":"1"},{"1":"1983","2":"1"},{"1":"1992","2":"1"},{"1":"1997","2":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["yr"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["hot_days"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"2011","2":"90"},{"1":"2023","2":"80"},{"1":"2009","2":"68"},{"1":"2022","2":"68"},{"1":"2019","2":"57"},{"1":"2018","2":"52"},{"1":"2008","2":"50"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 </div>
 <p>Find the years with the most 100+ degree days in each city.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>tx_clean <span class="sc">|&gt;</span> </span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(tmax <span class="sc">&gt;=</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(city, yr) <span class="sc">|&gt;</span> </span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">hot_days =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(hot_days))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>tx_clean <span class="sc">|&gt;</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(tmax <span class="sc">&gt;=</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(yr, city) <span class="sc">|&gt;</span> </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">hot_days =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(hot_days)) <span class="sc">|&gt;</span> </span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(hot_days <span class="sc">&gt;=</span> <span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'city'. You can override using the
-`.groups` argument.</code></pre>
+<pre><code>`summarise()` has grouped output by 'yr'. You can override using the `.groups`
+argument.</code></pre>
 </div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["city"],"name":[1],"type":["chr"],"align":["left"]},{"label":["yr"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["hot_days"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"Austin","2":"2011","3":"90"},{"1":"Austin","2":"2023","3":"80"},{"1":"Dallas","2":"2011","3":"73"},{"1":"Dallas","2":"1980","3":"70"},{"1":"Austin","2":"2009","3":"68"},{"1":"Austin","2":"2022","3":"68"},{"1":"Dallas","2":"1998","3":"60"},{"1":"Austin","2":"2019","3":"57"},{"1":"Austin","2":"2018","3":"52"},{"1":"Austin","2":"2008","3":"50"},{"1":"Dallas","2":"1954","3":"50"},{"1":"Austin","2":"2020","3":"49"},{"1":"Dallas","2":"2023","3":"49"},{"1":"Dallas","2":"2022","3":"47"},{"1":"Dallas","2":"1956","3":"44"},{"1":"Dallas","2":"1977","3":"43"},{"1":"Austin","2":"2000","3":"42"},{"1":"Austin","2":"2013","3":"42"},{"1":"Austin","2":"2017","3":"42"},{"1":"Dallas","2":"2006","3":"42"},{"1":"Austin","2":"1963","3":"40"},{"1":"Austin","2":"2001","3":"40"},{"1":"Dallas","2":"2000","3":"40"},{"1":"Dallas","2":"1978","3":"39"},{"1":"Houston","2":"2023","3":"39"},{"1":"Austin","2":"1998","3":"38"},{"1":"Dallas","2":"1952","3":"38"},{"1":"Dallas","2":"2012","3":"36"},{"1":"Dallas","2":"2013","3":"36"},{"1":"Austin","2":"2012","3":"35"},{"1":"Dallas","2":"1953","3":"35"},{"1":"Dallas","2":"1985","3":"35"},{"1":"Austin","2":"1956","3":"34"},{"1":"Austin","2":"2006","3":"34"},{"1":"Dallas","2":"1951","3":"34"},{"1":"Austin","2":"1951","3":"33"},{"1":"Dallas","2":"2018","3":"33"},{"1":"Austin","2":"1980","3":"32"},{"1":"Dallas","2":"1969","3":"32"},{"1":"Austin","2":"1954","3":"31"},{"1":"Dallas","2":"1997","3":"30"},{"1":"Dallas","2":"1963","3":"29"},{"1":"Dallas","2":"2010","3":"29"},{"1":"Dallas","2":"1957","3":"26"},{"1":"Dallas","2":"1964","3":"26"},{"1":"Dallas","2":"1987","3":"25"},{"1":"Austin","2":"2015","3":"24"},{"1":"Austin","2":"2016","3":"24"},{"1":"Dallas","2":"1943","3":"24"},{"1":"Dallas","2":"1944","3":"24"},{"1":"Dallas","2":"1946","3":"24"},{"1":"Dallas","2":"1999","3":"24"},{"1":"Dallas","2":"2015","3":"24"},{"1":"Austin","2":"1999","3":"23"},{"1":"Dallas","2":"1947","3":"23"},{"1":"Dallas","2":"1982","3":"23"},{"1":"Austin","2":"1952","3":"22"},{"1":"Austin","2":"1967","3":"22"},{"1":"Austin","2":"1993","3":"22"},{"1":"Austin","2":"2010","3":"22"},{"1":"Dallas","2":"1993","3":"22"},{"1":"Dallas","2":"2003","3":"22"},{"1":"Dallas","2":"2005","3":"22"},{"1":"Austin","2":"1948","3":"21"},{"1":"Austin","2":"1953","3":"21"},{"1":"Austin","2":"1990","3":"21"},{"1":"Austin","2":"1994","3":"21"},{"1":"Austin","2":"2005","3":"21"},{"1":"Austin","2":"2014","3":"21"},{"1":"Dallas","2":"1988","3":"21"},{"1":"Dallas","2":"1995","3":"21"},{"1":"Austin","2":"1982","3":"20"},{"1":"Austin","2":"1957","3":"19"},{"1":"Austin","2":"1962","3":"19"},{"1":"Austin","2":"1985","3":"19"},{"1":"Dallas","2":"1970","3":"19"},{"1":"Dallas","2":"2009","3":"19"},{"1":"Austin","2":"1984","3":"18"},{"1":"Dallas","2":"1948","3":"18"},{"1":"Dallas","2":"1981","3":"18"},{"1":"Dallas","2":"1990","3":"18"},{"1":"Dallas","2":"1996","3":"18"},{"1":"Dallas","2":"2016","3":"18"},{"1":"Dallas","2":"2019","3":"18"},{"1":"Houston","2":"2011","3":"18"},{"1":"Austin","2":"1989","3":"17"},{"1":"Austin","2":"1996","3":"17"},{"1":"Austin","2":"1986","3":"16"},{"1":"Dallas","2":"1971","3":"16"},{"1":"Dallas","2":"1984","3":"16"},{"1":"Houston","2":"2022","3":"16"},{"1":"Austin","2":"1939","3":"15"},{"1":"Austin","2":"1969","3":"15"},{"1":"Dallas","2":"1939","3":"15"},{"1":"Dallas","2":"1958","3":"14"},{"1":"Dallas","2":"1967","3":"14"},{"1":"Dallas","2":"1974","3":"14"},{"1":"Dallas","2":"1983","3":"14"},{"1":"Dallas","2":"1986","3":"14"},{"1":"Dallas","2":"2001","3":"14"},{"1":"Dallas","2":"2008","3":"14"},{"1":"Dallas","2":"2014","3":"14"},{"1":"Houston","2":"1998","3":"13"},{"1":"Houston","2":"2000","3":"13"},{"1":"Austin","2":"2021","3":"12"},{"1":"Dallas","2":"1949","3":"12"},{"1":"Dallas","2":"1955","3":"12"},{"1":"Dallas","2":"2020","3":"12"},{"1":"Austin","2":"2003","3":"11"},{"1":"Dallas","2":"1972","3":"11"},{"1":"Austin","2":"1944","3":"10"},{"1":"Austin","2":"1958","3":"10"},{"1":"Austin","2":"1988","3":"10"},{"1":"Houston","2":"1948","3":"10"},{"1":"Dallas","2":"1962","3":"9"},{"1":"Dallas","2":"1994","3":"9"},{"1":"Houston","2":"1962","3":"9"},{"1":"Austin","2":"1943","3":"8"},{"1":"Austin","2":"1960","3":"8"},{"1":"Dallas","2":"1965","3":"8"},{"1":"Dallas","2":"2017","3":"8"},{"1":"Houston","2":"1980","3":"8"},{"1":"Austin","2":"1940","3":"7"},{"1":"Austin","2":"1947","3":"7"},{"1":"Austin","2":"1955","3":"7"},{"1":"Austin","2":"1964","3":"7"},{"1":"Austin","2":"1970","3":"7"},{"1":"Houston","2":"1951","3":"7"},{"1":"Austin","2":"1974","3":"6"},{"1":"Austin","2":"1977","3":"6"},{"1":"Austin","2":"1978","3":"6"},{"1":"Austin","2":"1991","3":"6"},{"1":"Dallas","2":"1942","3":"6"},{"1":"Dallas","2":"1960","3":"6"},{"1":"Dallas","2":"1976","3":"6"},{"1":"Dallas","2":"1989","3":"6"},{"1":"Houston","2":"1934","3":"6"},{"1":"Houston","2":"2009","3":"6"},{"1":"Austin","2":"1941","3":"5"},{"1":"Austin","2":"1949","3":"5"},{"1":"Dallas","2":"1975","3":"5"},{"1":"Dallas","2":"2021","3":"5"},{"1":"Houston","2":"2013","3":"5"},{"1":"Houston","2":"2015","3":"5"},{"1":"Austin","2":"1945","3":"4"},{"1":"Dallas","2":"1940","3":"4"},{"1":"Dallas","2":"1941","3":"4"},{"1":"Dallas","2":"1979","3":"4"},{"1":"Dallas","2":"2002","3":"4"},{"1":"Dallas","2":"2007","3":"4"},{"1":"Houston","2":"1935","3":"4"},{"1":"Houston","2":"1947","3":"4"},{"1":"Houston","2":"1954","3":"4"},{"1":"Houston","2":"1969","3":"4"},{"1":"Houston","2":"1999","3":"4"},{"1":"Houston","2":"2017","3":"4"},{"1":"Houston","2":"2019","3":"4"},{"1":"Austin","2":"1938","3":"3"},{"1":"Austin","2":"2007","3":"3"},{"1":"Dallas","2":"1950","3":"3"},{"1":"Dallas","2":"1966","3":"3"},{"1":"Houston","2":"1930","3":"3"},{"1":"Houston","2":"1939","3":"3"},{"1":"Houston","2":"1964","3":"3"},{"1":"Houston","2":"1990","3":"3"},{"1":"Houston","2":"2005","3":"3"},{"1":"Houston","2":"2007","3":"3"},{"1":"Houston","2":"2012","3":"3"},{"1":"Austin","2":"1950","3":"2"},{"1":"Austin","2":"1959","3":"2"},{"1":"Austin","2":"1971","3":"2"},{"1":"Austin","2":"1976","3":"2"},{"1":"Austin","2":"1995","3":"2"},{"1":"Austin","2":"2002","3":"2"},{"1":"Austin","2":"2004","3":"2"},{"1":"Dallas","2":"1945","3":"2"},{"1":"Dallas","2":"1959","3":"2"},{"1":"Dallas","2":"1968","3":"2"},{"1":"Dallas","2":"1991","3":"2"},{"1":"Dallas","2":"2004","3":"2"},{"1":"Houston","2":"1932","3":"2"},{"1":"Houston","2":"1933","3":"2"},{"1":"Houston","2":"1956","3":"2"},{"1":"Houston","2":"1958","3":"2"},{"1":"Houston","2":"1982","3":"2"},{"1":"Houston","2":"2018","3":"2"},{"1":"Austin","2":"1942","3":"1"},{"1":"Austin","2":"1946","3":"1"},{"1":"Austin","2":"1961","3":"1"},{"1":"Austin","2":"1965","3":"1"},{"1":"Austin","2":"1966","3":"1"},{"1":"Austin","2":"1972","3":"1"},{"1":"Austin","2":"1981","3":"1"},{"1":"Austin","2":"1983","3":"1"},{"1":"Austin","2":"1992","3":"1"},{"1":"Austin","2":"1997","3":"1"},{"1":"Dallas","2":"1961","3":"1"},{"1":"Dallas","2":"1973","3":"1"},{"1":"Houston","2":"1936","3":"1"},{"1":"Houston","2":"1949","3":"1"},{"1":"Houston","2":"1953","3":"1"},{"1":"Houston","2":"1963","3":"1"},{"1":"Houston","2":"1965","3":"1"},{"1":"Houston","2":"1988","3":"1"},{"1":"Houston","2":"2003","3":"1"},{"1":"Houston","2":"2008","3":"1"},{"1":"Houston","2":"2020","3":"1"},{"1":"Houston","2":"2021","3":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["yr"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["city"],"name":[2],"type":["chr"],"align":["left"]},{"label":["hot_days"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"2011","2":"Austin","3":"90"},{"1":"2023","2":"Austin","3":"80"},{"1":"2011","2":"Dallas","3":"73"},{"1":"1980","2":"Dallas","3":"70"},{"1":"2009","2":"Austin","3":"68"},{"1":"2022","2":"Austin","3":"68"},{"1":"1998","2":"Dallas","3":"60"},{"1":"2019","2":"Austin","3":"57"},{"1":"2018","2":"Austin","3":"52"},{"1":"1954","2":"Dallas","3":"50"},{"1":"2008","2":"Austin","3":"50"},{"1":"2020","2":"Austin","3":"49"},{"1":"2023","2":"Dallas","3":"49"},{"1":"2022","2":"Dallas","3":"47"},{"1":"1956","2":"Dallas","3":"44"},{"1":"1977","2":"Dallas","3":"43"},{"1":"2000","2":"Austin","3":"42"},{"1":"2006","2":"Dallas","3":"42"},{"1":"2013","2":"Austin","3":"42"},{"1":"2017","2":"Austin","3":"42"},{"1":"1963","2":"Austin","3":"40"},{"1":"2000","2":"Dallas","3":"40"},{"1":"2001","2":"Austin","3":"40"},{"1":"1978","2":"Dallas","3":"39"},{"1":"2023","2":"Houston","3":"39"},{"1":"1952","2":"Dallas","3":"38"},{"1":"1998","2":"Austin","3":"38"},{"1":"2012","2":"Dallas","3":"36"},{"1":"2013","2":"Dallas","3":"36"},{"1":"1953","2":"Dallas","3":"35"},{"1":"1985","2":"Dallas","3":"35"},{"1":"2012","2":"Austin","3":"35"},{"1":"1951","2":"Dallas","3":"34"},{"1":"1956","2":"Austin","3":"34"},{"1":"2006","2":"Austin","3":"34"},{"1":"1951","2":"Austin","3":"33"},{"1":"2018","2":"Dallas","3":"33"},{"1":"1969","2":"Dallas","3":"32"},{"1":"1980","2":"Austin","3":"32"},{"1":"1954","2":"Austin","3":"31"},{"1":"1997","2":"Dallas","3":"30"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -635,11 +669,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="oyo-most-snow-days-by-city-each-year">OYO: Most snow days by city each year</h3>
 <p>Count only the days that where it snowed.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>tx_clean <span class="sc">|&gt;</span> </span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(snow <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(city, yr) <span class="sc">|&gt;</span> </span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">snow_days =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(snow_days))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>tx_clean <span class="sc">|&gt;</span> </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(snow <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(city, yr) <span class="sc">|&gt;</span> </span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">snow_days =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(snow_days))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'city'. You can override using the
 `.groups` argument.</code></pre>
@@ -659,16 +693,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="group-and-summarize-math">Group and Summarize: Math</h2>
 <p>Years with most rain in each city.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>tx_yr_rain <span class="ot">&lt;-</span> tx_clean <span class="sc">|&gt;</span> </span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yr <span class="sc">&gt;</span> <span class="dv">1939</span>, yr <span class="sc">&lt;</span> <span class="dv">2023</span>) <span class="sc">|&gt;</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(city, yr) <span class="sc">|&gt;</span> </span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">tot_rain =</span> <span class="fu">sum</span>(rain, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(city, <span class="fu">desc</span>(tot_rain))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>tx_yr_rain <span class="ot">&lt;-</span> tx_clean <span class="sc">|&gt;</span> </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yr <span class="sc">&gt;</span> <span class="dv">1939</span>, yr <span class="sc">&lt;</span> <span class="dv">2023</span>) <span class="sc">|&gt;</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(city, yr) <span class="sc">|&gt;</span> </span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">tot_rain =</span> <span class="fu">sum</span>(rain, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(city, <span class="fu">desc</span>(tot_rain))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'city'. You can override using the
 `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>tx_yr_rain</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>tx_yr_rain</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -680,9 +714,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>The most rain in each city, sliced:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>tx_yr_rain <span class="sc">|&gt;</span> </span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(city) <span class="sc">|&gt;</span> </span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(tot_rain, <span class="at">n =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>tx_yr_rain <span class="sc">|&gt;</span> </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(city) <span class="sc">|&gt;</span> </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(tot_rain, <span class="at">n =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -694,9 +728,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>The least rain in each city, sliced:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>tx_yr_rain <span class="sc">|&gt;</span> </span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(city) <span class="sc">|&gt;</span> </span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_min</span>(tot_rain, <span class="at">n =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>tx_yr_rain <span class="sc">|&gt;</span> </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(city) <span class="sc">|&gt;</span> </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_min</span>(tot_rain, <span class="at">n =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -710,15 +744,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="oyo-years-with-most-snow">OYO: Years with most snow</h3>
 <p>Find the years with the most total snow in each city</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>tx_yr_snow <span class="ot">&lt;-</span> tx_clean <span class="sc">|&gt;</span> </span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(city, yr) <span class="sc">|&gt;</span> </span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">tot_snow =</span> <span class="fu">sum</span>(snow)) <span class="sc">|&gt;</span> </span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(city, <span class="fu">desc</span>(tot_snow))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>tx_yr_snow <span class="ot">&lt;-</span> tx_clean <span class="sc">|&gt;</span> </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(city, yr) <span class="sc">|&gt;</span> </span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">tot_snow =</span> <span class="fu">sum</span>(snow)) <span class="sc">|&gt;</span> </span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(city, <span class="fu">desc</span>(tot_snow))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'city'. You can override using the
 `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>tx_yr_snow</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>tx_yr_snow</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -730,9 +764,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Most snow, sliced:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>tx_yr_snow <span class="sc">|&gt;</span> </span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(city) <span class="sc">|&gt;</span> </span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(tot_snow, <span class="at">n =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>tx_yr_snow <span class="sc">|&gt;</span> </span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(city) <span class="sc">|&gt;</span> </span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(tot_snow, <span class="at">n =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -749,15 +783,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Getting average monthly rain for each city.</p>
 <p>First get the total rain for each month/year:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>tx_mn_yr_rain <span class="ot">&lt;-</span> tx_clean <span class="sc">|&gt;</span> </span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yr <span class="sc">&gt;=</span> <span class="dv">1940</span>, yr <span class="sc">&lt;=</span> <span class="dv">2022</span>) <span class="sc">|&gt;</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(city, mn, yr) <span class="sc">|&gt;</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mn_yr_rain =</span> <span class="fu">sum</span>(rain, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'city', 'mn'. You can override using the
-`.groups` argument.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>tx_mn_yr_rain  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>tx_mn_yr_rain <span class="ot">&lt;-</span> tx_clean <span class="sc">|&gt;</span> </span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yr <span class="sc">&gt;=</span> <span class="dv">1940</span>, yr <span class="sc">&lt;=</span> <span class="dv">2022</span>) <span class="sc">|&gt;</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(city, mn, yr) <span class="sc">|&gt;</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mn_yr_rain =</span> <span class="fu">sum</span>(rain, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>tx_mn_yr_rain  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -769,14 +800,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Then calculate the average for the months in each city:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>city_avg_rain <span class="ot">&lt;-</span> tx_mn_yr_rain <span class="sc">|&gt;</span> </span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(city, mn) <span class="sc">|&gt;</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_mn_rain =</span> <span class="fu">mean</span>(mn_yr_rain))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>city_avg_rain <span class="ot">&lt;-</span> tx_mn_yr_rain <span class="sc">|&gt;</span> </span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(city, mn) <span class="sc">|&gt;</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_mn_rain =</span> <span class="fu">mean</span>(mn_yr_rain))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'city'. You can override using the
 `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>city_avg_rain</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>city_avg_rain</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -788,17 +819,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>And as a tease, we plot it:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>city_avg_rain <span class="sc">|&gt;</span> </span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> mn, <span class="at">y =</span> avg_mn_rain, <span class="at">group =</span> city)) <span class="sc">+</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">color =</span> city)) <span class="sc">+</span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>,<span class="dv">6</span>) <span class="sc">+</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Average monthly rainfall, 1940-2022"</span>,</span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">"Average monthly rain"</span>,</span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"City"</span></span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>city_avg_rain <span class="sc">|&gt;</span> </span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> mn, <span class="at">y =</span> avg_mn_rain, <span class="at">group =</span> city)) <span class="sc">+</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">color =</span> city)) <span class="sc">+</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>,<span class="dv">6</span>) <span class="sc">+</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Average monthly rainfall, 1940-2022"</span>,</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">"Average monthly rain"</span>,</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"City"</span></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="solution-day2-analysis_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="672"></p>
+<p><img src="solution-day2-analysis_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -806,11 +837,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="challenge-earliest-100-day-each-city">Challenge: Earliest 100+ day each city</h2>
 <p>For each city, find the earliest day of a year in which it reached 100 degrees.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>tx_clean <span class="sc">|&gt;</span> </span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(tmax <span class="sc">&gt;=</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(city) <span class="sc">|&gt;</span> </span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_min</span>(yd) <span class="sc">|&gt;</span> </span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(city, date, tmax)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>tx_clean <span class="sc">|&gt;</span> </span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(tmax <span class="sc">&gt;=</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(city) <span class="sc">|&gt;</span> </span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_min</span>(yd) <span class="sc">|&gt;</span> </span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(city, date, tmax)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">

@@ -16,3 +16,235 @@ To find several values from our data:
 - Earliest day to reach 100+ each year
 
 With this lesson we'll just use Texas data. (You theoretically could use a different state, but would need to adjust your code to import the right data, use valid cities, etc.)
+
+## Setup
+
+```{r}
+#| label: setup
+#| message: false
+
+library(tidyverse)
+```
+
+## Import
+
+Import your cleaned data using `read_rds()` and save it into an object:
+
+```{r}
+
+```
+
+## Arrange
+
+Find the coldest day, warmest day, most snow, most rain.
+
+### Coldest day
+
+Find the coldest day:
+
+```{r}
+
+```
+
+### Hotest day
+
+Find the hottest day:
+
+```{r}
+
+```
+
+### OYO: Most rain
+
+Find the days with the most rain:
+
+```{r}
+
+```
+
+### OYO: Most snow
+
+Find the days with the most snow:
+
+```{r}
+
+```
+
+## Filter
+
+Find days that are 100+:
+
+```{r}
+
+```
+
+Filter for days in Dallas that are 100+:
+
+```{r}
+
+```
+
+Find days where it snowed, or there is snow still on the ground:
+
+```{r}
+
+```
+
+### OYO: Snow days in Dallas
+
+Find days where it snowed or there is snow on the ground, but only in Dallas.
+
+```{r}
+
+```
+
+## Slice
+
+Use slice_min to find the coldest day in our data:
+
+```{r}
+
+```
+
+## Group and slice
+
+Add `group_by` to find the coldest day in each city.
+
+```{r}
+
+```
+
+### OYO: Hottest day in each city
+
+Use `group_by` and `slice_max` to find the hottest days in each city. Note there might be some ties.
+
+```{r}
+
+```
+
+### Multiple groups
+
+Hottest day each year in each city:
+
+```{r}
+
+```
+
+## Summarize
+
+Summarize to find our first date, last date and number of rows:
+
+```{r}
+
+```
+
+## Group and summarize
+
+Group the data by city and find the first date, last date and number of rows:
+
+```{r}
+
+```
+
+Add city and yr as a group:
+
+```{r}
+
+```
+
+
+## Group and summarize: Count
+
+Find the number of days in Austin that were 100+. Start first with prepping the data to get the date ranges we need:
+
+```{r}
+
+```
+
+Then do the calculation to get hot days:
+
+```{r}
+
+```
+
+Find the years with the most 100+ degree days in each city.
+
+```{r}
+
+```
+
+### OYO: Most snow days by city each year
+
+Count only the days that where it snowed.
+
+```{r}
+
+```
+
+## Group and Summarize: Math
+
+Years with most rain in each city.
+
+```{r}
+
+```
+
+The most rain in each city, sliced:
+
+```{r}
+
+```
+
+The least rain in each city, sliced:
+
+```{r}
+
+```
+
+### OYO: Years with most snow
+
+Find the years with the most total snow in each city
+
+```{r}
+
+```
+
+Most snow, sliced:
+
+```{r}
+
+```
+
+
+## Working through logic
+
+Getting average monthly rain for each city.
+
+First get the total rain for each month/year:
+
+```{r}
+#| message: false
+
+```
+
+Then calculate the average for the months in each city:
+
+```{r}
+#| message: false
+
+```
+
+And as a tease, we plot it:
+
+```{r}
+
+```
+
+
+## Challenge: Earliest 100+ day each city
+
+For each city, find the earliest day of a year in which it reached 100 degrees.
+
+```{r}
+
+```

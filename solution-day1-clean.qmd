@@ -2,7 +2,7 @@
 title: "Solutions Day 1"
 ---
 
-This is the notebook fellows will work through on the first day of the Center for Health Journalism Hands-On R course.
+This is a completed notebook based on the first day of the Center for Health Journalism Hands-On R course.
 
 You will be using daily weather summaries that have been downloaded  from [Climate Data Online](https://www.ncei.noaa.gov/cdo-web/datasets). The explanations use Texas, but there are files for Arkansas, California, New York and North Carolina for practice.
 
@@ -43,7 +43,7 @@ tx_raw
 
 Go through all the steps above, but with different a different state.
 
-
+> I don't include the answers for OYO in these solutions because it depends on the state used. If you stick with the same naming convention using two letters for your state intead of `tx`, then everything else should be the same as the code above. Hollar if you need help.
 
 ## Peeking at data
 
@@ -60,7 +60,6 @@ Look at 8 lines of the bottom of your data:
 ```{r}
 tx_raw |> tail(8)
 ```
-
 
 Use glimpse to see all your columns:
 
@@ -80,7 +79,7 @@ tx_raw$date |> summary()
 
 ### OYO: Peek at your state's data
 
-
+> This will depend on the state you use. Hollar if you need help.
 
 ## Create or change data
 
@@ -101,6 +100,7 @@ tx_dates |> glimpse()
 
 Make the same date parts, but with your own state data:
 
+> This will depend on the state you use. Hollar if you need help.
 
 ## Recoding values
 
@@ -139,6 +139,7 @@ tx_names |> distinct(name, city)
 
 Make similar short names, but for your state.
 
+> This will depend on the state you use. Hollar if you need help.
 
 ## Select
 
@@ -166,7 +167,7 @@ tx_tight |> glimpse()
 
 Go through the same process as above, but with your own state data.
 
-
+> This will depend on the state you use. Hollar if you need help.
 
 ## Export
 
@@ -180,6 +181,7 @@ tx_tight |> write_rds("data-processed/tx_clean.rds")
 
 Write your data to the `data-processed` folder. Make sure you use a name for your state.
 
+> This will depend on the state you use. Hollar if you need help.
 
 ## Checking your notebooks
 

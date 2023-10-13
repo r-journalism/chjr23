@@ -3,18 +3,16 @@ title: "Importing & Cleaning"
 author: "Christian McDonald"
 ---
 
-> Perhaps needs a last edit with check vs solutions. There is at least one unfinished sentence somewhere.
-
 ## Goals of this lesson
 
-In this second lesson we will work through building a notebook where you import data, manipulate it and do some analysis. While you may be viewing these lessons online, know they are also in the project folder all starting with `lesson-`. You'll build your notebook in another file in `practice-day1.qmd` where you'll be given some pre-written code with explanations of what it does. You'll also write your own code with mini on-your-own quests.
+In this second lesson we will work through building a notebook where you import data, manipulate it and do some analysis. While you may be viewing these lessons online, know they are also in the project folder all starting with `lesson-`. You'll build your notebook in another file in `practice-day1.qmd` where you'll take the pre-written code found here and apply it there. You'll also have chances to write your own code with mini on-your-own quests.
 
-In the end, we are creating a cleaned data set and exporting it to use later.
+The purpose of this module is to import and clean a data set, then export it to use in the next lesson.
 
-For this lesson we'll be using daily weather summaries from [Climate Data Online](https://www.ncei.noaa.gov/cdo-web/datasets) -- daily temperature and precipitation readings.
+We'll be using daily weather summaries from [Climate Data Online](https://www.ncei.noaa.gov/cdo-web/datasets) -- daily temperature and precipitation readings.
 
 ::: callout-tip
-Within a project I typically have one notebook for downloading and cleaning my data, and then another notebook for analyzing my data.  Since this is a guided training, the organization of this project is a little different. We'll walk through building a new project later.
+In my projects I typically have one notebook for downloading and cleaning my data, and then another notebook for analyzing my data.  Since this is a guided training, the organization of this project is a little different. We'll walk through building a new project later.
 :::
 
 ## Open the practice file
@@ -23,15 +21,15 @@ Let's get started.
 
 1. Make sure the Files page is open in the bottom right pane of RStudio.
 2. Click on the gear icon and choose **Go To Working Directory**. This takes the file explorer to our project folder so we know where everything is.
-3. Click and open the `practice-day1.qmd` file.
+3. Click and open the `practice-day1-clean.qmd` file.
 
-Our notebooks start with **metadata** at the top that includes the `title` listing, like this one, written in YAML and bracketed by the three dashes. There is [other configuration](https://quarto.org/docs/output-formats/html-basics.html) you can do in the metadata, but we won't here.
+Our notebooks start with **metadata** at the top that includes the `title` listing, like this one, written in YAML and bracketed by the three dashes. There are [other configurations](https://quarto.org/docs/output-formats/html-basics.html) you can apply in the metadata, but we won't here.
 
 Below the metadata you'll want to explain the goals of what you are doing in this notebook. We write these notes in Markdown in between our code.
 
 ## Packages and libraries
 
-After the goals in a notebook, the next thing to have is the libraries you'll use. While there is a lot of functionality baked into R, users can also write and package pre-written code into libraries. Different libraries have different "functions" that we use to manipulate our data in some way. Learning how to use these functions IS programming.
+After the goals in a notebook, the next thing you should always have is the libraries you'll use. While there is a lot of functionality baked into R, users can also write and package pre-written code into libraries. Different libraries have different "functions" that we use to manipulate our data in some way. Learning how to use these functions IS programming.
 
 We almost always load the [tidyverse](https://www.tidyverse.org/) library which is actually a collection of libraries, including:
 
@@ -48,7 +46,7 @@ We'll use another function from another library, [janitor](https://cran.r-projec
 Here is how we set up the libraries. It is usually the first code chunk you'll have in your notebook. 
 
 ::: callout-tip
-The code block below is displayed online in a special way to show you the tick marks, language designation and some execution options that are explained below. Usually the online directions only show the code inside the block.
+The code block below is displayed online in a special way to show you the tick marks, language designation and some execution options that are explained below. Usually you will need to insert a code block yourself, then copy or type in the code.
 :::
 
 This code chunk below has two special [execution options](https://quarto.org/docs/computations/execution-options.html) that affect how the code works.
@@ -57,6 +55,12 @@ This code chunk below has two special [execution options](https://quarto.org/doc
 - `message: false` suppresses the usual messages we see in our notebook after loading libraries. With most code chunks we want to see these messages, but not this one because they are standard. Plus, I wanted to show you how the options work.
 
 Execution options are not required, but those two are useful for our libraries chunk. That's often the only place I use any.
+
+1. In your practice notebook after the `## Libraries` headline ...
+2. Use the copy-to-clipboard icon at top-right of the code block below, then paste it into your notebook.
+3. Run the code block above using either the play button inside your Quarto document, or by placing your cursor in the code chunk and using *Cmd-shift-return* on your keyboard.
+
+You'll see a flash of green but you won't see any feedback in your notebook because we suppressed it.
 
 ```{r}
 #| label: setup
@@ -67,11 +71,8 @@ library(tidyverse)
 library(janitor)
 ```
 
-1. In your practice notebook after the `## Libraries` headline.
-2. Use the copy icon at top-right to copy the contents of the code block listed above and paste it into your notebook.
-3. Run the code block above using either the play button inside your Quarto document, or by placing your cursor in the code chunk and using *Cmd-shift-return* on your keyboard.
 
-You'll see a flash of green but you won't see any feedback in your notebook because we suppressed it.
+As noted earlier, from now on you'll need to insert your own code block and then write the code inside. We'll do that next.
 
 ## Functions
 
@@ -85,19 +86,21 @@ We can also string these functions together, taking the result of one and piping
 
 ## Importing data
 
-We use functions from the [readr](https://readr.tidyverse.org/) library to import our data. We choose which function based on the format of the data we are trying to import.
+We will use a function from the [readr](https://readr.tidyverse.org/) library to import our weather data. We choose which function to use based on the format of the data we are trying to import.
 
-The data I have prepared for you here is in "csv" format, or comma separated values. In this project we have two data folders, `data-raw` where we put our original data, and `data-processed` where we put anything we export out. Our aim here is to avoid changing our original raw data.
+The data I have for you here is in "csv" format, or comma separated values. In this project we have two data folders, `data-raw` where we put our original data, and `data-processed` where we put anything we export out. Our aim here is to avoid changing our original raw data.
+
+### Insert your import chunk
 
 ::: callout-important
 From now on you'll mostly create your own chunks in your practice notebook and type in the code indicated in the book. While it is possible to copy/paste the code easily, I implore you to type all the code here so you get used to using the RStudio editor.
 :::
 
-1. After the `## Import` headline and description there, insert a new code chunk. You can use the keyboard command *Cmd+option+i* or the green `+C` icon in the notebook toolbar.
+1. After the `## Import` headline and description there, insert a new code chunk. You can use the keyboard command *Cmd+option+i* or use the green `+C` icon in the notebook toolbar.
 2. Type in `read_csv()` into the code chunk. You'll see type-assist trying to help you.
 3. Once that is there, put your cursor in between the parenthesis (if it isn't already) and type in an opening quote `"`. You'll see that the closing quote is automatically added and your cursor is again put in the middle of them.
 4. Type in `data-raw/` and then hit *tab* on your keyboard. You should see a menu pop up with the available files. Choose the `tx.csv` file.
-5. Once your code looks like what I have below, **run the chunk**. (Use *Cmd-shift-return* from inside the chunk).
+5. Once your code looks like what I have below, **run the chunk**. (Use *Cmd-shift-return* from inside the chunk or click the green arrow at the top-right of the chunk.)
 
 
 ```{r}
@@ -106,18 +109,19 @@ read_csv("data-raw/tx.csv")
 
 We get two outputs here in our notebook:
 
-- The R Console pane shows messages about our import.
-- The second pane shows our data. The data construct here is called a data frame or tibble.
+- The R Console pane shows messages about our import. The column data types and things like that.
+- The second pane shows our data. The data construct here is called a "data frame" or "tibble".
 
 ### More about readr
 
-There is a cheatsheet in the [readr documentation](https://readr.tidyverse.org/) that outlines functions to import different kinds of data. There are also options for things like skipping lines, renaming columns and other common challenges.
+There is a cheatsheet in the [readr documentation](https://readr.tidyverse.org/) that outlines functions to import different kinds of data. There are also options for things like skipping lines, renaming columns, setting data types and other common challenges.
 
 ## The pipe
 
 To provide some consistency and save from having to use the shift key so much, we are going to run our data through a function called `clean_names()` after we read it in. As we do this we'll learn about the "pipe" which moves the result of an object or function into a new function.
 
 1. **Edit your import chunk** to add the code below: `|> clean_names()`.
+2. **Run** the chunk.
 
 ::: callout-tip
 You can use *Cmd+shift+m* inside a code block to type a pipe. If you get `%>%` instead, don't fret. Keep reading.
@@ -127,10 +131,7 @@ You can use *Cmd+shift+m* inside a code block to type a pipe. If you get `%>%` i
 read_csv("data-raw/tx.csv") |> clean_names()
 ```
 
-Our result now comes in two "tabs" for lack of a better word:
-
-- The first tab called "R Console" has the output from the `read_csv()` function.
-- The second tab called "spec_tbl_df" has output from the `clean_names()` function.
+If you look at the second result that shows our data, you may notice that the names of our columns are different. That's what `clean_names()` does.
 
 ### About clean_names()
 
@@ -161,7 +162,7 @@ read_csv("data-raw/tx.csv") |>
   clean_names()
 ```
 
-It might look like there are no arguments inside `clean_names()`, but what we are actually doing is passing the imported data frame into it like this:
+It might look like there are no arguments inside `clean_names()`, but what we are actually doing is nesting the imported data frame into it like this:
 
 ``` r
 clean_names(read_csv("data-raw/tx.csv"))
@@ -169,7 +170,7 @@ clean_names(read_csv("data-raw/tx.csv"))
 
 For a lot of functions in R the first argument is "what data are you taking about?" The pipe allows us to say "hey, take the data we just mucked with (i.e., the code before the pipe) and use that in this new function."
 
-You can see from the nested example that code without the pipe can get confusing. Using the pipe makes our code much more readable.
+You can see from the nested example above that code without the pipe can get confusing. Using the pipe makes our code much more readable, like a sentence.
 
 #### A rabbit dives into a pipe
 
@@ -181,7 +182,7 @@ This switch to `|>` is quite recent so you will still see `%>%` used in our trai
 
 While we have data printing to our screen, it hasn't been saved and we can't reuse it. That's next.
 
-To save something in our R environment to reuse it, we create an "object". An object can be made from vector (a list of one or more like items), a data frame (a collection of vectors, like a structured spreadsheet) or even a plot. In short, it is how we save things in our environment (in memory) to reuse later.
+To save something in our R environment to reuse it, we create an "object". An object can be made from a vector (a list of one or more like items), a data frame (a collection of vectors, like a structured spreadsheet) or even a plot. In short, it is how we save things in our environment (in memory) to reuse later.
 
 By convention we name the object first, then use `<-` to fill it with our data. Think of it like this: You must have a bucket first before you can fill it with water. The arrow shows you which way the water is flowing.
 
@@ -197,7 +198,7 @@ tx_raw <- read_csv("data-raw/tx.csv") |> clean_names()
 - If you look at your **Environment** pane at the top-right of RStudio, you'll see your saved object listed there.
 
 ::: callout-tip
-You can use *Option+i* in a code chunk to type in `<-`.
+You can use *Option+i* in a code chunk to type in `<-`. See the [Keyboard shortcuts chapter](resources/keyboard-shortcuts.qmd).
 :::
 
 Let's print the data out again so we can see it.
@@ -214,19 +215,26 @@ Let's talk about this output a little because there is a lot of useful informati
 
 ![Tibble display](images/tibble-display.png)
 
+Use the image above to orient yourself to the data frame display in your notebook. Click on the column arrows and page links to see more of the data.
+
+We have now imported our data and saved it into an object we can continue to work with.
+
 ### OYO: Import new data
 
 Here I want you to import weather data from a different state and save it into an object. You can look in the `data-raw` folder to see the files to choose from, perhaps from your state.
 
-1. After these directions but before the next headline, add a new code chunk.
+**You'll do this all in the same chunk, editing the code and running it after each step.**
+
+1. In your practice notebook in the "OYO: Import a different state" space, add a new code chunk.
 2. Use the `read_csv()` command to read in your data and run it to make sure it works.
-3. **Edit that same chunk** to save your data into a new object. Make sure you see it in your **Environment** tab.
-4. Add a new line with your new object so it will print out so you can see it.
-5. Add some notes in text to tell your future self what you've done.
+3. Using a pipe, add the `clean_names()` function to it and run it to make sure it still works.
+3. **Edit** your chunk to save your data into a new object. (I _really_ recommend you use the same naming convention, but with your state, like `nc_raw`.) Make sure you see it in your **Environment** tab.
+4. Add a new line in your chunk with your new object so it will print out so you can see it.
+5. Outside of the chunk, add some notes in text to tell your future self what you've done.
 
 ## Peeking at data
 
-There are a number of ways to look at your data. We'll tour through some.
+There are a number of ways to look at your data. We'll tour through some here.
 
 ### Head, Tail
 
@@ -239,7 +247,8 @@ With `head()` and `tail()` you can look at the "top" and "bottom" of your data. 
 tx_raw |> head()
 ```
 
-1. As indicated in the Peeking section, add a chunk and get 8 lines from the bottom of your data. 
+1. As indicated in the Peeking section, add a new chunk and get 8 lines from the bottom of your data, like this:
+
 ```{r}
 tx_raw |> tail(8)
 ```
@@ -248,7 +257,7 @@ tx_raw |> tail(8)
 
 The `glimpse()` function allows you to look at your data in another way ... to see all the variables and their data types, no matter how many there are.
 
-1. As indicated in the practice notebook, add a chunk and glimpse your data like below.
+1. As indicated in the practice notebook, add a chunk and glimpse your data like below, and then run it.
 
 ```{r}
 tx_raw |> glimpse()
@@ -268,7 +277,7 @@ tx_raw |> summary()
 
 This is super useful to get basic stats like the lowest, highest, average and median values.
 
-You can also do this for a specific column, like to check a date range within your data:
+To get a summary for single column you can name the data frame first, then append `$` and the column name, like this:
 
 ```{r}
 tx_raw$date |> summary()
@@ -276,13 +285,13 @@ tx_raw$date |> summary()
 
 ### OYO: Peek at your own data
 
-1. At the place indicated in your practice notebook, use these "peeking" functions to look at the data in your state. At least try `glimpse()` and `summary()`.
+1. At the place indicated in your practice notebook, add new chunks to use these "peeking" functions to look at the data in your state you imported above. At least try `glimpse()` and `summary()`.
 
 ## Create or change data
 
-A little later in our analysis we will want to do some calculations in our data based on the year and month of our data. If we were doing this analysis for the first time we might not realize that yet and would end up coming back to this notebook to do this, but we have the knowledge of foresight here.
+A little later in our analysis we will want to do some calculations in our data based on the year and month of our date. If we were doing this analysis for the first time we might not realize that yet and would end up coming back to this notebook to do these things below, but we have the knowledge of foresight here.
 
-We'll use the [mutate()](https://dplyr.tidyverse.org/reference/mutate.html) function here to create a new column based on other columns. As the name implies, `mutate()` changes or creates data.
+We'll use the [mutate()](https://dplyr.tidyverse.org/reference/mutate.html) function to create a new column based on other columns. As the name implies, `mutate()` changes or creates data.
 
 Let's explain how mutate works first: 
 
@@ -312,7 +321,7 @@ tx_dates |> glimpse()
 
 What are doing here is creating a machine of sorts that we will continue to tinker with.
 
-- We are creating a new object called `tx_dates` and then filling it with `tx_raw`.
+- We start with a new object called `tx_dates` and then fill it with `tx_raw`.
 - We then glimpse the new `tx_dates` object so we can see all the columns and some of the values.
 
 Right now there is no difference between `tx_dates` and `tx_raw` but we'll fix that. Doing it this way allows us to see all our columns at once with glimpse.
@@ -336,7 +345,7 @@ tx_dates |> glimpse()
 Do you see the new column added at the end? That is our new column that just has the year from each date. Some notes about this:
 
 - Within the mutate I started with the name of the new column first: `yr`. I called the new variable "yr" instead of "year" because there actually is a `year()` function that we use in that same line and I don't want to get confused. FWIW, R wouldn't care, but we are human.
-- The `year(date)` code is using the `year()` function to pluck those four numbers out of each filed in the `date` column. Since we are creating a new column to put this in, we aren't changing our original data at all.
+- The `year(date)` code is using the `year()` function to pluck those four numbers out of each the `date` column for each row of our data. Since we are creating a new column to put this in, we aren't changing our original data at all.
 
 This is the equivalent of adding a new column to a spreadsheet, and then using a formula that builds from other columns in the spreadsheet and then copying it all the way down the sheet.
 
@@ -361,12 +370,12 @@ tx_dates |> glimpse()
 
 This added two new columns to our date, one for the month and one for "day of the year".
 
-- The `month(date, label = TRUE)` function gives us what is called an "ordered factor" with an abbreviation of our month name. Factors are text strings that understand order, so this field knows that "Jan" comes before "Feb" instead of ordering things alphabetically. If this were a string `<chr>` then "Apr" would come first when we sorted it. If we didn't include the part `, label = TRUE` then we would've gotten a number fo the date, like `8` for August.
-- The `yday(date)` function is getting us how many days into the year this date falls. So if it were February 1st it would give us "32" since there are 31 days in January. This is probably overkill to create this, but I have a challenge for you later that needs it.
+- The `month(date, label = TRUE)` function gives us what is called an "ordered factor" with an abbreviation of our month name. Factors are text strings that have an order to them, so this field knows that "Jan" comes before "Feb" instead of ordering things alphabetically. If this were a string `<chr>` then "Apr" would come first when we sorted it. If we didn't include the part `label = TRUE` argument then we would've gotten a number for the date, like "8" for August.
+- The `yday(date)` function is calculating how many days into the year each date falls. So if it were February 1st it would give us "32" since there are 31 days in January then the one day into February. This is probably unusual to create this, but I have a challenge for you later that needs it.
 
 ### About Lubridate
 
-The functions we used above to get those date components comes from the [lubridate](https://lubridate.tidyverse.org/) package, which gets loaded with our tidyverse library. It is a package designed to ease the friction of working with dates (get it?), which can be a challenge in programming. You can use it to convert text into dates, get date components, adjust time zones and all kinds of things. I use the [cheatsheet](https://rawgit.com/rstudio/cheatsheets/main/lubridate.pdf) from this package a lot, usually to "parse date-times" or "get and set components".
+The functions we used above to get those date components come from the [lubridate](https://lubridate.tidyverse.org/) package, which gets loaded with our tidyverse library. It is a package designed to ease the friction of working with dates (get it?), which can be a challenge in programming. You can use it to convert text into dates, get date components, adjust time zones and all kinds of things. I use the [cheatsheet](https://rawgit.com/rstudio/cheatsheets/main/lubridate.pdf) from this package a lot, usually to "parse date-times" or "get and set components".
 
 ### OYO: Create new date compoents
 
@@ -375,7 +384,7 @@ On your own, create date components with your state's data like we did above. Fo
 
 ## Recoding values
 
-In our weather data we have the `name` column that has the name of the station the reading came from. Those names are pretty long and will get unwieldy later, so let's create more simple names for the cities, like "Austin", "Houston" and "Dallas".
+In our weather data we have the `name` column that has the name of the station the readings came from. Those names are pretty long and will get unwieldy later, so let's create more simple names for the cities, like "Austin", "Houston" and "Dallas".
 
 ### Find distinct values
 
@@ -399,7 +408,9 @@ Now we'll create a new column called `city` that we build based off the original
 In the interest of time we'll provide the finished code with an explanation vs building it piece by piece.
 
 1. Add a new code chunk for the recode.
-2. Use the copy-to-clipboard button (top right of chunk) to copy the code then paste it into your chunk and run it.
+2. To save time, I want you to use the copy-to-clipboard button (top right of the chunk when you roll your cursor over it) to copy this code and then paste it into your chunk and run it.
+
+(The numbers in the code chunk match the annotations below.)
 
 ```{r}
 tx_names <- tx_dates |> # <1>
@@ -418,7 +429,7 @@ tx_names |> glimpse() # <5>
 1. We start with our new object and then start filling it with our `tx_dates` data. We pipe into the mutate on the next line.
 2. Inside the mutate function we start with the name of the new column, `city`, and then set that equal to the values that come from our `recode()` function.
 3. The first argument of recode is what column we are looking into for our original values. For us this is the `name` column.
-4. For each line here, we start with our existing value (which we get from the step above) and then set it to our new value. (This construction is counter to the way R normally works where we usually put our new thing before the old thing.)
+4. For each line here, we start with our existing value (which we get from the step above) and then set it to our new value. (This construction is counter to the way R normally works where we put our new thing before the old thing.)
 5. On the last line we glimpse our new object so we can see if it worked.
 
 ### Check our work
@@ -442,9 +453,9 @@ We might be pressed for time by this point, but if possible recode your own stat
 
 Different weather stations can offer different data, and we are just concerned with some specific variables in or data. We can use the [`select()`](https://dplyr.tidyverse.org/reference/select.html) command to keep or drop columns.
 
-To make decisions what to keep, we would normally spend time with the [documentation for the data](https://www.ncei.noaa.gov/pub/data/cdo/documentation/GHCND_documentation.pdf) to make sure we know what is what.
+To make decisions about what to keep, we would normally spend time with the [documentation for the data](https://www.ncei.noaa.gov/pub/data/cdo/documentation/GHCND_documentation.pdf) to make sure we know what is what.
 
-In the interest of time, I've done that for you and I've made a list. In short we are saving the date, rain, snow and high/low temperature values, plus the columns we created. We don't need TOBS or TAVG, and in some states they have others we don't need.
+In the interest of time, I've done that for you and I've made a list. In short we are saving the date, rain, snow and high/low temperature values, plus the columns we created. We don't need TOBS or TAVG, and in some states they have other variables we don't need.
 
 Also in the interest of time, we'll copy/paste this instead of typing it all in.
 
@@ -472,8 +483,8 @@ tx_tight |> glimpse() # <4>
 ```
 
 1. We start with our new object and pour into it our `tx_names` data with its piped changes.
-2. Inside select we list the variables we want to keep in the order we want them.
-3. For the `prcp` column, we are also renaming the variable to the more familiar `rain`. It's easier to type. In typical R fashion the new name comes first.
+2. Inside `select()` we list the variables we want to keep in the order we want them.
+3. For the `prcp` column, we are also renaming the variable to the more familiar `rain`. It's easier to remember and type. In typical R fashion the new name comes first.
 4. Lastly we glimpse the data so we can check if we got what we wanted.
 
 ### OYO: Select
@@ -484,11 +495,11 @@ Again, if we have time you could do the same for your state.
 
 After all that, we finally have the data the way we want it. I do all this work in a separate notebook like this so I don't have to rerun all the steps when I'm doing analysis (tomorrow!). It is not unusual that during my analysis I come back to this cleaning notebook, fix things and then rerun all the code. That way the fixes are available to all other notebooks using the data.
 
-OK, how to do we get this data out? We'll use another [readr]() function called `write_rds()` to save our data to our computer. We use the `.rds` file (which stands for "R data store"?) because unlike CSVs it saves all our data types. That's often the purpose of cleaning to fix data types like converting text to a date, or a ZIP code to text.
+OK, how to do we get this data out? We'll use another [readr]() function called `write_rds()` to save our data to our computer. We use the `.rds` file type (which stands for "R data store"?) because unlike CSVs it saves all our data types. Fixing these data types is often our goal in cleaning, like converting text to a date, or a ZIP code to text.
 
 1. In the `## Export your data` section of your notebook add a new code chunk.
-2. Take your most recent object and pipe it into `write_rds()` as indicated below.
-3. As you type in the path (inside the quotes) note you can type a few letters and then use *tab* to complete the path. Write the path for to the `data-processed` folder and name the file `tx_clean.rds`, as indicated below.
+2. Take your most recent object `tx_tight` and pipe it into `write_rds()` as indicated below.
+3. As you type in the path (inside the quotes) note you can type a few letters and then use *tab* to complete the path. Write the path for to the `data-processed` folder and then name the file `tx_clean.rds`, as indicated below.
 
 ```{r}
 tx_tight |> write_rds("data-processed/tx_clean.rds")
@@ -511,6 +522,7 @@ If there are errors you'll need to fix them. It is not unusual, especially if yo
 
 ## Render the notebook
 
-Now that everything is working, you can click the **Render** button at the top of the notebook RStudio will format your notebook as an HTML page and how it in your Viewer in bottom-right pane.
+Now that everything is working, you can click the **Render** button at the top of the notebook. RStudio will format your notebook as an HTML page and show it in your Viewer in bottom-right pane.
 
-You'll notice that rendered version has navigation that can get you to other notebooks in this project, including these lessons you've been reading. We'll talk about how to set these projects up later.
+There is a resource chapter [Managing a project](resources/projects.qmd) where you can read about how to set up projects as a website much like these lessons.
+

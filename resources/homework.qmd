@@ -2,10 +2,11 @@
 title: "Homework"
 ---
 
-1. Go through the projects video
-2. Create a new quarto project or website
-3. Import our Skittles data (link TK)
+1. Go through the [Managing a project](projects.qmd) page and video
+2. Create a new quarto website
+    - You can just use the `index.qmd` file for this exercise
+3. Import our Skittles data (link TK) using `read_csv()`
 4. Find the answers to the following questions:
     - Who got the most candy? Who the least?
     - What is the average number of candies per bag?
-    - On average, which color candy is most prevalent
+    - On average, which color candy is most prevalent?

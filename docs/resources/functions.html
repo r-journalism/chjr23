@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -137,6 +171,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Data Wrangling</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../resources/homework.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -185,8 +225,8 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../resources/homework.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Homework</span></a>
+  <a href="../resources/keyboard-shortcuts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Keyboard commands</span></a>
   </div>
 </li>
       </ul>
@@ -241,19 +281,28 @@ ul.task-list li input[type="checkbox"] {
 </ul></li>
 <li><a href="https://dplyr.tidyverse.org/reference/distinct.html"><code>distinct()</code></a> will filter rows down to the unique values of the columns given.</li>
 <li><a href="https://dplyr.tidyverse.org/reference/arrange.html"><code>arrange()</code></a> sorts data based on values in a column. Use <code>desc()</code> to reverse the order. <strong>Example:</strong> <code>arrange(col_name %&gt;% desc())</code></li>
-<li><a href="https://dplyr.tidyverse.org/reference/mutate.html"><code>mutate()</code></a> changes and existing column or creates a new one. <strong>Example:</strong> <code>mutate(new_col = (col01 / col02))</code>.</li>
+<li><a href="https://dplyr.tidyverse.org/reference/mutate.html"><code>mutate()</code></a> changes an existing column or creates a new one. <strong>Example:</strong> <code>mutate(new_col = (col01 / col02))</code>.</li>
 <li><a href="https://www.rdocumentation.org/packages/base/topics/Round"><code>round()</code></a> is a base R function that can round a number to a set decimal point. Often used within a <code>mutate()</code> function.</li>
 <li><a href="https://dplyr.tidyverse.org/reference/recode.html"><code>recode()</code></a>, <a href="https://dplyr.tidyverse.org/reference/if_else.html"><code>if_else()</code></a> and <a href="https://dplyr.tidyverse.org/reference/case_when.html"><code>case_when()</code></a> are all functions that can be used with <code>mutate()</code> to create new categorizations with your data.</li>
-<li><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html"><code>pivot_longer()</code></a> “lengthens” data, increasing the number of rows and decreasing the number of columns. <strong>Example:</strong> <code>pivot_longer(cols = 3:5, names_to = "new_key_col_name", values_to = "new_val_col_name")</code> will take the third through the fifth columns and turn each value into a new row of data. It will put them into two columns: The first column will have the name you give it in <code>names_to</code> and contain the old column name that corresponds to each value pivoted. The second column will have the name of whatever you set in <code>values_to</code> and will contain all the values from each of the columns.</li>
-<li><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html"><code>pivot_wider()</code></a> is the opposite of <code>pivot_longer()</code>. <strong>Example:</strong> <code>pivot_wider(names_from = col_of_key_values, values_from = col_with_values)</code>. See the link.</li>
+<li><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html"><code>pivot_longer()</code></a> “lengthens” data, increasing the number of rows and decreasing the number of columns.</li>
+<li><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html"><code>pivot_wider()</code></a> is the opposite of <code>pivot_longer()</code>.</li>
 </ul>
 </section>
 <section id="aggregation" class="level2">
 <h2 class="anchored" data-anchor-id="aggregation">Aggregation</h2>
 <ul>
-<li><a href="https://dplyr.tidyverse.org/reference/group_by.html"><code>group_by()</code></a> and <a href="https://dplyr.tidyverse.org/reference/summarise.html"><code>summarize()</code></a> often come together. When you use <code>group_by()</code>, every function after it is broken down by that grouping. We often add <a href="https://dplyr.tidyverse.org/reference/arrange.html"><code>arrange()</code></a> to these, calling this our GSA functions. <strong>Example:</strong> <code>group_by(song, artist) %&gt;% summarize(weeks = n(), top_chart_position = min(peak_position))</code>. To break or remove groupings, use <code>ungroup()</code>.</li>
-<li><a href="https://dplyr.tidyverse.org/reference/count.html"><code>count()</code></a> is a shortcut for GSA that count the number rows based on variable groups you feed it.</li>
+<li><a href="https://dplyr.tidyverse.org/reference/group_by.html"><code>group_by()</code></a> and <a href="https://dplyr.tidyverse.org/reference/summarise.html"><code>summarize()</code></a> often come together. When you use <code>group_by()</code>, every function after it is broken down by that grouping. We often add <a href="https://dplyr.tidyverse.org/reference/arrange.html"><code>arrange()</code></a> to these, calling this our GSA functions.</li>
+<li>To break or remove groupings, use <code>ungroup()</code>.</li>
+<li><a href="https://dplyr.tidyverse.org/reference/count.html"><code>count()</code></a> is a shortcut for GSA that counts the number rows based on variable groups you feed it.</li>
 </ul>
+<p>A group_by/summarize/arrange example that would find the songs with the most weeks on the Billboard Hot 100, along with the “top” position the song reached on the chart:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>hot100 <span class="sc">|&gt;</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(song, artist) <span class="sc">|&gt;</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">weeks =</span> <span class="fu">n</span>(),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">top_chart_position =</span> <span class="fu">min</span>(peak_position)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(weeks))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="math" class="level2">
 <h2 class="anchored" data-anchor-id="math">Math</h2>

@@ -1,0 +1,34 @@
+# Keyboard commands
+
+Learning keyboard shortcuts can make you a more efficient coder.
+
+You can find a list of all the shortcuts at **Tools → Keyboard Shortcuts Help**.
+
+Another way to find a menu item (and to learn its keyboard equivalent) is with the **Help** menu. Just type in the menu item and it will show you where it is.
+
+The must-learn keyboard commands:
+
+::: {.panel-tabset}
+
+## Mac
+
+- Insert code chunk: _**Cmd+Option+i**_
+- Type a pipe `|>` or `%>$`: _**Cmd+Shift+m**_
+- Type the assignment arrow `<-`: _**Option+-**_
+- Run a single line of code: While on the line, do _**Cmd+Return**_
+- Run a chunk of code: While in the code chunk, so _**Cmd+Shift+Return**_
+- Run all chunks: _**Cmd+Option+r**_
+- Toggle to/from a comment: While on line(s) of code, do _**Cmd+Shift+c**_
+
+## PC
+
+- Insert code chunk: _**Ctrl+Alt+i**_
+- Type a pipe `|>` or `%>$`: _**Ctrl+Shift+m**_
+- Type the assignment arrow `<-`: _**Alt+-**_ ???
+- Run a single line of code: While on the line, do _**Ctrl+Enter**_
+- Run a chunk of code: While in the code chunk, so _**Ctrl+Shift+Enter**_
+- Run all chunks: _**Ctrl+Alt+r**_
+- Toggle to/from a comment: While on line(s) of code, do _**Ctrl+Shift+c**_
+
+:::
+

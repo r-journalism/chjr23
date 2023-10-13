@@ -77,8 +77,6 @@ Make the same date parts, but with your own state data:
 Use distinct so you can see the station names:
 
 
-### Use mutate to recode
-
 Use recode to create a new column of short city names:
 
 
@@ -97,7 +95,7 @@ Create a new version of your data with only the columns you need, in the order y
 
 ### OYO: Select your cols
 
-Go through the same process as above, but with your own state data.
+Go through the same process as above to select columns with your own state data.
 
 
 

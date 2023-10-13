@@ -172,6 +172,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Data Wrangling</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./resources/homework.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -220,8 +226,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./resources/homework.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Homework</span></a>
+  <a href="./resources/keyboard-shortcuts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Keyboard commands</span></a>
   </div>
 </li>
       </ul>
@@ -238,14 +244,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#welcome-to-the-center-for-health-journalism-r-course." id="toc-welcome-to-the-center-for-health-journalism-r-course." class="nav-link active" data-scroll-target="#welcome-to-the-center-for-health-journalism-r-course.">Welcome to the Center for Health Journalism R course.</a></li>
   <li><a href="#about-quarto-r-and-scripted-journalism" id="toc-about-quarto-r-and-scripted-journalism" class="nav-link" data-scroll-target="#about-quarto-r-and-scripted-journalism">About Quarto, R and scripted journalism</a></li>
-  <li><a href="#installing-the-software" id="toc-installing-the-software" class="nav-link" data-scroll-target="#installing-the-software">Installing the software</a></li>
   <li><a href="#rstudio-tour" id="toc-rstudio-tour" class="nav-link" data-scroll-target="#rstudio-tour">RStudio tour</a></li>
   <li><a href="#updating-preferences" id="toc-updating-preferences" class="nav-link" data-scroll-target="#updating-preferences">Updating preferences</a></li>
   <li><a href="#the-r-package-environment" id="toc-the-r-package-environment" class="nav-link" data-scroll-target="#the-r-package-environment">The R Package environment</a>
   <ul class="collapse">
   <li><a href="#install-packages-well-use" id="toc-install-packages-well-use" class="nav-link" data-scroll-target="#install-packages-well-use">Install packages we’ll use</a></li>
   </ul></li>
-  <li><a href="#download-part-1-course-materials" id="toc-download-part-1-course-materials" class="nav-link" data-scroll-target="#download-part-1-course-materials">Download Part 1 Course materials</a></li>
   <li><a href="#go-to-the-next-chapter" id="toc-go-to-the-next-chapter" class="nav-link" data-scroll-target="#go-to-the-next-chapter">Go to the next chapter</a></li>
   </ul>
 </nav>
@@ -276,15 +280,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<blockquote class="blockquote">
-<p>Perhaps needs a last edit</p>
-</blockquote>
 <section id="welcome-to-the-center-for-health-journalism-r-course." class="level2">
 <h2 class="anchored" data-anchor-id="welcome-to-the-center-for-health-journalism-r-course.">Welcome to the Center for Health Journalism R course.</h2>
 <p>The purpose of this first module is to:</p>
 <ul>
-<li>Get you familiar with RStudio, the program we use to write R code.</li>
+<li>Explain the benefits of using scripted data journalism techniques.</li>
 <li>Get the first two days of material onto your computer.</li>
+<li>Get you familiar with RStudio, the program we use to write R code.</li>
 <li>Introduce Quarto documents, which allow you to write notes and code together in the same document, just like this document that you are reading.</li>
 </ul>
 </section>
@@ -304,18 +306,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This website was created using Quarto and R, and the tool I used to write everything was RStudio.</p>
 <p>This document you are reading is also a Quarto document. These lessons have explanations, instructions and code you can run right on your computer. You’ll also write and run some on your own code.</p>
 <ul>
-<li>The written words and explanations are written in a syntax called <a href="https://quarto.org/docs/authoring/markdown-basics.html">Markdown</a>. It’s a common language used by programmers to create documentation. It’s understandable as text, but also easily converted to other formats.</li>
-<li>The programming code for data is writing in R in code chunks. We’ll introduce those in a moment.</li>
+<li>The written words and explanations are written in a syntax called <a href="https://quarto.org/docs/authoring/markdown-basics.html">Markdown</a>. It’s a language commonly used by programmers to create documentation. It’s understandable as text, but also easily converted to other formats like HTML.</li>
+<li>The programming code for data is written in R in code chunks. We’ll introduce those in a moment.</li>
 </ul>
-</section>
-<section id="installing-the-software" class="level2">
-<h2 class="anchored" data-anchor-id="installing-the-software">Installing the software</h2>
-<p>You need to have both R and RStudio Desktop installed on your computer. Hopefully this is already done.</p>
-<ul>
-<li>You can find the <a href="https://posit.co/download/rstudio-desktop/">installers here</a>. You need both R and RStudio.</li>
-<li>If on a Mac, make sure you install RStudio into your Applications folder.</li>
-</ul>
-<p>There is a chance we might have to install <a href="https://quarto.org/docs/get-started/">Quarto CLI</a>, but don’t worry about it unless we need it.</p>
 </section>
 <section id="rstudio-tour" class="level2">
 <h2 class="anchored" data-anchor-id="rstudio-tour">RStudio tour</h2>
@@ -328,7 +321,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Some things of note here:</p>
 <ul>
-<li>At the top-right of your RStudio window is a <strong>Project</strong> menu that should show the name of this project that you have open. If you click on the dropdown, you’ll see other options.
+<li>At the top-right of your RStudio window is a <strong>Project</strong> menu that should show the name of the project that you have open. If you click on the dropdown, you’ll see other options.
 <ul>
 <li>We always want to be working in a project, which is basically a folder to hold your documents and data.</li>
 </ul></li>
@@ -385,20 +378,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This installs R software packages onto your computer we’ll use later. You only have to install these packages once.</p>
 </section>
 </section>
-<section id="download-part-1-course-materials" class="level2">
-<h2 class="anchored" data-anchor-id="download-part-1-course-materials">Download Part 1 Course materials</h2>
-<p>Now we’ll download the course materials for the first couple of days of class. They are stored on Github.</p>
-<ol type="1">
-<li>Go to this link: <a href="https://github.com/utdata/chjr-part1">github.com/utdata/chjr-part1</a>.</li>
-<li>Click on the big green <strong>Code</strong> button and choose <strong>Download zip</strong></li>
-<li>Find the downloaded file and unzip the folder. Mac: Double-click on it. <a href="https://support.microsoft.com/en-us/windows/zip-and-unzip-files-8d28fa72-f2f9-712f-67df-f80cf89fd4e5">PC directions here</a></li>
-<li>Move the unzipped folder to your Desktop (or some other place you can find it).</li>
-<li>Go back to RStudio and go to File &gt; Open Project. Go find your folder and open the file <code>chjr-part1.Rproj</code>.</li>
-</ol>
-</section>
 <section id="go-to-the-next-chapter" class="level2">
 <h2 class="anchored" data-anchor-id="go-to-the-next-chapter">Go to the next chapter</h2>
-<p>We’re moving on to the next chapter: <a href="https://critmcdonald.github.io/chjr-part1/lesson-day1-02-clean.html">Importing &amp; Cleaning</a></p>
+<p>We’re moving on to the next chapter: <a href="./lesson-day1-02-clean.html">Importing &amp; Cleaning</a>.</p>
 
 
 </section>

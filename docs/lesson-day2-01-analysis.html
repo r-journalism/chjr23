@@ -175,6 +175,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Data Wrangling</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./resources/homework.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Homework</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -223,8 +229,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./resources/homework.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Homework</span></a>
+  <a href="./resources/keyboard-shortcuts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Keyboard commands</span></a>
   </div>
 </li>
       </ul>
@@ -275,7 +281,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#oyo-years-with-most-snow" id="toc-oyo-years-with-most-snow" class="nav-link" data-scroll-target="#oyo-years-with-most-snow">OYO: Years with most snow</a></li>
   </ul></li>
-  <li><a href="#working-through-logic" id="toc-working-through-logic" class="nav-link" data-scroll-target="#working-through-logic">Working through logic</a></li>
+  <li><a href="#working-through-logic" id="toc-working-through-logic" class="nav-link" data-scroll-target="#working-through-logic">Working through logic</a>
+  <ul class="collapse">
+  <li><a href="#first-sum-rain-within-a-city-month-year" id="toc-first-sum-rain-within-a-city-month-year" class="nav-link" data-scroll-target="#first-sum-rain-within-a-city-month-year">First: Sum rain within a city, month, year</a></li>
+  <li><a href="#second-average-rain-by-city-month" id="toc-second-average-rain-by-city-month" class="nav-link" data-scroll-target="#second-average-rain-by-city-month">Second: Average rain by city, month</a></li>
+  <li><a href="#plot-the-results" id="toc-plot-the-results" class="nav-link" data-scroll-target="#plot-the-results">Plot the results</a></li>
+  </ul></li>
   <li><a href="#challenge-earliest-100-day-each-city" id="toc-challenge-earliest-100-day-each-city" class="nav-link" data-scroll-target="#challenge-earliest-100-day-each-city">Challenge: Earliest 100+ day each city</a></li>
   <li><a href="#what-do-you-want-to-learn-about-the-weather" id="toc-what-do-you-want-to-learn-about-the-weather" class="nav-link" data-scroll-target="#what-do-you-want-to-learn-about-the-weather">What do you want to learn about the weather?</a></li>
   </ul>
@@ -307,13 +318,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<blockquote class="blockquote">
-<p>FIRST DRAFT DONE. NEED TO CHECK AGAINST SOLUTIONS.</p>
-</blockquote>
 <section id="goals-of-this-lesson" class="level2">
 <h2 class="anchored" data-anchor-id="goals-of-this-lesson">Goals of this lesson</h2>
 <p>For this lesson we’ll learn about data wrangling functions, many of them from <a href="https://dplyr.tidyverse.org/index.html">dplyr</a>. These are the functions that are much like you do in spreadsheets, like filtering, pivoting and the like. Most of these skills are necessary to prepare data before you make charts.</p>
-<p>Function we will learn about include: <code>arrange()</code>, <code>filter()</code>, <code>slice()</code>, <code>group_by()</code> and <code>summarize()</code>.</p>
+<p>Functions we will learn about include: <code>arrange()</code>, <code>filter()</code>, <code>slice()</code>, <code>group_by()</code> and <code>summarize()</code>.</p>
 <p>We’ll use these to find several findings from our data, including:</p>
 <ul>
 <li>The coldest and warmest days</li>
@@ -321,19 +329,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Years with most snow days</li>
 <li>Years with most 100+ days</li>
 <li>Years with most rain</li>
-<li>Earliest day to reach 100+ each year</li>
+<li>The earliest day to reach 100+ each year</li>
 </ul>
-<p>To perhaps avoid some confusion we’ll use just the Texas data for this lesson.</p>
-<p>(You theoretically could use a different state, but would need to adjust your code to import the right data, use valid cities, etc.)</p>
+<p>To perhaps avoid some confusion we’ll use just the Texas data for this lesson. I’ll still be giving you your own mini-quests.</p>
+<p>(You theoretically could use a your state, but you would need to adjust your code to import that data, use valid cities, etc.)</p>
 </section>
 <section id="clean-up-our-workspace" class="level2">
 <h2 class="anchored" data-anchor-id="clean-up-our-workspace">Clean up our workspace</h2>
 <p>Again I have a practice notebook ready for you to fill in to keep you on track. Let’s open the file and clean up our environment before we get going.</p>
 <ol type="1">
-<li>Open your <code>chjr-part1</code> project if it isn’t already.</li>
+<li>Open your <code>chjr23</code> project if it isn’t already.</li>
 <li>Open the file <code>practice-day1-analysis.qmd</code>.</li>
-<li>Under run, choose “Restart R and Clear Output”.</li>
-<li>Check your Enfironment tab. If there is anything listed there, click on the <strong>broom icon</strong> to clear it out.</li>
+<li>Under the Run menu at the top of the page, choose “Restart R and Clear Output”.</li>
+<li>Check your Environment tab. If there is anything listed there, click on the <strong>broom icon</strong> to clear it out.</li>
 </ol>
 <p>We do this so we don’t have any leftovers from our previous notebook. Each notebook should run independently. That’s also necessary to Render pages within a project.</p>
 </section>
@@ -348,15 +356,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We only need the tidyverse library for this one.</p>
+<p>We only need the tidyverse library for this notebook.</p>
 </section>
 <section id="import-our-cleaned-data" class="level2">
 <h2 class="anchored" data-anchor-id="import-our-cleaned-data">Import our cleaned data</h2>
-<p>Now to reap the benefit our the hard work from last lesson, let’s import our cleaned data.</p>
+<p>Now to reap the benefit our the hard work from the last lesson, let’s import our cleaned data.</p>
 <ol type="1">
 <li>In the import section of the notebook, add a code chunk.</li>
-<li>Add the <code>read_rds()</code> function below and fill out the path to your cleaned data, as indicated.</li>
-<li>Save that data into a new object called <code>tx_clean</code>.</li>
+<li>Add the <code>read_rds()</code> function below and fill out the path to your cleaned data, as indicated and run it to make sure it works.</li>
+<li>Save that data into a new object called <code>tx_clean</code> and run it again. Make sure it shows up in your Environment tab.</li>
 </ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tx_clean <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"data-processed/tx_clean.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -364,13 +372,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="arrange" class="level2">
 <h2 class="anchored" data-anchor-id="arrange">Arrange</h2>
-<p>The <a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a> function is what we use to sort our data. We can use this function to find a couple of answers were looking for, like what are the hottest and coldest days in our data.</p>
+<p>The <a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a> function is what we use to sort our data. We can use this function to find a couple of answers were are looking for, like what are the hottest and coldest days in our data.</p>
 <p>The function is pretty simple, just feed it the data (usually from a pipe) and then add the column you want to sort on. By default it is in “ascending” order: low to high or alphabetically. If you want the opposite (and journalists usually do) you have to wrap the column in another function, <code>desc()</code>.</p>
 <ol type="1">
 <li>In the arrange section, add a code chunk for the “Coldest day” section.</li>
 <li>Start with your data, the pipe into <code>arrange()</code> and add the <code>tmin()</code> column.</li>
 <li><strong>Run the chunk</strong> so you can see the result. Note the data is ordered by the tmin column, but it’s hard to see. Let’s add a <code>select()</code> function to focus on what we care about.</li>
-<li>Pipe into <code>select()</code> adding the city, date and tmin columns.</li>
+<li>Pipe into <code>select()</code> adding the <code>city</code>, <code>date</code> and <code>tmin</code> columns.</li>
 </ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>tx_clean <span class="sc">|&gt;</span> </span>
@@ -385,7 +393,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Glad I as not in Austin in 1949. Now to find the hottest days.</p>
+<p>Glad I was not in Austin in 1949. Now to find the hottest days.</p>
 <ol type="1">
 <li>After the “Hottest day” header add a new code chunk.</li>
 <li>Use arrange to find the highest <code>tmax</code> value. <strong>Run</strong> the chunk to make sure it worked.</li>
@@ -404,7 +412,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Ugh, I was in Austin in 2011.</p>
+<p>Ugh, I was in Austin on both of those days in 2000 and 2011.</p>
 <section id="oyo-most-rain" class="level3">
 <h3 class="anchored" data-anchor-id="oyo-most-rain">OYO: Most rain</h3>
 <p>Using the same tools, find:</p>
@@ -417,7 +425,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="filter" class="level2">
 <h2 class="anchored" data-anchor-id="filter">Filter</h2>
 <p>We use the <a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a> function when we want to specify rows based on a condition. This is the equivalent of clicking on the Filter tool in Excel and choosing values to keep or exclude, but we do it with code that can be fixed and repeated.</p>
-<p>We’ll use this function to build to some of our answers, like which years had the most 100+ degree days. We need to work on this skill here first, as there are nuances.</p>
+<p>We’ll use filter as one function of many for some of our answers, like which years had the most 100+ degree days. We need to work on the filtering skill here first, as there are nuances.</p>
 <p>The function works like this:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this is psuedo code. don't add it</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>data <span class="sc">|&gt;</span> </span>
@@ -482,15 +490,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-<p>Where you apply a filter matters. If we want to consider only certain data before other operations, then we need to do the filter first. In other cases we may filter after all our calculations just to clean up the result to show rows of interest.</p>
+<p>Where you apply a filter matters. If we want to consider only certain data before other operations, then we need to do the filter first. In other cases we may filter after all our calculations to show just rows of interest.</p>
 </section>
 <section id="single-condition" class="level3">
 <h3 class="anchored" data-anchor-id="single-condition">Single condition</h3>
 <p>Let’s find days that are 100+.</p>
 <ol type="1">
 <li>In the <code>## Filter</code> section in the part about 100+ days, add a code chunk.</li>
-<li>Start with the data, the pipe into filter</li>
-<li>For the condition, look in the <code>tmax</code> column using <code>&gt;=</code> to find values “greater or equal to” <code>100</code></li>
+<li>Start with the data, then pipe into <code>filter()</code>.</li>
+<li>For the condition, look in the <code>tmax</code> column using <code>&gt;=</code> to find values “greater or equal to” <code>100</code>.</li>
 <li><strong>Run the code</strong> to make sure it works.</li>
 <li>Use <code>select()</code> to focuse on the variables of interest.</li>
 </ol>
@@ -536,7 +544,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>You can use the <code>|</code> operator for an “or” condition. That character is the shift of the <code>\</code> key just above your return/enter key.</p>
 <ol type="1">
 <li>In the section about snow days, add a chunk.</li>
-<li>Add the code, but run after adding the first condition, before you add the second, so you can compare them when you are done.</li>
+<li>Add the code, but run after adding the first condition, before you add the second condition, so you can compare them when you are done.</li>
+<li>Add the second condition and run it again.</li>
+<li>Add the select to focus on our columns of interest.</li>
 </ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>tx_clean <span class="sc">|&gt;</span> </span>
@@ -558,20 +568,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="oyo-real-snow-days-in-dallas" class="level3">
 <h3 class="anchored" data-anchor-id="oyo-real-snow-days-in-dallas">OYO: Real snow days in Dallas</h3>
-<p>In your notebook, start with the snow days we had above, but add a new condition to it that</p>
+<p>In your notebook, start with the snow days we had above, but add a new condition to the filter that filters <code>city</code> to just “Dallas”.</p>
 </section>
 <section id="filtering-text" class="level3">
 <h3 class="anchored" data-anchor-id="filtering-text">Filtering text</h3>
-<p>Our data here doesn’t lend itself well to explaining this, but we can use filter to find parts of words as well. There are many ways, but the one I use the most is <code>str_detect()</code>.</p>
+<p>We don’t really have a need for this in our data, but we can use filter to find parts of words as well. There are many ways, but the one I use the most is <code>str_detect()</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-9"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-9-1"><a href="#annotated-cell-9-1" aria-hidden="true" tabindex="-1"></a>tx_clean <span class="sc">|&gt;</span> </span>
 <a class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-9-2" class="code-annotation-target"><a href="#annotated-cell-9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(city, <span class="st">"st"</span>)) <span class="sc">|&gt;</span></span>
-<span id="annotated-cell-9-3"><a href="#annotated-cell-9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(city)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-9" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-9-3" class="code-annotation-target"><a href="#annotated-cell-9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(city)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-9" data-target-annotation="1">1</dt>
 <dd>
 <span data-code-annotation="1" data-code-cell="annotated-cell-9" data-code-lines="2">Inside the filter, we start with <code>str_detect()</code>. The first argument it needs is which column in our data to look at, so we fed it <code>city</code>. The second argument (after a comma) is the string of text we are looking for in the column, which is <code>st</code> in our case.</span>
+</dd>
+<dt data-target-cell="annotated-cell-9" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-annotation="2" data-code-cell="annotated-cell-9" data-code-lines="3">I used <code>distinct(city)</code> here so we could more easily see our results.</span>
 </dd>
 </dl>
 </div>
@@ -589,7 +603,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="slice" class="level2">
 <h2 class="anchored" data-anchor-id="slice">Slice</h2>
-<p>Another way to pick out specific rows of data based on a condition is to use <a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a> variables like <code>slice_max()</code>, <code>slice_min()</code>. I mainly want to show this so you can understand our next function better.</p>
+<p>Another way to pick out specific rows of data based on a condition is to use <a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a> variables like <code>slice_max()</code>, <code>slice_min()</code>.</p>
 <p>Let’s use <code>slice_min()</code> to find the coldest day in our data.</p>
 <ol type="1">
 <li>In the slice section of the notebook about coldest day, add the following:</li>
@@ -613,7 +627,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="group-by">Group by</h2>
 <p>The <code>group_by()</code> function goes behind the scenes to organize your data into groups, and any function that follows it gets executed <strong>within</strong> those groups.</p>
 <p>The columns you feed into <code>group_by()</code> determine the groups. If we do <code>group_by(city)</code> then all the “Austin” rows are grouped together, then all the “Dallas” rows, then all the “Houston” rows.</p>
-<p>I sometimes think of these groups as piles of data, separate from each other. We would have three piles of date, one for each city. Functions that follow happen independently on each pile.</p>
+<p>I sometimes think of these groups as piles of data, separate from each other. We would have three piles of data, one for each city. Functions that follow happen independently on each pile.</p>
 </section>
 <section id="group-and-slice" class="level2">
 <h2 class="anchored" data-anchor-id="group-and-slice">Group and slice</h2>
@@ -640,7 +654,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>So, if we <code>group_by(city, yr)</code> then we will get a pile for each year of Austin (85 piles because there are 85 years of data for Austin), then a pile for each year in Houston, etc.</p>
 <p>If we were to find the hottest day in each of those piles, it would look like this:</p>
 <ol type="1">
-<li>Create a new chunk and add this to your notebook.</li>
+<li>Create a new chunk and add this to your notebook using copy-to-clipboard.</li>
 <li>Try it with and without the <code>distinct()</code> at the end and think about why you got those results.</li>
 </ol>
 <div class="cell">
@@ -661,11 +675,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>I added distinct the <code>distinct()</code> there to remove some ties where there were multiple days in a year with that high temperature.</p>
+<p>I added distinct the <code>distinct()</code> there to remove some ties where there were multiple days in a year with that same high temperature.</p>
 </section>
 <section id="summarize" class="level2">
 <h2 class="anchored" data-anchor-id="summarize">Summarize</h2>
-<p>While slice is nice, we really went through this exercise to understand group_by so we can use it with <a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a>, which allows us to summarize data much like a pivot table in Excel.</p>
+<p>While slice is nice, we really went through this exercise to understand <code>group_by()</code> so we can use it with <a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a>, which allows us to summarize data much like a pivot table in Excel.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -679,8 +693,8 @@ Tip
 <p><code>summarise()</code> and <code>summarize()</code> are the same function. The creator of tidyverse is from New Zealand so he has both spellings. I tend to use them both by whim, though the “s” version comes first in type-assist.</p>
 </div>
 </div>
-<p>If there are no group_by variables, the output will be a single row summarizing all observations in the input. If we have groups, it will contain one column for each grouping variable and one column for each summary statistic we specify.</p>
-<p>Let’s do one without groups.</p>
+<p>If there are no group_by variables, the output of <code>summarize()</code> will be a single row summarizing all observations in the input. If we have groups, it will contain one column for each grouping variable and one column for each summary statistic we specify. Much easier to understand if we do it.</p>
+<p>Let’s first do one without groups.</p>
 <ol type="1">
 <li>In the Summarize section, add the following chunk and code.</li>
 </ol>
@@ -700,7 +714,8 @@ Tip
 </div>
 </div>
 </div>
-<p>We have no groups here, so we just get the stats we as for … the earliest date in our data, the latest date in our data and the number of rows.</p>
+<p>We have no groups here, so we just get the stats we specified … the earliest date in our data, the latest date in our data and the number of rows.</p>
+<p><strong>It is important</strong> to name our summarized columns like the <code>e_date =</code> part above. If we don’t, the function becomes a new column name it is hard to work with later. We can name the summarized column anything we want, but choose something that <em>describes</em> the column.</p>
 <section id="add-city-as-a-group" class="level3">
 <h3 class="anchored" data-anchor-id="add-city-as-a-group">Add city as a group</h3>
 <ol type="1">
@@ -731,9 +746,14 @@ Tip
 </div>
 </div>
 </div>
+<p>Now that we’ve added a group, we get a result for each unique value within that column. We have three cities, so we get three results.</p>
 </section>
 <section id="add-both-city-and-yr-as-a-group" class="level3">
 <h3 class="anchored" data-anchor-id="add-both-city-and-yr-as-a-group">Add both city and yr as a group</h3>
+<p>If we group by multiple things, then again we’ll get results for each unique combination between the two variables.</p>
+<ol type="1">
+<li>Just use the copy-to-clipboard tool to add this to your notebook and run it to see it.</li>
+</ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-15"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-15-1"><a href="#annotated-cell-15-1" aria-hidden="true" tabindex="-1"></a>tx_clean <span class="sc">|&gt;</span> </span>
 <a class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-15-2" class="code-annotation-target"><a href="#annotated-cell-15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(city, yr) <span class="sc">|&gt;</span></span>
@@ -763,6 +783,8 @@ Tip
 </div>
 </div>
 </div>
+<p>Now we get a result for each year within each city.</p>
+<p>You’ll also see this message about “<code>summarise()</code> has grouped output by ‘city’.” That is not an error, it’s just telling you that your data will remain grouped by city if you add more functions. It’s a rabbit hole we won’t jump down today, but know it is not a problem.</p>
 </section>
 <section id="common-summarize-stats" class="level3">
 <h3 class="anchored" data-anchor-id="common-summarize-stats">Common summarize stats</h3>
@@ -791,7 +813,7 @@ Tip
 <li>Count the number of records in each group.</li>
 </ul>
 <p>We’ll use these general steps to answer this question: <strong>What years have had the most 100+ degree days.</strong> We’ll start with Austin with careful consideration, then generally show how do it for all the cities.</p>
-<p>Here are the steps I used to do this, along with my though process. In some cases I’m editing the code as I go along but all we show is the end result below.</p>
+<p>Here are the steps I used to do this, along with my thought process. In some cases I’m adding code to check something and then deleting it before moving in, but the code below just shows the end result.</p>
 <ol type="1">
 <li>I started with a new code chunk with the <code>tx_clean</code> data.</li>
 <li>I then filtered it to Austin and ran it to check it. I saved that result into a new object, <code>atx</code>.</li>
@@ -830,7 +852,7 @@ $ yd   &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18
 <ol type="1">
 <li>I start with the <code>atx</code> data and filter to get days where <code>tmax</code> was 100+. I <strong>Run the chunk</strong> to check it.</li>
 <li>Then I grouped the records by <code>yr</code>.</li>
-<li>Then I summarize to get the count using n(), but with a descriptive column name, <code>hot_days</code>.</li>
+<li>Then I summarize to get the count using <code>n()</code>, but with a descriptive column name, <code>hot_days</code>.</li>
 <li>Then I arranged the results to show the most <code>hot_days</code> at the top.</li>
 <li>Then I added a filter to cut off the list at a logical place, years with 50 days or more.</li>
 </ol>
@@ -874,14 +896,14 @@ argument.</code></pre>
 <p>Apparently the Houston Hobby Airport just doesn’t have that many 100+ degree days compared to Austin and Dallas. That humidity, though …</p>
 <section id="oyo-most-snow-days-by-city-each-year" class="level3">
 <h3 class="anchored" data-anchor-id="oyo-most-snow-days-by-city-each-year">OYO: Most snow days by city each year</h3>
-<p>If there is time, you could try to do something similar to count the number of days with it snowed.</p>
+<p>If there is time, you could use a similar method to count the number of days with with <code>snow</code>.</p>
 </section>
 </section>
 <section id="group-and-summarize-math" class="level2">
 <h2 class="anchored" data-anchor-id="group-and-summarize-math">Group and Summarize: Math</h2>
-<p>The next question we want to answer: <strong>In each city, which years had the most rain and which had the least?</strong> Let’s walk through our questions againL</p>
+<p>The next question we want to answer: <strong>In each city, which years had the most rain and which had the least?</strong> Let’s walk through our logic questions again:</p>
 <p><em>Do we need to consider all the data?</em></p>
-<p>In this case we definitely want only whole years. We calculated the first date of all the data earlier, and it looks like we’ll have to start with 1940. We’ll also lop off 2023.</p>
+<p>In this case we definitely want only whole years. When we tried summarize above we calculated the first date of all the data, and looking at that we’ll have to start with 1940. We’ll also lop off 2023.</p>
 <p><em>Do we need to consider our data in any groups?</em></p>
 <p>We need to add together values in each city and year, so Austin for 1940, then ’41, etc. We’ll group our data by <code>city</code> and <code>yr</code>.</p>
 <p><em>What do we need to calculate?</em></p>
@@ -889,11 +911,11 @@ argument.</code></pre>
 <p>Work through this in your practice notebook step by step:</p>
 <ol type="1">
 <li>In the “Group and Summarize: Math” section, add a code chunk.</li>
-<li>Start with our data, then filter it to start after 1939 and before 2023. <strong>Run</strong> the chunk to make sure it works. You might even pipe into a <code>slice_max()</code> to test if it worked (but then remove it after you have checked.)</li>
+<li>Start with our data, then filter it to start after 1939 and before 2023. <strong>Run</strong> the chunk to make sure it works. You might even pipe into a <code>slice_max(date)</code> to test if it worked (but then remove it after you have checked.)</li>
 <li>Group your data by <code>city</code> and <code>yr</code>.</li>
-<li>Summarize your data using <code>sum()</code> on the <code>rain</code> column. You probably have to add an argument <code>na.rm = TRUE</code> to make this work because some days there were no rain and <code>sum()</code> doesn’t know what to do with those blank values.</li>
-<li>Arrange the values first by city, then by the summed rain in descending order.</li>
-<li>Save your result into an object and then print it back out so you can see it.</li>
+<li>Summarize your data using <code>sum()</code> on the <code>rain</code> column. You probably have to add an argument <code>na.rm = TRUE</code> to make this work because some days have blank values for rain and <code>sum()</code> doesn’t know what to do with those blank values. Run it!</li>
+<li>Arrange the values first by city, then by the summed rain in descending order. Run it!</li>
+<li>Save your result into an object and then print it back out so you can see it. Run it!</li>
 </ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>tx_yr_rain <span class="ot">&lt;-</span> tx_clean <span class="sc">|&gt;</span> </span>
@@ -915,7 +937,7 @@ argument.</code></pre>
 </div>
 </div>
 </div>
-<p>At this point we have all the values, through they are hard to read. Some directions we could take to get more clarity:</p>
+<p>At this point we have all the values, through they are hard to read. Some paths we could take to get more clarity:</p>
 <ul>
 <li>We could take our new object and build new blocks to filter by city and arrange by most or least rain. Six new code chunks. Very clear.</li>
 <li>We could maybe use group and slice_max to find highest values within each city, and then again with slice_min. There is an <a href="https://dplyr.tidyverse.org/reference/slice.html">option</a> to set the number of returns.</li>
@@ -951,26 +973,33 @@ argument.</code></pre>
 </div>
 <section id="oyo-years-with-most-snow" class="level3">
 <h3 class="anchored" data-anchor-id="oyo-years-with-most-snow">OYO: Years with most snow</h3>
-<p>Try to do the same to fine the years with the most snow in each city.</p>
+<p>Try to do the same to find the years with the most snow in each city.</p>
 </section>
 </section>
 <section id="working-through-logic" class="level2">
 <h2 class="anchored" data-anchor-id="working-through-logic">Working through logic</h2>
 <p>Here is a question that takes a couple of steps to accomplish: <strong>What is the average monthly rainfall for each city?</strong> i.e., How much rain should we expect each month, based on history?</p>
-<p><em>Do we need to consider all our data?</em> Again, we want just full years, so 1940 through 2022.</p>
+<p><em>Do we need to consider all our data?</em> We don’t want partial years or months or our math won’t work out right, so again, we want just full years, so 1940 through 2022 for the Texas data.</p>
 <p><em>Do we need to consider data in groups?</em> This is tricky. We can’t just group by month and get the average because then we would be averaging the rain <em>each</em> day within a month. We have to total the rain within a month for each year, then we can get the average.</p>
 <p><em>What calculations do we need?</em> Kinda answered that in that we need two calculations: One to total the rain within each month/year, and another to get the averages across those months.</p>
 <p>We could do the code all in one chunk, but you wouldn’t see the result of the first group and sum, so we’ll do it in two.</p>
+<section id="first-sum-rain-within-a-city-month-year" class="level3">
+<h3 class="anchored" data-anchor-id="first-sum-rain-within-a-city-month-year">First: Sum rain within a city, month, year</h3>
+<ol type="1">
+<li>Use the copy-to-clipboard option to add this to your notebook in the “Working through logic” section. Annotations about the code follow.</li>
+</ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="annotated-cell-24"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-24-1"><a href="#annotated-cell-24-1" aria-hidden="true" tabindex="-1"></a>tx_mn_yr_rain <span class="ot">&lt;-</span> tx_clean <span class="sc">|&gt;</span> </span>
 <a class="code-annotation-anchor" data-target-cell="annotated-cell-24" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-24-2" class="code-annotation-target"><a href="#annotated-cell-24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(yr <span class="sc">&gt;=</span> <span class="dv">1940</span>, yr <span class="sc">&lt;=</span> <span class="dv">2022</span>) <span class="sc">|&gt;</span></span>
 <a class="code-annotation-anchor" data-target-cell="annotated-cell-24" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-24-3" class="code-annotation-target"><a href="#annotated-cell-24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(city, mn, yr) <span class="sc">|&gt;</span></span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-24" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-24-4" class="code-annotation-target"><a href="#annotated-cell-24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mn_yr_rain =</span> <span class="fu">sum</span>(rain, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-24" data-target-annotation="3" onclick="event.preventDefault();">3</a><span id="annotated-cell-24-4" class="code-annotation-target"><a href="#annotated-cell-24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mn_yr_rain =</span> <span class="fu">sum</span>(rain, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="annotated-cell-24-5"><a href="#annotated-cell-24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-24-6"><a href="#annotated-cell-24-6" aria-hidden="true" tabindex="-1"></a>tx_mn_yr_rain  </span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-24" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-24" data-code-lines="2">We filter to get our full years</span>
+<span data-code-annotation="1" data-code-cell="annotated-cell-24" data-code-lines="2">We filter to get our full years.</span>
 </dd>
 <dt data-target-cell="annotated-cell-24" data-target-annotation="2">2</dt>
 <dd>
@@ -982,11 +1011,6 @@ argument.</code></pre>
 </dd>
 </dl>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`summarise()` has grouped output by 'city', 'mn'. You can override using the
-`.groups` argument.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>tx_mn_yr_rain  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -996,19 +1020,26 @@ argument.</code></pre>
 </div>
 </div>
 </div>
+</section>
+<section id="second-average-rain-by-city-month" class="level3">
+<h3 class="anchored" data-anchor-id="second-average-rain-by-city-month">Second: Average rain by city, month</h3>
+<p>Now we can group by city and month to average together all the “Jan” in “Austin”, then all the “Feb” in “Austin”, etc.</p>
+<ol type="1">
+<li>Use the copy-to-clipboard option to add this to your notebook. Annotations follow.</li>
+</ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="annotated-cell-26"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-26-1"><a href="#annotated-cell-26-1" aria-hidden="true" tabindex="-1"></a>city_avg_rain <span class="ot">&lt;-</span> tx_mn_yr_rain <span class="sc">|&gt;</span> </span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-26-2" class="code-annotation-target"><a href="#annotated-cell-26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(city, mn) <span class="sc">|&gt;</span></span>
-<a class="code-annotation-anchor" data-target-cell="annotated-cell-26" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-26-3" class="code-annotation-target"><a href="#annotated-cell-26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_mn_rain =</span> <span class="fu">mean</span>(mn_yr_rain))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="annotated-cell-25"><pre class="sourceCode r code-annotation-code code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-25-1"><a href="#annotated-cell-25-1" aria-hidden="true" tabindex="-1"></a>city_avg_rain <span class="ot">&lt;-</span> tx_mn_yr_rain <span class="sc">|&gt;</span> </span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-25" data-target-annotation="1" onclick="event.preventDefault();">1</a><span id="annotated-cell-25-2" class="code-annotation-target"><a href="#annotated-cell-25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(city, mn) <span class="sc">|&gt;</span></span>
+<a class="code-annotation-anchor" data-target-cell="annotated-cell-25" data-target-annotation="2" onclick="event.preventDefault();">2</a><span id="annotated-cell-25-3" class="code-annotation-target"><a href="#annotated-cell-25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_mn_rain =</span> <span class="fu">mean</span>(mn_yr_rain))</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-26" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-25" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-26" data-code-lines="2">We take the result from above and group now by each city and each month, so we can work with all the “Austin in Jan” to get our average.</span>
+<span data-code-annotation="1" data-code-cell="annotated-cell-25" data-code-lines="2">We take the result from above and group now by each city and each month, so we can work with all the “Austin in Jan” to get our average.</span>
 </dd>
-<dt data-target-cell="annotated-cell-26" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-25" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-cell="annotated-cell-26" data-code-lines="3">Now we can get the average <code>mean()</code> of those months.</span>
+<span data-code-annotation="2" data-code-cell="annotated-cell-25" data-code-lines="3">Now we can get the average <code>mean()</code> of those months.</span>
 </dd>
 </dl>
 </div>
@@ -1016,7 +1047,7 @@ argument.</code></pre>
 <pre><code>`summarise()` has grouped output by 'city'. You can override using the
 `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>city_avg_rain</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>city_avg_rain</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
 <div data-pagedtable="false">
@@ -1026,29 +1057,33 @@ argument.</code></pre>
 </div>
 </div>
 </div>
-<p>And to tease you into what is in store for you tomorrow, let’s plot those results:</p>
+</section>
+<section id="plot-the-results" class="level3">
+<h3 class="anchored" data-anchor-id="plot-the-results">Plot the results</h3>
+<p>And to tease you to what is in store for you tomorrow, let’s plot those results. We won’t get into each line of code here, I just want to show you it can be done.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>city_avg_rain <span class="sc">|&gt;</span> </span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> mn, <span class="at">y =</span> avg_mn_rain, <span class="at">group =</span> city)) <span class="sc">+</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">color =</span> city)) <span class="sc">+</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>,<span class="dv">6</span>) <span class="sc">+</span></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Average monthly rainfall, 1940-2022"</span>,</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">"Average monthly rain"</span>,</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"City"</span></span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>city_avg_rain <span class="sc">|&gt;</span> </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> mn, <span class="at">y =</span> avg_mn_rain, <span class="at">group =</span> city)) <span class="sc">+</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">color =</span> city)) <span class="sc">+</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>,<span class="dv">6</span>) <span class="sc">+</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Average monthly rainfall, 1940-2022"</span>,</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">"Average monthly rain"</span>,</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"City"</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="lesson-day2-01-analysis_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
+</section>
 <section id="challenge-earliest-100-day-each-city" class="level2">
 <h2 class="anchored" data-anchor-id="challenge-earliest-100-day-each-city">Challenge: Earliest 100+ day each city</h2>
-<p>Find the earliest date in each city where it reached at least 100 degrees. Here is a hint: We have the <code>yd</code> field that is the number of days into a year.</p>
+<p>Find the earliest date in each city where it reached at least 100 degrees. Here is a hint: Slice is nice and we have the <code>yd</code> field that is the number of days into a year.</p>
 </section>
 <section id="what-do-you-want-to-learn-about-the-weather" class="level2">
 <h2 class="anchored" data-anchor-id="what-do-you-want-to-learn-about-the-weather">What do you want to learn about the weather?</h2>
-<p>Dream up a question and answer it. Maybe import your own state’s data and find something there. The earliest snowfall. The snowiest month on average. The first freeze. The last freeze. Or more challenge, the average day of the last freeze (i.e., when can I plan my garden!).</p>
+<p>Dream up a question and answer it. Maybe import your own state’s data and find something there. The earliest snowfall. The snowiest month on average. The first freeze. The last freeze. Or more challenging: the average day of the last freeze (i.e., when can I plant my garden!).</p>
 
 
 </section>

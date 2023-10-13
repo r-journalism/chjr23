@@ -3,13 +3,11 @@ title: "Data Wrangling"
 author: "Christian McDonald"
 ---
 
-> FIRST DRAFT DONE. NEED TO CHECK AGAINST SOLUTIONS.
-
 ## Goals of this lesson
 
 For this lesson we'll learn about data wrangling functions, many of them from [dplyr](https://dplyr.tidyverse.org/index.html). These are the functions that are much like you do in spreadsheets, like filtering, pivoting and the like. Most of these skills are necessary to prepare data before you make charts.
 
-Function we will learn about include: `arrange()`, `filter()`, `slice()`, `group_by()` and `summarize()`.
+Functions we will learn about include: `arrange()`, `filter()`, `slice()`, `group_by()` and `summarize()`.
 
 We'll use these to find several findings from our data, including:
 
@@ -18,20 +16,20 @@ We'll use these to find several findings from our data, including:
 - Years with most snow days
 - Years with most 100+ days
 - Years with most rain
-- Earliest day to reach 100+ each year
+- The earliest day to reach 100+ each year
 
-To perhaps avoid some confusion we'll use just the Texas data for this lesson.
+To perhaps avoid some confusion we'll use just the Texas data for this lesson. I'll still be giving you your own mini-quests.
 
-(You theoretically could use a different state, but would need to adjust your code to import the right data, use valid cities, etc.)
+(You theoretically could use a your state, but you would need to adjust your code to import that data, use valid cities, etc.)
 
 ## Clean up our workspace
 
 Again I have a practice notebook ready for you to fill in to keep you on track. Let's open the file and clean up our environment before we get going.
 
-1. Open your `chjr-part1` project if it isn't already.
+1. Open your `chjr23` project if it isn't already.
 2. Open the file `practice-day1-analysis.qmd`.
-3. Under run, choose "Restart R and Clear Output".
-4. Check your Enfironment tab. If there is anything listed there, click on the **broom icon** to clear it out.
+3. Under the Run menu at the top of the page, choose "Restart R and Clear Output".
+4. Check your Environment tab. If there is anything listed there, click on the **broom icon** to clear it out.
 
 We do this so we don't have any leftovers from our previous notebook. Each notebook should run independently. That's also necessary to Render pages within a project.
 
@@ -47,15 +45,15 @@ I'm going to include the whole setup chunk code here again so you get the execut
 library(tidyverse)
 ```
 
-We only need the tidyverse library for this one.
+We only need the tidyverse library for this notebook.
 
 ## Import our cleaned data
 
-Now to reap the benefit our the hard work from last lesson, let's import our cleaned data.
+Now to reap the benefit our the hard work from the last lesson, let's import our cleaned data.
 
 1. In the import section of the notebook, add a code chunk.
-2. Add the `read_rds()` function below and fill out the path to your cleaned data, as indicated.
-3. Save that data into a new object called `tx_clean`.
+2. Add the `read_rds()` function below and fill out the path to your cleaned data, as indicated and run it to make sure it works.
+3. Save that data into a new object called `tx_clean` and run it again. Make sure it shows up in your Environment tab.
 
 ```{r}
 tx_clean <- read_rds("data-processed/tx_clean.rds")
@@ -63,14 +61,14 @@ tx_clean <- read_rds("data-processed/tx_clean.rds")
 
 ## Arrange
 
-The [arrange()](https://dplyr.tidyverse.org/reference/arrange.html) function is what we use to sort our data. We can use this function to find a couple of answers were looking for, like what are the hottest and coldest days in our data.
+The [arrange()](https://dplyr.tidyverse.org/reference/arrange.html) function is what we use to sort our data. We can use this function to find a couple of answers were are looking for, like what are the hottest and coldest days in our data.
 
 The function is pretty simple, just feed it the data (usually from a pipe) and then add the column you want to sort on. By default it is in "ascending" order: low to high or alphabetically. If you want the opposite (and journalists usually do) you have to wrap the column in another function, `desc()`.
 
 1. In the arrange section, add a code chunk for the "Coldest day" section.
 2. Start with your data, the pipe into `arrange()` and add the `tmin()` column.
 3. **Run the chunk** so you can see the result. Note the data is ordered by the tmin column, but it's hard to see. Let's add a `select()` function to focus on what we care about.
-4. Pipe into `select()` adding the city, date and tmin columns.
+4. Pipe into `select()` adding the `city`, `date` and `tmin` columns.
 
 ```{r}
 tx_clean |> 
@@ -78,7 +76,7 @@ tx_clean |>
   select(city, date, tmin)
 ```
 
-Glad I as not in Austin in 1949. Now to find the hottest days.
+Glad I was not in Austin in 1949. Now to find the hottest days.
 
 1. After the "Hottest day" header add a new code chunk.
 2. Use arrange to find the highest `tmax` value. **Run** the chunk to make sure it worked.
@@ -90,7 +88,7 @@ tx_clean |>
   select(city, date, tmax)
 ```
 
-Ugh, I was in Austin in 2011.
+Ugh, I was in Austin on both of those days in 2000 and 2011.
 
 ### OYO: Most rain
 
@@ -103,7 +101,7 @@ Using the same tools, find:
 
 We use the [filter()](https://dplyr.tidyverse.org/reference/filter.html) function when we want to specify rows based on a condition. This is the equivalent of clicking on the Filter tool in Excel and choosing values to keep or exclude, but we do it with code that can be fixed and repeated.
 
-We'll use this function to build to some of our answers, like which years had the most 100+ degree days. We need to work on this skill here first, as there are nuances.
+We'll use filter as one function of many for some of our answers, like which years had the most 100+ degree days. We need to work on the filtering skill here first, as there are nuances.
 
 The function works like this:
 
@@ -141,15 +139,15 @@ There are a number of these logical tests for the comparison:
 | **is.na(**x**)**  | Is NA (missing values)   |
 | **!is.na(**x**)** | Is not NA                |
 
-Where you apply a filter matters. If we want to consider only certain data before other operations, then we need to do the filter first. In other cases we may filter after all our calculations just to clean up the result to show rows of interest.
+Where you apply a filter matters. If we want to consider only certain data before other operations, then we need to do the filter first. In other cases we may filter after all our calculations to show just rows of interest.
 
 ### Single condition
 
 Let's find days that are 100+.
 
 1. In the `## Filter` section in the part about 100+ days, add a code chunk.
-2. Start with the data, the pipe into filter
-3. For the condition, look in the `tmax` column using `>=` to find values "greater or equal to" `100`
+2. Start with the data, then pipe into `filter()`.
+3. For the condition, look in the `tmax` column using `>=` to find values "greater or equal to" `100`.
 4. **Run the code** to make sure it works.
 5. Use `select()` to focuse on the variables of interest.
 
@@ -181,7 +179,9 @@ But what if we have an "either or" case where one of two conditions could be tru
 You can use the `|` operator for an "or" condition. That character is the shift of the `\` key just above your return/enter key.
 
 1. In the section about snow days, add a chunk.
-2. Add the code, but run after adding the first condition, before you add the second, so you can compare them when you are done.
+2. Add the code, but run after adding the first condition, before you add the second condition, so you can compare them when you are done.
+3. Add the second condition and run it again.
+4. Add the select to focus on our columns of interest.
 
 
 ```{r}
@@ -190,22 +190,23 @@ tx_clean |>
   select(city, date, snow, snwd)
 ```
 
+
 ### But I need "and" and "or"
 
 You can mix "and" and "or" conditions, but note the order of them might matter depending on what you are doing.
 
 ### OYO: Real snow days in Dallas
 
-In your notebook, start with the snow days we had above, but add a new condition to it that 
+In your notebook, start with the snow days we had above, but add a new condition to the filter that filters `city` to just "Dallas".
 
 ### Filtering text
 
-Our data here doesn't lend itself well to explaining this, but we can use filter to find parts of words as well. There are many ways, but the one I use the most is `str_detect()`.
+We don't really have a need for this in our data, but we can use filter to find parts of words as well. There are many ways, but the one I use the most is `str_detect()`.
 
 ```{r}
 tx_clean |> 
   filter(str_detect(city, "st")) |> # <1>
-  distinct(city)
+  distinct(city) # <2>
 ```
 
 1. Inside the filter, we start with `str_detect()`. The first argument it needs is which column in our data to look at, so we fed it `city`. The second argument (after a comma) is the string of text we are looking for in the column, which is `st` in our case.
@@ -215,7 +216,7 @@ The code above found both "Hou**st**on" and "Au**st**in" because they have "st" 
 
 ## Slice
 
-Another way to pick out specific rows of data based on a condition is to use [slice](https://dplyr.tidyverse.org/reference/slice.html) variables like `slice_max()`, `slice_min()`. I mainly want to show this so you can understand our next function better.
+Another way to pick out specific rows of data based on a condition is to use [slice](https://dplyr.tidyverse.org/reference/slice.html) variables like `slice_max()`, `slice_min()`.
 
 Let's use `slice_min()` to find the coldest day in our data.
 
@@ -236,7 +237,7 @@ The `group_by()` function goes behind the scenes to organize your data into grou
 
 The columns you feed into `group_by()` determine the groups. If we do `group_by(city)` then  all the "Austin" rows are grouped together, then all the "Dallas" rows, then all the "Houston" rows.
 
-I sometimes think of these groups as piles of data, separate from each other. We would have three piles of date, one for each city. Functions that follow happen independently on each pile.
+I sometimes think of these groups as piles of data, separate from each other. We would have three piles of data, one for each city. Functions that follow happen independently on each pile.
 
 ## Group and slice
 
@@ -259,7 +260,7 @@ So, if we `group_by(city, yr)` then we will get a pile for each year of Austin (
 
 If we were to find the hottest day in each of those piles, it would look like this:
 
-1. Create a new chunk and add this to your notebook.
+1. Create a new chunk and add this to your notebook using copy-to-clipboard.
 2. Try it with and without the `distinct()` at the end and think about why you got those results.
 
 ```{r}
@@ -270,19 +271,19 @@ tx_clean |>
   distinct()
 ```
 
-I added distinct the `distinct()` there to remove some ties where there were multiple days in a year with that high temperature.
+I added distinct the `distinct()` there to remove some ties where there were multiple days in a year with that same high temperature.
 
 ## Summarize
 
-While slice is nice, we really went through this exercise to understand group_by so we can use it with [summarize](https://dplyr.tidyverse.org/reference/summarise.html), which allows us to summarize data much like a pivot table in Excel.
+While slice is nice, we really went through this exercise to understand `group_by()` so we can use it with [summarize()](https://dplyr.tidyverse.org/reference/summarise.html), which allows us to summarize data much like a pivot table in Excel.
 
 ::: callout-tip
 `summarise()` and `summarize()` are the same function. The creator of tidyverse is from New Zealand so he has both spellings. I tend to use them both by whim, though the "s" version comes first in type-assist.
 :::
 
-If there are no group_by variables, the output will be a single row summarizing all observations in the input. If we have groups, it will contain one column for each grouping variable and one column for each summary statistic we specify.
+If there are no group_by variables, the output of `summarize()` will be a single row summarizing all observations in the input. If we have groups, it will contain one column for each grouping variable and one column for each summary statistic we specify. Much easier to understand if we do it.
 
-Let's do one without groups.
+Let's first do one without groups.
 
 1. In the Summarize section, add the following chunk and code.
 
@@ -295,7 +296,9 @@ tx_clean |>
   )
 ```
 
-We have no groups here, so we just get the stats we as for ... the earliest date in our data, the latest date in our data and the number of rows.
+We have no groups here, so we just get the stats we specified ... the earliest date in our data, the latest date in our data and the number of rows.
+
+**It is important** to name our summarized columns like the `e_date =` part above. If we don't, the function becomes a new column name it is hard to work with later. We can name the summarized column anything we want, but choose something that _describes_ the column.
 
 ### Add city as a group
 
@@ -313,7 +316,13 @@ tx_clean |>
 
 1. This is where we add the group.
 
+Now that we've added a group, we get a result for each unique value within that column. We have three cities, so we get three results.
+
 ### Add both city and yr as a group
+
+If we group by multiple things, then again we'll get results for each unique combination between the two variables.
+
+1. Just use the copy-to-clipboard tool to add this to your notebook and run it to see it.
 
 ```{r}
 tx_clean |> 
@@ -326,6 +335,10 @@ tx_clean |>
 ```
 
 1. This is where we add the second group to get both city and yr.
+
+Now we get a result for each year within each city.
+
+You'll also see this message about "`summarise()` has grouped output by 'city'." That is not an error, it's just telling you that your data will remain grouped by city if you add more functions. It's a rabbit hole we won't jump down today, but know it is not a problem.
 
 ### Common summarize stats
 
@@ -354,7 +367,7 @@ A very typical workflow to answer a data-driven question is to count records. Of
 
 We'll use these general steps to answer this question: **What years have had the most 100+ degree days.** We'll start with Austin with careful consideration, then generally show how do it for all the cities.
 
-Here are the steps I used to do this, along with my though process. In some cases I'm editing the code as I go along but all we show is the end result below.
+Here are the steps I used to do this, along with my thought process. In some cases I'm adding code to check something and then deleting it before moving in, but the code below just shows the end result.
 
 1. I started with a new code chunk with the `tx_clean` data.
 2. I then filtered it to Austin and ran it to check it. I saved that result into a new object, `atx`.
@@ -378,7 +391,7 @@ With my prepped data I can now do my calculations:
 
 1. I start with the `atx` data and filter to get days where `tmax` was 100+. I **Run the chunk** to check it.
 2. Then I grouped the records by `yr`.
-3. Then I summarize to get the count using n(), but with a descriptive column name, `hot_days`.
+3. Then I summarize to get the count using `n()`, but with a descriptive column name, `hot_days`.
 4. Then I arranged the results to show the most `hot_days` at the top.
 5. Then I added a filter to cut off the list at a logical place, years with 50 days or more.
 
@@ -406,16 +419,16 @@ Apparently the Houston Hobby Airport just doesn't have that many 100+ degree day
 
 ### OYO: Most snow days by city each year
 
-If there is time, you could try to do something similar to count the number of days with it snowed.
+If there is time, you could use a similar method to count the number of days with with `snow`.
 
 
 ## Group and Summarize: Math
 
-The next question we want to answer: **In each city, which years had the most rain and which had the least?** Let's walk through our questions againL
+The next question we want to answer: **In each city, which years had the most rain and which had the least?** Let's walk through our logic questions again:
 
 _Do we need to consider all the data?_
 
-In this case we definitely want only whole years. We calculated the first date of all the data earlier, and it looks like we'll have to start with 1940. We'll also lop off 2023. 
+In this case we definitely want only whole years. When we tried summarize above we calculated the first date of all the data, and looking at that we'll have to start with 1940. We'll also lop off 2023. 
 
 _Do we need to consider our data in any groups?_
 
@@ -428,11 +441,11 @@ We need to add together the inches of rain, so we can `sum()` the `rain` column.
 Work through this in your practice notebook step by step:
 
 1. In the "Group and Summarize: Math" section, add a code chunk.
-2. Start with our data, then filter it to start after 1939 and before 2023. **Run** the chunk to make sure it works. You might even pipe into a `slice_max()` to test if it worked (but then remove it after you have checked.)
+2. Start with our data, then filter it to start after 1939 and before 2023. **Run** the chunk to make sure it works. You might even pipe into a `slice_max(date)` to test if it worked (but then remove it after you have checked.)
 3. Group your data by `city` and `yr`.
-4. Summarize your data using `sum()` on the `rain` column. You probably have to add an argument `na.rm = TRUE` to make this work because some days there were no rain and `sum()` doesn't know what to do with those blank values.
-5. Arrange the values first by city, then by the summed rain in descending order.
-6. Save your result into an object and then print it back out so you can see it.
+4. Summarize your data using `sum()` on the `rain` column. You probably have to add an argument `na.rm = TRUE` to make this work because some days have blank values for rain and `sum()` doesn't know what to do with those blank values. Run it!
+5. Arrange the values first by city, then by the summed rain in descending order. Run it!
+6. Save your result into an object and then print it back out so you can see it. Run it!
 
 ```{r}
 tx_yr_rain <- tx_clean |> 
@@ -444,7 +457,7 @@ tx_yr_rain <- tx_clean |>
 tx_yr_rain
 ```
 
-At this point we have all the values, through they are hard to read. Some directions we could take to get more clarity:
+At this point we have all the values, through they are hard to read. Some paths we could take to get more clarity:
 
 - We could take our new object and build new blocks to filter by city and arrange by most or least rain. Six new code chunks. Very clear.
 - We could maybe use group and slice_max to find highest values within each city, and then again with slice_min. There is an [option](https://dplyr.tidyverse.org/reference/slice.html) to set the number of returns.
@@ -468,13 +481,13 @@ tx_yr_rain |>
 
 ### OYO: Years with most snow
 
-Try to do the same to fine the years with the most snow in each city.
+Try to do the same to find the years with the most snow in each city.
 
 ## Working through logic
 
 Here is a question that takes a couple of steps to accomplish: **What is the average monthly rainfall for each city?** i.e., How much rain should we expect each month, based on history?
 
-_Do we need to consider all our data?_ Again, we want just full years, so 1940 through 2022.
+_Do we need to consider all our data?_ We don't want partial years or months or our math won't work out right, so again, we want just full years, so 1940 through 2022 for the Texas data.
 
 _Do we need to consider data in groups?_ This is tricky. We can't just group by month and get the average because then we would be averaging the rain _each_ day within a month. We have to total the rain within a month for each year, then we can get the average.
 
@@ -482,7 +495,13 @@ _What calculations do we need?_ Kinda answered that in that we need two calculat
 
 We could do the code all in one chunk, but you wouldn't see the result of the first group and sum, so we'll do it in two.
 
+### First: Sum rain within a city, month, year
+
+1. Use the copy-to-clipboard option to add this to your notebook in the "Working through logic" section. Annotations about the code follow.
+
 ```{r}
+#| message: false
+
 tx_mn_yr_rain <- tx_clean |> 
   filter(yr >= 1940, yr <= 2022) |> # <1>
   group_by(city, mn, yr) |>  # <2>
@@ -491,9 +510,15 @@ tx_mn_yr_rain <- tx_clean |>
 tx_mn_yr_rain  
 ```
 
-1. We filter to get our full years
+1. We filter to get our full years.
 2. We group by three things so we can add the rain in each city for each month of each year.
 3. We then sum the rain with a nice name. We use `na.rm = TRUE` because there were cases where the rain value was blank instead of 0.0. Perhaps the station was down? Would need to do some reporting to figure that out.
+
+### Second: Average rain by city, month
+
+Now we can group by city and month to average together all the "Jan" in "Austin", then all the "Feb" in "Austin", etc.
+
+1. Use the copy-to-clipboard option to add this to your notebook. Annotations follow.
 
 ```{r}
 city_avg_rain <- tx_mn_yr_rain |> 
@@ -506,7 +531,9 @@ city_avg_rain
 1. We take the result from above and group now by each city and each month, so we can work with all the "Austin in Jan" to get our average.
 2. Now we can get the average `mean()` of those months.
 
-And to tease you into what is in store for you tomorrow, let's plot those results:
+### Plot the results
+
+And to tease you to what is in store for you tomorrow, let's plot those results. We won't get into each line of code here, I just want to show you it can be done.
 
 ```{r}
 city_avg_rain |> 
@@ -520,10 +547,11 @@ city_avg_rain |>
   )
 ```
 
+
 ## Challenge: Earliest 100+ day each city
 
-Find the earliest date in each city where it reached at least 100 degrees. Here is a hint: We have the `yd` field that is the number of days into a year.
+Find the earliest date in each city where it reached at least 100 degrees. Here is a hint: Slice is nice and we have the `yd` field that is the number of days into a year.
 
 ## What do you want to learn about the weather?
 
-Dream up a question and answer it. Maybe import your own state's data and find something there. The earliest snowfall. The snowiest month on average. The first freeze. The last freeze. Or more challenge, the average day of the last freeze (i.e., when can I plan my garden!).
+Dream up a question and answer it. Maybe import your own state's data and find something there. The earliest snowfall. The snowiest month on average. The first freeze. The last freeze. Or more challenging: the average day of the last freeze (i.e., when can I plant my garden!).
