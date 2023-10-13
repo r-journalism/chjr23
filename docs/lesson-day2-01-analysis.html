@@ -8,7 +8,7 @@
 
 <meta name="author" content="Christian McDonald">
 
-<title>Data Wrangling</title>
+<title>CHJR 2323 - Data Wrangling</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -124,6 +124,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">CHJR 2323</a> 
+    </div>
+      </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
@@ -143,7 +148,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Home</span></a>
+ <span class="menu-text">Getting started</span></a>
   </div>
 </li>
       </ul>
@@ -581,11 +586,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-9" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-9" data-code-lines="2">Inside the filter, we start with <code>str_detect()</code>. The first argument it needs is which column in our data to look at, so we fed it <code>city</code>. The second argument (after a comma) is the string of text we are looking for in the column, which is <code>st</code> in our case.</span>
+<span data-code-cell="annotated-cell-9" data-code-lines="2" data-code-annotation="1">Inside the filter, we start with <code>str_detect()</code>. The first argument it needs is which column in our data to look at, so we fed it <code>city</code>. The second argument (after a comma) is the string of text we are looking for in the column, which is <code>st</code> in our case.</span>
 </dd>
 <dt data-target-cell="annotated-cell-9" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-cell="annotated-cell-9" data-code-lines="3">I used <code>distinct(city)</code> here so we could more easily see our results.</span>
+<span data-code-cell="annotated-cell-9" data-code-lines="3" data-code-annotation="2">I used <code>distinct(city)</code> here so we could more easily see our results.</span>
 </dd>
 </dl>
 </div>
@@ -733,7 +738,7 @@ Tip
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-14" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-14" data-code-lines="2">This is where we add the group.</span>
+<span data-code-cell="annotated-cell-14" data-code-lines="2" data-code-annotation="1">This is where we add the group.</span>
 </dd>
 </dl>
 </div>
@@ -766,7 +771,7 @@ Tip
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-15" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-15" data-code-lines="2">This is where we add the second group to get both city and yr.</span>
+<span data-code-cell="annotated-cell-15" data-code-lines="2" data-code-annotation="1">This is where we add the second group to get both city and yr.</span>
 </dd>
 </dl>
 </div>
@@ -999,15 +1004,15 @@ argument.</code></pre>
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-24" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-24" data-code-lines="2">We filter to get our full years.</span>
+<span data-code-cell="annotated-cell-24" data-code-lines="2" data-code-annotation="1">We filter to get our full years.</span>
 </dd>
 <dt data-target-cell="annotated-cell-24" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-cell="annotated-cell-24" data-code-lines="3">We group by three things so we can add the rain in each city for each month of each year.</span>
+<span data-code-cell="annotated-cell-24" data-code-lines="3" data-code-annotation="2">We group by three things so we can add the rain in each city for each month of each year.</span>
 </dd>
 <dt data-target-cell="annotated-cell-24" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-annotation="3" data-code-cell="annotated-cell-24" data-code-lines="4">We then sum the rain with a nice name. We use <code>na.rm = TRUE</code> because there were cases where the rain value was blank instead of 0.0. Perhaps the station was down? Would need to do some reporting to figure that out.</span>
+<span data-code-cell="annotated-cell-24" data-code-lines="4" data-code-annotation="3">We then sum the rain with a nice name. We use <code>na.rm = TRUE</code> because there were cases where the rain value was blank instead of 0.0. Perhaps the station was down? Would need to do some reporting to figure that out.</span>
 </dd>
 </dl>
 </div>
@@ -1035,11 +1040,11 @@ argument.</code></pre>
 <dl class="code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-25" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-annotation="1" data-code-cell="annotated-cell-25" data-code-lines="2">We take the result from above and group now by each city and each month, so we can work with all the “Austin in Jan” to get our average.</span>
+<span data-code-cell="annotated-cell-25" data-code-lines="2" data-code-annotation="1">We take the result from above and group now by each city and each month, so we can work with all the “Austin in Jan” to get our average.</span>
 </dd>
 <dt data-target-cell="annotated-cell-25" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-annotation="2" data-code-cell="annotated-cell-25" data-code-lines="3">Now we can get the average <code>mean()</code> of those months.</span>
+<span data-code-cell="annotated-cell-25" data-code-lines="3" data-code-annotation="2">Now we can get the average <code>mean()</code> of those months.</span>
 </dd>
 </dl>
 </div>

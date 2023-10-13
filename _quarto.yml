@@ -6,13 +6,14 @@ project:
     - "!practice*.qmd"
 
 website:
+  title: "CHJR 2323"
   sidebar:
     style: "docked"
     search: true
     contents:
       - section: "CHJR Part 1"
         contents:
-          - text: Home
+          - text: "Getting started"
             url: index.qmd
       - section: "Lessons"
         contents:
