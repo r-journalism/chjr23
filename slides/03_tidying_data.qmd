@@ -1,11 +1,11 @@
 ---
 title: "Joining and Tidying<br /><br /><br />"
-author: "2022 Data Health Fellowship"
+author: "2023 Data Health Fellowship"
 format:
   revealjs: 
     theme: beige
 title-slide-attributes:
-    data-background-image: "../images/usc.jpg"
+    data-background-image: "slide_images/usc.jpg"
     data-background-size: contain
     data-background-opacity: "number"
 ---
@@ -34,7 +34,7 @@ y
 ## Two data frames
 
 ```{r, echo=F, fig.retina=TRUE, out.width=800}
-knitr::include_graphics("../images/original-dfs.png")
+knitr::include_graphics("slide_images/original-dfs.png")
 ```
 
 
@@ -131,7 +131,7 @@ left_join(x, y)
 
 ## stringr package
 
-![](../images/stringr.png)
+![](slide_images/stringr.png)
 
 
 ## stringr functions
@@ -329,7 +329,7 @@ parse_number(messy_numbers)
 
 ## parse_number()
 
-![](../images/parse_number.png)
+![](slide_images/parse_number.png)
 
 
 
@@ -340,24 +340,24 @@ Run this to go through the exercises
 ```{r}
 #| eval: FALSE
 #| echo: TRUE
-learnr::run_tutorial("3_a_joining", "chjr")
+practice-day3-wrangling.qmd
 ```
 
 Get as far as you can in the time we have! 
 
-## Tidy data {background-color="white" background-image="../images/tidydata_1.jpg" background-size="100%" }
+## Tidy data {background-color="white" background-image="slide_images/tidydata_1.jpg" background-size="100%" }
 
-## Messy data {background-color="white" background-image="../images/tidydata_2.jpg" background-size="100%" }
+## Messy data {background-color="white" background-image="slide_images/tidydata_2.jpg" background-size="100%" }
 
-## _ {background-color="white" background-image="../images/tidydata_3.jpg" background-size="100%" }
+## _ {background-color="white" background-image="slide_images/tidydata_3.jpg" background-size="100%" }
 
-## One tool, similar data structures {background-color="white" background-image="../images/tidydata_4.jpg" background-size="100%" }
+## One tool, similar data structures {background-color="white" background-image="slide_images/tidydata_4.jpg" background-size="100%" }
 
-## Multiple tools, more efficient {background-color="white" background-image="../images/tidydata_5.jpg" background-size="100%" }
+## Multiple tools, more efficient {background-color="white" background-image="slide_images/tidydata_5.jpg" background-size="100%" }
 
-## Success! {background-color="white" background-image="../images/tidydata_6.jpg" background-size="100%" }
+## Success! {background-color="white" background-image="slide_images/tidydata_6.jpg" background-size="100%" }
 
-## You! Happy! {background-color="white" background-image="../images/tidydata_7.jpg" background-size="100%" }
+## You! Happy! {background-color="white" background-image="slide_images/tidydata_7.jpg" background-size="100%" }
 
 ## Sample data
 
@@ -375,7 +375,7 @@ df
 
 ## wide vs long
 
-![](../images/original-dfs-tidy.png)
+![](slide_images/original-dfs-tidy.png)
 
 ## pivot_longer() illustrated
 
@@ -541,7 +541,7 @@ df_long %>%
 :::
 
 
-## Lubridate for dates {background-color="white" background-image="../images/lubridate" background-size="100%" }
+## Lubridate for dates {background-color="white" background-image="slide_images/lubridate" background-size="100%" }
 
 
 
@@ -615,7 +615,7 @@ df %>%
 
 ## Recognizing dates
 
-![](../images/lubridate_ymd.png)
+![](slide_images/lubridate_ymd.png)
 
 
 # Your turn
@@ -625,7 +625,7 @@ Run this to go through the exercises
 ```{r}
 #| eval: FALSE
 #| echo: TRUE
-learnr::run_tutorial("3_b_math_pivots", "chjr")
+practic-day3-wrangling.qmd
 ```
 
 Get as far as you can!

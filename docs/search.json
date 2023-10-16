@@ -147,11 +147,60 @@
     "text": "Challenge: Earliest 100+ day each city\nFor each city, find the earliest day of a year in which it reached 100 degrees.\n\ntx_clean |&gt; \n  filter(tmax &gt;= 100) |&gt; \n  group_by(city) |&gt; \n  slice_min(yd) |&gt; \n  select(city, date, tmax)"
   },
   {
-    "objectID": "slides/sd1-02-import.html#libraries",
-    "href": "slides/sd1-02-import.html#libraries",
-    "title": "Importing",
-    "section": "Libraries",
-    "text": "Libraries\nLibraries are a collections of pre-written functions that we download to our computer so we can us them in our code.\nThe Tidyverse has several libraries that are designed to work together, like dplyr to manipulate data, and ggplot to make charts."
+    "objectID": "slides/sd1-01-intro.html#install-r-rstudio",
+    "href": "slides/sd1-01-intro.html#install-r-rstudio",
+    "title": "Quarto, R & RStudio",
+    "section": "Install R & RStudio",
+    "text": "Install R & RStudio\nYou’ll need to go to https://posit.co/downloads/ and click on the big Download RStudio button there. There are two parts:\n\nInstall the R language\nInstall the RStudio Desktop program\n\nMake sure you run the installer or copy into your Applications folder as noted.\nThe R language gets installed on your machine, but you never launch it like a regular program."
+  },
+  {
+    "objectID": "slides/sd1-01-intro.html#install-quarto",
+    "href": "slides/sd1-01-intro.html#install-quarto",
+    "title": "Quarto, R & RStudio",
+    "section": "Install Quarto",
+    "text": "Install Quarto\n\nGo to quarto.org/ and then click the Getting Started link.\nDownload and install the software for your machine."
+  },
+  {
+    "objectID": "slides/sd1-01-intro.html#launch-rstudio",
+    "href": "slides/sd1-01-intro.html#launch-rstudio",
+    "title": "Quarto, R & RStudio",
+    "section": "Launch RStudio",
+    "text": "Launch RStudio\n\nFrom your Applications folder (or through your Start menu) launch the program called RStudio\n\n\nlauncher"
+  },
+  {
+    "objectID": "slides/sd1-01-intro.html#about-rstudio-desktop",
+    "href": "slides/sd1-01-intro.html#about-rstudio-desktop",
+    "title": "Quarto, R & RStudio",
+    "section": "About RStudio Desktop",
+    "text": "About RStudio Desktop\nWe’ll orient a bit in class.\n\nRStudio Desktop"
+  },
+  {
+    "objectID": "slides/sd1-01-intro.html#look-for-the-console",
+    "href": "slides/sd1-01-intro.html#look-for-the-console",
+    "title": "Quarto, R & RStudio",
+    "section": "Look for the console",
+    "text": "Look for the console\nWe need you to run some commands in the RStudio Console. We’ll provide code to copy/paste.\nInstall packages\nThis will take some time to run, depending on the internet.\ninstall.packages(c(\"usethis\", \"tidyverse\", \"quarto\", \"rmarkdown\", \"janitor\"))\nDownload, open the material\nAs you are asked questions, choose the default answers or ones that make the most sense.\nusethis::use_course(\"https://github.com/r-journalism/chjr/archive/master.zip\")"
+  },
+  {
+    "objectID": "slides/sd1-01-intro.html#using-projects",
+    "href": "slides/sd1-01-intro.html#using-projects",
+    "title": "Quarto, R & RStudio",
+    "section": "Using projects",
+    "text": "Using projects\n\n\nR needs to know where things live on your computer so it can find them.\nWe use projects to organize our work. One folder for each project, with everything you need."
+  },
+  {
+    "objectID": "slides/sd1-01-intro.html#open-our-first-lesson",
+    "href": "slides/sd1-01-intro.html#open-our-first-lesson",
+    "title": "Quarto, R & RStudio",
+    "section": "Open our first lesson",
+    "text": "Open our first lesson\n\nIn the Files pane, find our first file in lessons/d1-01-intro.qmd and open it.\nThis should open in your pane to the left, with the Console below it.\n\nWe’ll work from there now."
+  },
+  {
+    "objectID": "slides/sd1-01-intro.html#tour-of-our-project",
+    "href": "slides/sd1-01-intro.html#tour-of-our-project",
+    "title": "Quarto, R & RStudio",
+    "section": "Tour of our project",
+    "text": "Tour of our project"
   },
   {
     "objectID": "resources/wx-testing.html",
@@ -417,7 +466,7 @@
     "href": "index.html",
     "title": "CHJR 2023",
     "section": "",
-    "text": "Lessons for the 2023 version of the Center for Health Journalism’s Data Fellowship.\nWith these lessons we’ll learn about:\n\nBasics of R, RStudio and Quarto\nImporting, cleaning and exporting data\nBasic data wrangling\nProject management\n\n\nand more to come\n\n\n\nYou need to have both R and RStudio Desktop installed on your computer. Hopefully this is already done.\n\nYou can find the installers here. You need both R and RStudio.\nIf on a Mac, make sure you install RStudio into your Applications folder.\n\nThere is a chance we might have to install Quarto CLI, but don’t worry about it unless we need it. If we have challenges wih Macs installing xcode-cli tools, I have a copy here.\n\n\n\nNow we’ll download the course materials for the first couple of days of class. They are stored on Github.\n\nGo to the repo on Github: github.com/r-journalism/chjr23\nClick on the big green Code button and choose Download zip.\nFind the downloaded file and unzip the folder. Mac: Double-click on it. PC directions here\nMove the unzipped folder to your Desktop (or some other place you can find it).\nGo back to RStudio and go to File &gt; Open Project. Go find your folder and open the file chjr23.Rproj.\n\n\n\n\nFor at least the first couple of days we’ll use web-published versions of the lessons to read as we work through practice notebooks in the project.\n\nStart here\n\n\n\n\nThere might be some slides to support the lessons."
+    "text": "Lessons for the 2023 version of the Center for Health Journalism’s Data Fellowship.\nWith these lessons we’ll learn about:\n\nBasics of R, RStudio and Quarto\nImporting, cleaning and exporting data\nBasic data wrangling\nworking with text\nShaping data\nVisualizing data\nProject management\n\n\n\nYou need to have both R and RStudio Desktop installed on your computer. Hopefully this is already done.\n\nYou can find the installers here. You need both R and RStudio.\nIf on a Mac, make sure you install RStudio into your Applications folder.\n\nThere is a chance we might have to install Quarto CLI, but don’t worry about it unless we need it. If we have challenges wih Macs installing xcode-cli tools, I have a copy here.\n\n\n\nNow we’ll download the course materials for the first couple of days of class. They are stored on Github.\n\nGo to the repo on Github: github.com/r-journalism/chjr23\nClick on the big green Code button and choose Download zip.\nFind the downloaded file and unzip the folder. Mac: Double-click on it. PC directions here\nMove the unzipped folder to your Desktop (or some other place you can find it).\nGo back to RStudio and go to File &gt; Open Project. Go find your folder and open the file chjr23.Rproj.\n\n\n\n\nFor at least the first couple of days we’ll use web-published versions of the lessons to read as we work through practice notebooks in the project.\n\nStart here\n\n\n\n\nThere might be some slides to support the lessons."
   },
   {
     "objectID": "index.html#installing-the-software",
@@ -1090,62 +1139,6 @@
     "title": "Joining and Tidying",
     "section": "Recognizing dates",
     "text": "Recognizing dates"
-  },
-  {
-    "objectID": "slides/sd1-01-intro.html#install-r-rstudio",
-    "href": "slides/sd1-01-intro.html#install-r-rstudio",
-    "title": "Quarto, R & RStudio",
-    "section": "Install R & RStudio",
-    "text": "Install R & RStudio\nYou’ll need to go to https://posit.co/downloads/ and click on the big Download RStudio button there. There are two parts:\n\nInstall the R language\nInstall the RStudio Desktop program\n\nMake sure you run the installer or copy into your Applications folder as noted.\nThe R language gets installed on your machine, but you never launch it like a regular program."
-  },
-  {
-    "objectID": "slides/sd1-01-intro.html#install-quarto",
-    "href": "slides/sd1-01-intro.html#install-quarto",
-    "title": "Quarto, R & RStudio",
-    "section": "Install Quarto",
-    "text": "Install Quarto\n\nGo to quarto.org/ and then click the Getting Started link.\nDownload and install the software for your machine."
-  },
-  {
-    "objectID": "slides/sd1-01-intro.html#launch-rstudio",
-    "href": "slides/sd1-01-intro.html#launch-rstudio",
-    "title": "Quarto, R & RStudio",
-    "section": "Launch RStudio",
-    "text": "Launch RStudio\n\nFrom your Applications folder (or through your Start menu) launch the program called RStudio\n\n\nlauncher"
-  },
-  {
-    "objectID": "slides/sd1-01-intro.html#about-rstudio-desktop",
-    "href": "slides/sd1-01-intro.html#about-rstudio-desktop",
-    "title": "Quarto, R & RStudio",
-    "section": "About RStudio Desktop",
-    "text": "About RStudio Desktop\nWe’ll orient a bit in class.\n\nRStudio Desktop"
-  },
-  {
-    "objectID": "slides/sd1-01-intro.html#look-for-the-console",
-    "href": "slides/sd1-01-intro.html#look-for-the-console",
-    "title": "Quarto, R & RStudio",
-    "section": "Look for the console",
-    "text": "Look for the console\nWe need you to run some commands in the RStudio Console. We’ll provide code to copy/paste.\nInstall packages\nThis will take some time to run, depending on the internet.\ninstall.packages(c(\"usethis\", \"tidyverse\", \"quarto\", \"rmarkdown\", \"janitor\"))\nDownload, open the material\nAs you are asked questions, choose the default answers or ones that make the most sense.\nusethis::use_course(\"https://github.com/r-journalism/chjr/archive/master.zip\")"
-  },
-  {
-    "objectID": "slides/sd1-01-intro.html#using-projects",
-    "href": "slides/sd1-01-intro.html#using-projects",
-    "title": "Quarto, R & RStudio",
-    "section": "Using projects",
-    "text": "Using projects\n\n\nR needs to know where things live on your computer so it can find them.\nWe use projects to organize our work. One folder for each project, with everything you need."
-  },
-  {
-    "objectID": "slides/sd1-01-intro.html#open-our-first-lesson",
-    "href": "slides/sd1-01-intro.html#open-our-first-lesson",
-    "title": "Quarto, R & RStudio",
-    "section": "Open our first lesson",
-    "text": "Open our first lesson\n\nIn the Files pane, find our first file in lessons/d1-01-intro.qmd and open it.\nThis should open in your pane to the left, with the Console below it.\n\nWe’ll work from there now."
-  },
-  {
-    "objectID": "slides/sd1-01-intro.html#tour-of-our-project",
-    "href": "slides/sd1-01-intro.html#tour-of-our-project",
-    "title": "Quarto, R & RStudio",
-    "section": "Tour of our project",
-    "text": "Tour of our project"
   },
   {
     "objectID": "solution-day1-clean.html",

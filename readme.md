@@ -7,9 +7,10 @@ With these lessons we'll learn about:
 - Basics of R, RStudio and Quarto
 - Importing, cleaning and exporting data
 - Basic data wrangling
+- working with text
+- Shaping data
+- Visualizing data
 - Project management
-
-> and more to come
 
 ## Installing the software
 
