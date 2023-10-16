@@ -466,7 +466,7 @@
     "href": "index.html",
     "title": "CHJR 2023",
     "section": "",
-    "text": "Lessons for the 2023 version of the Center for Health Journalism’s Data Fellowship.\nWith these lessons we’ll learn about:\n\nBasics of R, RStudio and Quarto\nImporting, cleaning and exporting data\nBasic data wrangling\nworking with text\nShaping data\nVisualizing data\nProject management\n\n\n\nYou need to have both R and RStudio Desktop installed on your computer. Hopefully this is already done.\n\nYou can find the installers here. You need both R and RStudio.\nIf on a Mac, make sure you install RStudio into your Applications folder.\n\nThere is a chance we might have to install Quarto CLI, but don’t worry about it unless we need it. If we have challenges wih Macs installing xcode-cli tools, I have a copy here.\n\n\n\nNow we’ll download the course materials for the first couple of days of class. They are stored on Github.\n\nGo to the repo on Github: github.com/r-journalism/chjr23\nClick on the big green Code button and choose Download zip.\nFind the downloaded file and unzip the folder. Mac: Double-click on it. PC directions here\nMove the unzipped folder to your Desktop (or some other place you can find it).\nGo back to RStudio and go to File &gt; Open Project. Go find your folder and open the file chjr23.Rproj.\n\n\n\n\nFor at least the first couple of days we’ll use web-published versions of the lessons to read as we work through practice notebooks in the project.\n\nStart here\n\n\n\n\nThere might be some slides to support the lessons."
+    "text": "Lessons for the 2023 version of the Center for Health Journalism’s Data Fellowship.\nWith these lessons we’ll learn about:\n\nBasics of R, RStudio and Quarto\nImporting, cleaning and exporting data\nBasic data wrangling\nworking with text\nShaping data\nVisualizing data\nProject management\n\n\n\nYou need to have both R and RStudio Desktop installed on your computer. Hopefully this is already done.\n\nYou can find the installers here. You need both R and RStudio.\nIf on a Mac, make sure you install RStudio into your Applications folder.\n\nThere is a chance we might have to install Quarto CLI, but don’t worry about it unless we need it. If we have challenges wih Macs installing xcode-cli tools, I have a copy here.\n\n\n\nNow we’ll download the course materials for the first couple of days of class. They are stored on Github.\n\nGo to the repo on Github: github.com/r-journalism/chjr23\nClick on the big green Code button and choose Download zip.\nFind the downloaded file and unzip the folder. Mac: Double-click on it. PC directions here\nMove the unzipped folder to your Desktop (or some other place you can find it).\nGo back to RStudio and go to File &gt; Open Project. Go find your folder and open the file chjr23.Rproj.\n\n\n\n\nFor at least the first couple of days we’ll use web-published versions of the lessons to read as we work through practice notebooks in the project.\n\nStart here\n\n\n\n\n\nDay 3: Tidying data\nDay 4: Visualizing data"
   },
   {
     "objectID": "index.html#installing-the-software",
@@ -494,7 +494,7 @@
     "href": "index.html#slides",
     "title": "CHJR 2023",
     "section": "",
-    "text": "There might be some slides to support the lessons."
+    "text": "Day 3: Tidying data\nDay 4: Visualizing data"
   },
   {
     "objectID": "lesson-day1-02-clean.html",

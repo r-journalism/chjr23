@@ -39,4 +39,6 @@ For at least the first couple of days we'll use web-published versions of the le
 
 ## Slides
 
-There might be some slides to support the lessons.
+- Day 3: [Tidying data](https://r-journalism.github.io/chjr23/slides/03_tidying_data.html)
+- Day 4: [Visualizing data](https://r-journalism.github.io/chjr23/slides/04_visualizing_data.html)
+
