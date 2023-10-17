@@ -34,15 +34,22 @@ joined_new <- left_join(df_new, county_pop, by="GEOID")
 ## Intro
 
 
-We've done some basic exploring of the FEMA disaster declaration data. 
+Let's say you get some FEMA disaster declaration data. 
+
+
+```{r import2, warning=F, message=F}
+df <- read_csv("https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries.csv")
+```
+
+```{r preview2, eval=T}
+glimpse(df)
+```
 
 But there are only so many different ways to slice the data based on the variables in the original data set.
 
-So we have to be creative and think of what other variables we can add.
+So we have to be creative and think of what other variables we can add. That's the whole perk of being a journalist. Not accepting what you've got but thinking what you can bring to it.
 
-Last time, we added some decades categories using the `case_when()` and `mutate()` functions.
-
-But let's go even further by adding an additional data set.
+But let's go even further by adding an additional data set. So we can focus on the people.
 
 Let's bring in county population data from the U.S. Census so we can estimate how many people were affected by different disasters.
 
@@ -81,13 +88,6 @@ Pay attention to the column names and what kind of data is in each column.
 
 Next, let's take a look at our original FEMA data set.
 
-```{r import2, warning=F, message=F}
-df <- read_csv("https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries.csv")
-```
-
-```{r preview2, eval=T}
-glimpse(df)
-```
 
 
 ### In each data set, which columns share the most similarity for locations? 
@@ -349,7 +349,7 @@ joined_new |>
             median_pop=median(estimate, na.rm=T))
 ```
 
-How many more county Flood declarations were there in Kentucky in 2021 compared to 2022?
+How many more county Flood declarations were there in Kentucky in 2021 compared to 2022? Figure this out using your console.
 
 ___?
 
@@ -553,12 +553,12 @@ We'll use the `pivot_longer()` function which needs:
 
 
 ```{r pivot_longer, eval=TRUE}
-# We could do cols=`1967`:`2022`
-# or we could do the number of columns in the dataframe as in cols=2:41
+# We could do cols=`1967`:`2023`
+# or we could do the number of columns in the dataframe as in cols=2:42
 # let's do the first option in this one
 
 fires_wide |> 
-  pivot_longer(cols=`1967`:`2022`,
+  pivot_longer(cols=`1967`:`2023`,
                names_to="year",
                values_to="declarations")
   
