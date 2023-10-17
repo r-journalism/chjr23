@@ -17,6 +17,7 @@ These are the station identifiers:
 - NC: USW00013881, USW00013748, USW00013722
 - TX: USW00013960, USW00012918, USW00013958
 - NY: USW00094728, USW00014735, USW00014733
+- NM: USC00291813,USW00023050, USW00023049
 
 I really only need TX, CA & NC, I think.
 
@@ -47,13 +48,14 @@ tx_raw <- read_csv("../data-raw/tx.csv") |> clean_names()
 nc_raw <- read_csv("../data-raw/nc.csv") |> clean_names()
 ny_raw <- read_csv("../data-raw/ny.csv") |> clean_names()
 ar_raw <- read_csv("../data-raw/ar.csv") |> clean_names()
+nm_raw <- read_csv("../data-raw/nm.csv") |> clean_names()
 ```
 
 ## Bind data
 
 ```{r}
 wx_raw <- ar_raw |> 
-  bind_rows(ca_raw, nc_raw, ny_raw, tx_raw)
+  bind_rows(ca_raw, nc_raw, ny_raw, tx_raw, nm_raw)
 
 wx_raw |> glimpse()
 ```
@@ -101,6 +103,10 @@ wx_cities <- wx_states |>
     "HOUSTON WILLIAM P HOBBY AIRPORT, TX US" = "Houston",
     "AUSTIN CAMP MABRY, TX US" = "Austin",
     "DALLAS FAA AIRPORT, TX US" = "Dallas",
+    "ALBUQUERQUE INTERNATIONAL AIRPORT, NM US" = "Albuquerque",
+    "CIMARRON 4 SW, NM US" = "Cimmarron",
+    "SANTA FE CO MUNICIPAL AIRPORT, NM US" = "Sante Fe"
+
   ))
 
 wx_cities |> distinct(name, city)

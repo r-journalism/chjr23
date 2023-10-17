@@ -43,7 +43,14 @@ tx_raw
 
 Go through all the steps above, but with different a different state.
 
-> I don't include the answers for OYO in these solutions because it depends on the state used. If you stick with the same naming convention using two letters for your state intead of `tx`, then everything else should be the same as the code above. Hollar if you need help.
+> These solutions are done using New Mexico.If you stick with the same naming convention using two letters for your state intead of `tx`, then everything else should be the same as the code above. Hollar if you need help.
+
+```{r}
+nm_raw <- read_csv("data-raw/nm.csv") |> clean_names()
+
+nm_raw
+```
+
 
 ## Peeking at data
 
@@ -81,6 +88,12 @@ tx_raw$date |> summary()
 
 > This will depend on the state you use. Hollar if you need help.
 
+```{r}
+nm_raw |> glimpse()
+nm_raw |> summary()
+```
+
+
 ## Create or change data
 
 Create year, month values based on the date.
@@ -101,6 +114,18 @@ tx_dates |> glimpse()
 Make the same date parts, but with your own state data:
 
 > This will depend on the state you use. Hollar if you need help.
+
+```{r}
+nm_dates <- nm_raw |> 
+  mutate(
+    yr = year(date),
+    mn = month(date, label = TRUE),
+    yd = yday(date)
+  )
+
+nm_dates |> glimpse()
+```
+
 
 ## Recoding values
 
@@ -141,6 +166,29 @@ Make similar short names, but for your state.
 
 > This will depend on the state you use. Hollar if you need help.
 
+```{r}
+nm_dates |> distinct(name)
+```
+
+```{r}
+nm_names <- nm_dates |> 
+  mutate(
+    city = recode(
+      name,
+      "ALBUQUERQUE INTERNATIONAL AIRPORT, NM US" = "Albuquerque",
+      "CIMARRON 4 SW, NM US" = "Cimmarron",
+      "SANTA FE CO MUNICIPAL AIRPORT, NM US" = "Sante Fe"
+    )
+  )
+
+nm_names |> glimpse()
+```
+
+```{r}
+nm_names |> distinct(name, city)
+```
+
+
 ## Select
 
 Create a new version of your data with only the columns you need, in the order you want them.
@@ -169,6 +217,25 @@ Go through the same process as above, but with your own state data.
 
 > This will depend on the state you use. Hollar if you need help.
 
+```{r}
+nm_tight <- nm_names |> 
+  select(
+    city,
+    date,
+    rain = prcp,
+    snow,
+    snwd,
+    tmax,
+    tmin,
+    yr,
+    mn,
+    yd
+  )
+
+nm_tight |> glimpse()
+```
+
+
 ## Export
 
 Write the file out as "rds" to the `data-processed` folder.
@@ -182,6 +249,11 @@ tx_tight |> write_rds("data-processed/tx_clean.rds")
 Write your data to the `data-processed` folder. Make sure you use a name for your state.
 
 > This will depend on the state you use. Hollar if you need help.
+
+```{r}
+nm_tight |> write_rds("data-processed/nm_clean.rds")
+```
+
 
 ## Checking your notebooks
 
