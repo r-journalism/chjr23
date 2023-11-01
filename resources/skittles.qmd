@@ -3,6 +3,9 @@ title: "Skittles"
 ---
 
 ```{r}
+#| label: setup
+#| message: false
+
 library(tidyverse)
 library(janitor)
 ```
