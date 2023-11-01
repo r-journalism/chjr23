@@ -1,0 +1,87 @@
+---
+title: "Skittles"
+---
+
+```{r}
+library(tidyverse)
+library(janitor)
+```
+
+
+```{r}
+skittles_raw <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vROx6MYM-ay2beXwPkvd203SKoHUbIhk9ane5FEgTItSvq-cf3mS7UPGCWKuh3-gRupPS8Sm6Bzzd44/pub?gid=1289069364&single=true&output=csv") |> clean_names()
+
+skittles_raw
+```
+
+## Convert the date
+
+```{r}
+skittles <- skittles_raw |> 
+  rename(
+    all = how_many_skittles_do_you_have,
+    yellow = how_many_yellow_skittles,
+    purple = how_many_purple_skittles,
+    red = how_many_red_skittles,
+    orange = how_many_orange_skittles,
+    green = how_many_green_skittles
+  )
+
+skittles
+```
+
+## Checking the totals
+
+```{r}
+skittles |> 
+  rowwise() |> 
+  mutate(tot = sum(yellow + purple + red + orange + green))
+```
+
+
+## Finding average of each color
+
+On way ... to summarize the different rows.
+
+```{r}
+skittles |> 
+  summarise(
+    avg_yellow = mean(yellow),
+    avg_purple = mean(purple),
+    avg_red = mean(red),
+    avg_orange = mean(orange),
+    avg_green = mean(green),
+    
+  )
+```
+
+## Pivot the data
+
+```{r}
+skittles_long <- skittles |> 
+  select(2, 4:8) |> 
+  pivot_longer(2:6, names_to = "color", values_to = "candies")
+
+skittles_long
+```
+
+
+## New totals through group
+
+```{r}
+skittles_long |> 
+  group_by(name) |> 
+  summarise(tot = sum(candies)) |> 
+  arrange(tot |> desc())
+```
+
+
+## New average through group
+
+```{r}
+skittles_long |> 
+  group_by(color) |> 
+  summarize(avg_color = mean(candies)) |> 
+  arrange(avg_color |> desc())
+```
+

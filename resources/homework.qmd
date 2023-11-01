@@ -5,8 +5,13 @@ title: "Homework"
 1. Go through the [Managing a project](projects.qmd) page and video
 2. Create a new quarto website
     - You can just use the `index.qmd` file for this exercise
-3. Import our Skittles data (link TK) using `read_csv()`
+3. Import our Skittles data (url below) using `read_csv()`
+4. You might use [`rename()`](https://dplyr.tidyverse.org/reference/rename.html) to rename your columns.
 4. Find the answers to the following questions:
     - Who got the most candy? Who the least?
     - What is the average number of candies per bag?
     - On average, which color candy is most prevalent?
+    
+```
+https://docs.google.com/spreadsheets/d/e/2PACX-1vROx6MYM-ay2beXwPkvd203SKoHUbIhk9ane5FEgTItSvq-cf3mS7UPGCWKuh3-gRupPS8Sm6Bzzd44/pub?gid=1289069364&single=true&output=csv
+```
