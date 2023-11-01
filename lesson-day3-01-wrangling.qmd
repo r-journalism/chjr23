@@ -27,6 +27,8 @@ y
 
 **Two data frames**
 
+Here are the two data frames we created color coded.
+
 ```{r, echo=F, fig.retina=TRUE, out.width=400}
 knitr::include_graphics("images/original-dfs.png")
 ```
@@ -34,6 +36,11 @@ knitr::include_graphics("images/original-dfs.png")
 
 ### left_join()
 
+The most typical join is a left join.
+
+The function requires two arguments: The original dataframe and a dataframe to join to it. 
+
+Check out the results:
 
 ```{r left, warning=F, message=F}
 #| echo: TRUE
@@ -42,10 +49,19 @@ library(dplyr)
 left_join(x, y)
 ```
 
+Did you notice the `NA` in the **y** column?
 
 **left_join() illustrated**
 
+Here's why the `NA` shows up.
+
 ![](https://ucd-cws.github.io/CABW2020_R_training/images/left-join.gif)
+
+Because there is no 4 value to join with in the *original* dataframe.
+
+Alright, that was easy because both dataframes had the same name to join on.
+
+But what happens if the data you want to join on have different column names?
 
 **Two data frames: x and y but with different column names**
 
@@ -65,6 +81,9 @@ y
 ```
 :::
 
+So the two columns are no longer both `id` but instead one is `id` and the other one is `new_id`.
+
+Add the argument `by=c()`...
 
 :::{.fragment}
 ```{r left2}
@@ -73,7 +92,13 @@ left_join(x, y, by=c("id"="new_id"))
 ```
 :::
 
+Easy!
+
+But...
+
 **Watch out for repeated data**
+
+Dataframe 1:
 
 ```{r left3}
 #| echo: FALSE
@@ -83,6 +108,8 @@ x <- data.frame(id=c(1,2,3),
 x
 ```
 
+Dataframe 2: There are multiple 2s in id.
+
 ```{r left4}
 #| echo: FALSE
 y <- data.frame(id=c(1,2,4,2), 
@@ -91,6 +118,8 @@ y <- data.frame(id=c(1,2,4,2),
 y
 ```
 
+So when you join...
+
 :::{.fragment}
 ```{r}
 #| echo: TRUE
@@ -98,16 +127,22 @@ left_join(x, y)
 ```
 :::
 
+This could be bad if you were expecting only 1 row of each!!
 
 **Extra rows illustrated**
 
 ![](https://github.com/gadenbuie/tidyexplain/raw/main/images/left-join-extra.gif)
 
+So be careful. Always look at the results of your join to make sure it didn't mess up.
+
+Now, here's another version of a join, but this time in the other direction.
 
 ### right_join()
 
 
 ![](https://github.com/gadenbuie/tidyexplain/raw/main/images/right-join.gif)
+
+And here are a bunch of other joins for reference:
 
 ### full_join()
 
@@ -123,8 +158,7 @@ left_join(x, y)
 
 ## stringr package
 
-![](images/stringr.png =250x)
-
+Let's go over some strategies on cleaning up text using the [**stringr**](https://stringr.tidyverse.org/) package.
 
 ## stringr functions
 
@@ -299,6 +333,8 @@ More functions in [stringr](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_
 
 ## parse_number()
 
+A really important function that will help format your numbers.
+
 (from the readr package)
 
 ```{r parse}
@@ -347,6 +383,10 @@ df <- data.frame(id=c(1,2), x=c("a", "b"),
 df
 ```
 
+Sometimes we need to transform our data to analyze it more effectively.
+
+Pay attention to the colors and the values below...
+
 ## wide vs long
 
 ![](images/original-dfs-tidy.png)
@@ -356,6 +396,12 @@ df
 ![](https://github.com/gadenbuie/tidyexplain/raw/main/images/tidyr-pivoting.gif)
 
 ## pivot_longer()
+
+Here's how to turn a wide dataframe into a long one.
+
+(Why would you want to do this? Because it's easier to do group_bys and summarize and visualizations)
+
+Version 1: With the names of the columns.
 
 ```{r left9}
 #| echo: TRUE
@@ -370,6 +416,8 @@ df |>
 
 ## pivot_longer()
 
+Version 2: With the column counts (second through fourth columns, for example)
+
 ```{r left20}
 #| echo: TRUE
 df |> 
@@ -378,6 +426,7 @@ df |>
                values_to="val")
 ```
 
+Setting up a new data frame for another example:
 
 ```{r left30}
 df <- data.frame(state=c("TX", "NY", "FL"),
@@ -387,6 +436,8 @@ df <- data.frame(state=c("TX", "NY", "FL"),
 ```
 
 ## pivot_longer() again
+
+Okay, let's consolidate the animals count in the columns.
 
 ```{r}
 #| echo: TRUE
@@ -403,22 +454,7 @@ df |>
 ```
 :::
 
-## pivot_longer() again
-
-```{r}
-#| echo: TRUE
-df
-```
-
-:::{.fragment}
-```{r}
-#| echo: TRUE
-df |> 
-  pivot_longer(cols=2:4,
-               names_to="animals",
-               values_to="totals")
-```
-:::
+Here's why we turned the wide data to a long one: For easier math.
 
 ## pivot for math
 ```{r math1}
@@ -428,10 +464,14 @@ df <- data.frame(state=c("TX", "NY", "FL"),
                  birds=c(99,3,64))
 ```
 
+Let's look at the data again:
+
 ```{r}
 #| echo: TRUE
 df
 ```
+
+But now I'm going to add some code to figure out the percents by state.
 
 :::{.fragment}
 ```{r}
@@ -445,6 +485,10 @@ df |>
            round(total/sum(total)*100,1))
 ```
 :::
+
+Okay, but now this is hard to look at.
+
+Let's make it go back to a wide data frame.
 
 ## pivot_wider()
 
@@ -474,6 +518,12 @@ df_long |>
 ```
 :::
 
+Okay, this is ugly.
+
+It's because the `total` column is throwing things off.
+
+Let's get rid of it first.
+
 :::{.fragment}
 ```{r}
 #| echo: TRUE
@@ -485,6 +535,8 @@ df_long |>
            birds-fish)
 ```
 :::
+
+Ok, but what if you did want to keep the total values?
 
 ## pivot_wider() more columns
 
@@ -504,6 +556,8 @@ df_long <- df |>
 df_long
 ```
 
+You can keep it with the added `c()` function.
+
 :::{.fragment}
 ```{r}
 #| echo: TRUE
@@ -514,15 +568,19 @@ df_long |>
 ```
 :::
 
+See how it appends the column names in front of the column name?
 
 ## Lubridate for dates {background-color="white" background-image="images/lubridate" background-size="100%" }
 
 
 
+Let's set up a fake data set:
 
 ```{r dates2}
 #| echo: TRUE
-#| 
+#| warning: FALSE
+#| message: FALSE
+
 library(lubridate)
 
 df <- data.frame(First=c("Charlie", "Lucy", "Peppermint"),
@@ -532,6 +590,10 @@ df <- data.frame(First=c("Charlie", "Lucy", "Peppermint"),
 df
 ```
 
+All of these different date formats are a nightmare.
+
+Fortunately, there is something consistent about all of them and so lubridate has a function to fix it.
+
 :::{.fragment}
 ```{r}
 #| echo: TRUE
@@ -540,6 +602,7 @@ df |>
 ```
 :::
 
+Other combinations:
 
 ## Reading dates
 
@@ -552,6 +615,8 @@ df |>
 | hour, minute                           | `hm()`           |
 | hour, minute, second                   | `hms()`          |
 | year, month, day, hour, minute, second | `ymd_hms()`      |
+
+If you wanted to pull out specific parts of a date or time:
 
 ## Accessing date parts
 

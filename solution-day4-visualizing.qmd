@@ -47,7 +47,7 @@ annual_fires <- annual_disasters  |>
 
 Before we begin, let's bring in the data we've been working with.
 
-```{r imported, eval=T}
+```{r imported, eval=T,  warning=F, message=F}
 df <- read_csv("https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries.csv")
 
 df_new <- df |> 
@@ -200,7 +200,7 @@ At its core you need to tell it what data you're using, what type of visual geom
 
 **Important:** We have to use + signs between each line, not `|>`. This is because **ggplot()** was created before the **tidyverse** piping method was established.
 
-```{r show-ggplot-template, eval=TRUE}
+```{r show-ggplot-template, eval=TRUE, echo=F}
 include_graphics("images/flair.png")
 
 ```

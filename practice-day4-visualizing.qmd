@@ -3,8 +3,6 @@ title: "Visualizing data practice"
 editor: visual
 ---
 
-
-
 ```{r setup, include=FALSE}
 packages <- c("tidyverse", "lubridate", "rvest", "httr", "remotes", "knitr", "DT", "flair")
 if (length(setdiff(packages, rownames(installed.packages()))) > 0) {
@@ -43,8 +41,7 @@ annual_fires <- annual_disasters  %>%
 
 ```
 
-<span style="color:white">welcome to class!</span>
-
+[welcome to class!]{style="color:white"}
 
 ## Data Introduction
 
@@ -62,7 +59,6 @@ joined_new <- left_join(df_new, county_pop, by="GEOID") %>%
   mutate(year=year(incidentBeginDate))
 ```
 
-
 Let's take a look at what were working with. Check out `joined_new` with the usual function we use:
 
 ```{r glimpse, eval=TRUE}
@@ -73,7 +69,7 @@ Let's take a look at what were working with. Check out `joined_new` with the usu
 function starts with an *g*.
 ```
 
-Okay, let's transform the data like we did before. 
+Okay, let's transform the data like we did before.
 
 Can you count up how many **disasters** there have been **per year**? Not total disasters. Individual disasters.
 
@@ -92,7 +88,7 @@ The function starts with a *c* and don't forget to name the column you're creati
 year should be the second argument in the function.
 ```
 
-Alright, we've got a lot of data going back decades. 
+Alright, we've got a lot of data going back decades.
 
 The benefit of working quickly with data in R is how you can quickly visualize it to spot any trends.
 
@@ -108,13 +104,9 @@ annual_fires <- annual_disasters  %>%
 annual_fires
 ```
 
-
 ```{r fires-hint, eval=F}
 The function starts with a *f* and don't forget ==
 ```
-
-
-  
 
 ## Grammar of Graphics
 
@@ -137,59 +129,37 @@ Basically, every of a chart can created using these aesthetic components and map
 
 **Aesthetic**
 
-* The visual property of a graph
+-   The visual property of a graph
 
-* Position, shape, color, etc.
+-   Position, shape, color, etc.
 
 **Data**
 
-* A column in a data set
+-   A column in a data set
 
------
+------------------------------------------------------------------------
 
 Here's are the core components of the chart above:
 
-<table>
-  <tr>
-    <th class="cell-left">Data</th>
-    <th class="cell-left">Aesthetic</th>
-    <th class="cell-left">Graphic/Geometry</th>
-  </tr>
-  <tr>
-    <td class="cell-left">Year</td>
-    <td class="cell-left">Position (x-axis)&emsp;</td>
-    <td class="cell-left">Column</td>
-  </tr>
-  <tr>
-    <td class="cell-left">Total disasters</td>
-    <td class="cell-left">Position (y-axis)</td>
-    <td class="cell-left">Point</td>
-  </tr>
-</table>
++-----------------+--------------------+------------------+
+| Data            | Aesthetic          | Graphic/Geometry |
++=================+====================+==================+
+| Year            | Position (x-axis)  | Column           |
++-----------------+--------------------+------------------+
+| Total disasters | Position (y-axis)  | Point            |
++-----------------+--------------------+------------------+
 
------
+------------------------------------------------------------------------
 
 Here's how the data was mapped in ggplot2 code from the `annual_fires` data frame:
 
-<table>
-  <tr>
-    <th class="cell-left">Data</th>
-    <th class="cell-left">aes()</th>
-    <th class="cell-left">geom</th>
-  </tr>
-  <tr>
-    <td class="cell-left">year</td>
-    <td class="cell-left">x</td>
-    <td class="cell-left">geom_col()</td>
-  </tr>
-  <tr>
-    <td class="cell-left">total</td>
-    <td class="cell-left">y</td>
-    <td class="cell-left">geom_col()</td>
-  </tr>
-</table>
-
-
++-------+-------+------------+
+| Data  | aes() | geom       |
++=======+=======+============+
+| year  | x     | geom_col() |
++-------+-------+------------+
+| total | y     | geom_col() |
++-------+-------+------------+
 
 ### ggplot() template
 
@@ -205,37 +175,17 @@ At its core you need to tell it what data you're using, what type of visual geom
 
 **Important:** We have to use + signs between each line, not `%>%`. This is because **ggplot()** was created before the **tidyverse** piping method was established.
 
-```{r show-ggplot-template, echo=FALSE, tidy=FALSE}
-decorate('
-ggplot(data = DATA) +
-  GEOM_FUNCTION(mapping = aes(AESTHETIC MAPPINGS))
-', eval = FALSE) %>% 
-  flair("DATA", background = "#CBB5FF", before = "<b>", after = "</b>") %>% 
-  flair("GEOM_FUNCTION", background = "#FFDFD1", before = "<b>", after = "</b>") %>% 
-  flair("AESTHETIC MAPPINGS", background = "#FFD0CF", before = "<b>", after = "</b>") %>% 
-  knit_print.with_flair()
+
+```{r show-ggplot-template, eval=TRUE}
+include_graphics("images/flair.png")
+
 ```
 
----
-
-```{r ggplot-template-example, echo=FALSE}
-decorate('
-ggplot(data = annual_fires +
-  geom_col(mapping = aes(x = year, y = total)) 
-', eval = FALSE) %>%
-  flair("annual_fires", background = "#CBB5FF", before = "<b>", after = "</b>") %>% 
-  flair("geom_col", background = "#FFDFD1", before = "<b>", after = "</b>") %>% 
-  flair("x = year, y = total", background = "#FFD0CF", before = "<b>", after = "</b>") %>% 
-
-  knit_print.with_flair()
-```
-
----
 
 ```{r img0, echo = F, eval=FALSE, out.width="100%"}
 library(knitr)
 include_graphics("images/ggplot1.png")
-``` 
+```
 
 ### Grammatical layers
 
@@ -245,11 +195,11 @@ Think of these components as **layers**.
 
 ```{r img1a, echo = F, out.width="50%", fig.align="center"}
 include_graphics("images/ggplot1a.png")
-``` 
+```
 
 Add them to foundational `ggplot()` with +
 
-These are all the arguments we can enhance the data viz with. 
+These are all the arguments we can enhance the data viz with.
 
 Change the colors of the viz based on a column. Or the size of the shape.
 
@@ -259,7 +209,7 @@ Or the opacity or the gradient.
 
 ```{r img2a, echo = F, out.width="100%"}
 include_graphics("images/ggplot2a.png")
-``` 
+```
 
 We can also swap out the different geometry types.
 
@@ -271,7 +221,7 @@ You can even use shapefiles.
 
 ```{r img3a, echo = F, out.width="60%", fig.align="center"}
 include_graphics("images/ggplot3a.png")
-``` 
+```
 
 THERE ARE [SO MANY GEOMS](https://twitter.com/search?q=geom_%20%23rstats&src=typed_query&f=image) for different visualizations. Here are the [official ones](https://ggplot2.tidyverse.org/reference/index.html#section-layer-geoms).
 
@@ -294,50 +244,35 @@ There are many of other grammatical layers we can use to describe graphs.
 
 We sequentially add layers onto the foundational `ggplot()` plot to create complex figures.
 
-
 ```{r img4a, echo = F, out.width="50%", fig.align="center"}
 include_graphics("images/ggplot4a.png")
-``` 
+```
 
 Scales change the properties of the variable mapping.
 
 Here are a few examples:
 
-<table>
-  <tr>
-    <th class="cell-left">Example layer</th>
-    <th class="cell-left">What it does</th>
-  </tr>
-  <tr>
-    <td class="cell-left"><code class="remark-inline-code">scale_x_continuous()</code></td>
-    <td class="cell-left">Make the x-axis continuous</td>
-  </tr>
-  <tr>
-    <td class="cell-left"><code class="remark-inline-code">scale_x_continuous(breaks = 1:5)&ensp;</code></td>
-    <td class="cell-left">Manually specify axis ticks</td>
-  </tr>
-  <tr>
-    <td class="cell-left"><code class="remark-inline-code">scale_x_date()</code></td>
-    <td class="cell-left">Considers x-axis dates</td>
-  </tr>
-  <tr>
-    <td class="cell-left"><code class="remark-inline-code">scale_color_gradient()</code></td>
-    <td class="cell-left">Use a gradient</td>
-  </tr>
-  <tr>
-    <td class="cell-left"><code class="remark-inline-code">scale_fill_viridis_d()</code></td>
-    <td class="cell-left">Fill with discrete viridis colors</td>
-  </tr>
-</table>
++------------------------------------+-----------------------------------+
+| Example layer                      | What it does                      |
++====================================+===================================+
+| `scale_x_continuous()`             | Make the x-axis continuous        |
++------------------------------------+-----------------------------------+
+| `scale_x_continuous(breaks = 1:5)` | Manually specify axis ticks       |
++------------------------------------+-----------------------------------+
+| `scale_x_date()`                   | Considers x-axis dates            |
++------------------------------------+-----------------------------------+
+| `scale_color_gradient()`           | Use a gradient                    |
++------------------------------------+-----------------------------------+
+| `scale_fill_viridis_d()`           | Fill with discrete viridis colors |
++------------------------------------+-----------------------------------+
 
-----
+------------------------------------------------------------------------
 
 Check out the x-axis.
 
 ### Exercise 2
 
 Now add `scale_x_continuous(limits=c(2010, 2022), breaks=2010:2022)` to the bottom of the code.
-
 
 ```{r scented2, eval=TRUE, warning=F, message=F}
 ggplot(data=annual_fires) +
@@ -346,7 +281,6 @@ ggplot(data=annual_fires) +
 
 # Add line above this one
 ```
-
 
 Do you see the difference at the bottom of the chart compared to the one above it?
 
@@ -360,28 +294,17 @@ The next possible layer allows for small multiples. It's really neat.
 
 Facets show subplots for different subsets of data.
 
-<table>
-  <tr>
-    <th class="cell-left">Example layer</th>
-    <th class="cell-left">What it does</th>
-  </tr>
-  <tr>
-    <td class="cell-left"><code class="remark-inline-code">facet_wrap(vars(incidentType))</code></td>
-    <td class="cell-left">Plot for each disaster type</td>
-  </tr>
-  <tr>
-    <td class="cell-left"><code class="remark-inline-code">facet_wrap(vars(incidentType, year))</code>&emsp;</td>
-    <td class="cell-left">Plot for each disaster type/year</td>
-  </tr>
-  <tr>
-    <td class="cell-left"><code class="remark-inline-code">facet_wrap(..., ncol = 1)</code></td>
-    <td class="cell-left">Put all facets in one column</td>
-  </tr>
-  <tr>
-    <td class="cell-left"><code class="remark-inline-code">facet_wrap(..., nrow = 1)</code></td>
-    <td class="cell-left">Put all facets in one row</td>
-  </tr>
-</table>
++-----------------------------------------+----------------------------------+
+| Example layer                           | What it does                     |
++=========================================+==================================+
+| `facet_wrap(vars(incidentType))`        | Plot for each disaster type      |
++-----------------------------------------+----------------------------------+
+| `facet_wrap(vars(incidentType, year))`  | Plot for each disaster type/year |
++-----------------------------------------+----------------------------------+
+| `facet_wrap(..., ncol = 1)`             | Put all facets in one column     |
++-----------------------------------------+----------------------------------+
+| `facet_wrap(..., nrow = 1)`             | Put all facets in one row        |
++-----------------------------------------+----------------------------------+
 
 The table above shows all the different ways you can use facets-- you can break it out by one extra variable or even two.
 
@@ -406,7 +329,6 @@ ggplot() +
 function starts with an *f*.
 ```
 
-
 Alright, looks like the x-axis labels are getting a little crowded.
 
 We can't even read it!
@@ -414,7 +336,6 @@ We can't even read it!
 ### Try again!
 
 Now, try it with `ncol=1` as an additional argument in `facet_wrap()`
-
 
 ```{r facet_example2, eval=TRUE, warning=F, message=F}
 annual_disasters %>% 
@@ -424,7 +345,6 @@ ggplot() +
   scale_x_continuous(limits=c(2010, 2022), breaks=2010:2022) +
   facet_wrap(vars(incidentType)_______)
 ```
-
 
 ```{r facet_example2-hint, eval=F}
 function starts with an *f*.
@@ -437,33 +357,22 @@ Now we can add more customization to the chart.
 
 To make it really shine!
 
-<table>
-  <tr>
-    <th class="cell-left">Example layer</th>
-    <th class="cell-left">What it does</th>
-  </tr>
-  <tr>
-    <td class="cell-left"><code class="remark-inline-code">labs(title = "Neat title")</code></td>
-    <td class="cell-left">Title</td>
-  </tr>
-  <tr>
-    <td class="cell-left"><code class="remark-inline-code">labs(caption = "Something")</td>
-    <td class="cell-left">Caption</td>
-  </tr>
-  <tr>
-    <td class="cell-left"><code class="remark-inline-code">labs(y = "Something")</td>
-    <td class="cell-left">y-axis</td>
-  </tr>
-  <tr>
-    <td class="cell-left"><code class="remark-inline-code">labs(color = "Type")</code></td>
-    <td class="cell-left">Title of size legend</td>
-  </tr>
-</table>
++-------------------------------+----------------------+
+| Example layer                 | What it does         |
++===============================+======================+
+| `labs(title = "Neat title")`  | Title                |
++-------------------------------+----------------------+
+| `labs(caption = "Something")` | Caption              |
++-------------------------------+----------------------+
+| `labs(y = "Something")`       | y-axis               |
++-------------------------------+----------------------+
+| `labs(color = "Type")`        | Title of size legend |
++-------------------------------+----------------------+
 
-* Title should be "Disaster declarations since 2010"
-* Label for the x-axis should be blank (aka "") because the years are obvious
-* Label for the y-axis should be "Total"
-* Caption should be "Data: FEMA"
+-   Title should be "Disaster declarations since 2010"
+-   Label for the x-axis should be blank (aka "") because the years are obvious
+-   Label for the y-axis should be "Total"
+-   Caption should be "Data: FEMA"
 
 Add those labels below:
 
@@ -487,7 +396,6 @@ You only need to call labs() once.
 Within parentheses, just separate the arguments with commas. You don't use the plus signs.
 ```
 
-
 ## Themes
 
 Change the appearance of anything in the plot.
@@ -496,29 +404,17 @@ While you can customize every font, color, gradient, etc, you can set these styl
 
 There are many built-in themes.
 
-
-<table>
-  <tr>
-    <th class="cell-left">Example layer</th>
-    <th class="cell-left">What it does</th>
-  </tr>
-  <tr>
-    <td class="cell-left"><code class="remark-inline-code">theme_grey()</code></td>
-    <td class="cell-left">Default grey background</td>
-  </tr>
-  <tr>
-    <td class="cell-left"><code class="remark-inline-code">theme_bw()</td>
-    <td class="cell-left">Black and white</td>
-  </tr>
-  <tr>
-    <td class="cell-left"><code class="remark-inline-code">theme_dark()</td>
-    <td class="cell-left">Dark</td>
-  </tr>
-  <tr>
-    <td class="cell-left"><code class="remark-inline-code">theme_minimal()</code></td>
-    <td class="cell-left">Minimal</td>
-  </tr>
-</table>
++-------------------+-------------------------+
+| Example layer     | What it does            |
++===================+=========================+
+| `theme_grey()`    | Default grey background |
++-------------------+-------------------------+
+| `theme_bw()`      | Black and white         |
++-------------------+-------------------------+
+| `theme_dark()`    | Dark                    |
++-------------------+-------------------------+
+| `theme_minimal()` | Minimal                 |
++-------------------+-------------------------+
 
 Try out the different themes listed above in the code below.
 
@@ -544,10 +440,9 @@ There are a collections of pre-built themes online, like the [ggthemes package](
 
 Organizations often make their own custom themes, like [the BBC](https://bbc.github.io/rcookbook/).
 
-
 ```{r img10, echo = F, out.width="100%"}
 include_graphics("images/bbc-cookbook.png")
-``` 
+```
 
 ### Theme adjustments
 
@@ -583,12 +478,11 @@ ggplot() +
 # copy and paste the chunk of code above this chunk into the line above this one
 ```
 
-
 These were just a few examples of layers.
 
 ```{r img11, echo = F, fig.align="center", out.width="50%"}
 include_graphics("images/ggplot5.png")
-``` 
+```
 
 See the [ggplot2 documentation](https://ggplot2.tidyverse.org/reference/index.html) for complete examples of everything you can do
 
@@ -602,14 +496,11 @@ Congrats on completing the walkthroughs for Class 4!
 title: "Exploratory Viz"
 ---
 
-
-
 ```{r setup, include=FALSE, echo=FALSE}
 library(tidyverse)
 library(lubridate)
 library(readxl)
 library(DT)
-library(flair)
 library(janitor)
 
 
@@ -677,7 +568,7 @@ sd_group_compare <- sd_adjusted %>%
 
 Usually we'd next go over all the different `geom_` visualizations you can create using a single data set.
 
-* [A ggplot2 tutorial for beautiful plotting in R](https://cedricscherer.netlify.app/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/)
+-   [A ggplot2 tutorial for beautiful plotting in R](https://cedricscherer.netlify.app/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/)
 
 But we're going to use more real-life data that I think will be relevant to your journalism.
 
@@ -687,9 +578,7 @@ Downloads this data [san_diego.csv](https://github.com/utdata/chj-r-introduction
 
 Make sure you've got the proper libraries loaded.
 
-
 ### Ready for the code?
-
 
 ```{r sd1, eval=T}
 library(tidyverse)
@@ -729,10 +618,9 @@ sd_month <- sd_adjusted %>%
 sd_month
 ```
 
-
-<div id="sd_month1-hint">
+::: {#sd_month1-hint}
 **Hint:** count / deaths
-</div>
+:::
 
 ### Exercise 8
 
@@ -746,9 +634,7 @@ sd_month %>%
        caption="Source; San Diego Medical Examiner")
 ```
 
-
-
-Alright, a little messy. We can see some overall growing trend in one category, but that's it. 
+Alright, a little messy. We can see some overall growing trend in one category, but that's it.
 
 Perhaps looking at the data by month is too granular. Let's step back and aggregate by year.
 
@@ -777,8 +663,7 @@ sd_year %>% ggplot(aes(x=year, y=deaths)) +
   ______wrap(vars(_______________), ncol=4)
 ```
 
-
-Alright, now we're getting somewhere. 
+Alright, now we're getting somewhere.
 
 Looks like accidents have been trending up year over year.
 
@@ -788,7 +673,7 @@ Suicides actually look down this year compared to prior years.
 
 Hm...
 
-What else can we do? 
+What else can we do?
 
 We can try to measure **Excess Deaths**
 
@@ -828,8 +713,6 @@ ggplot(sd_group, aes(x=_____, y=__________, color=year_type, group=year_type)) +
   geom_____() +
   facet_wrap(vars(manner_of_death), scales="free_y", ncol=2)
 ```
-
-
 
 Great.
 
@@ -886,7 +769,6 @@ sd_group_compare <- sd_adjusted %>%
 datatable(sd_group_compare)
 ```
 
-
 ### Exercise 11
 
 Run the code below with `manner_of_death` as x and `avg_deaths` as y.
@@ -899,8 +781,6 @@ Which do you prefer and why?
 ggplot(sd_group_compare, aes(x=________, y=______, fill=year_type)) +
   geom_bar(position="dodge", stat="identity") 
 ```
-
-
 
 Alright, before we go, I want to clean things up some.
 
@@ -941,4 +821,3 @@ Well, dig into the accidents, perhaps, and see if there's any explanation for th
 Alright, congratulations on going on this exploratory data visualization journey.
 
 Some of the answers won't appear right away unless you poke around and look at the data in as many ways as possible.
-

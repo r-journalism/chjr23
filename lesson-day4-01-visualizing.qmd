@@ -3,10 +3,6 @@ title: "Visualizing data"
 author: "Andrew Ba Tran"
 ---
 
-
-Render, dammit!
-
-
 ```{r warning=F, message=F}
 library(tidyverse)
 library(lubridate)
