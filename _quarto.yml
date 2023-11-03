@@ -22,13 +22,14 @@ website:
           - lesson-day2-01-analysis.qmd
           - lesson-day3-01-wrangling.qmd
           - lesson-day4-01-visualizing.qmd
-          - resources/homework.qmd
+          - lesson-monthly1-review.qmd
       - section: "Solutions"
         contents:
           - solution-day1-clean.qmd
           - solution-day2-analysis.qmd
           - solution-day3-wrangling.qmd
           - solution-day4-visualizing.qmd
+          - solution-monthly1-review.qmd
       - section: "Resources"
         contents:
           - resources/functions.qmd

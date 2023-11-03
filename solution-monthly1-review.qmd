@@ -1,14 +1,22 @@
 ---
-title: "Review"
+title: "Solutions: Core functions"
 ---
 
-This is meant as a review of the most used functions for the 4-day traning.
+> The solutions version
+
+This is meant as a review of the most used functions for the 4-day training.
+
+::: callout
+You can  <i class="bi bi-download"></i> [download this file](practice-monthly1-review.qmd){download="practice-monthly1-review.qmd"}
+to follow along. Save it inside your chjr23 project folder.
+:::
 
 ## Setup
 
 ```{r}
 #| label: setup
 #| message: false
+#| warning: false
 
 library(tidyverse)
 library(janitor)
@@ -25,12 +33,19 @@ Domestic box office daily revenue as tracked by [Box Office Mojo](https://www.bo
 A list of things we'll try to answer with this data:
 
 - Title with highest revenue single day
-- Titles in the most theaters on a single day
-- Title appearing the most
+- Title in the most theaters on a single day
+- Title appearing the most since 2000
 - Title with highest revenue since 2000
 - Distributor with the most revenue since 2000
 - Industry revenue by year (i.e., the COVID effect)
 - Highest grossing movies this year
+- Highest grossing movies recently
+
+Remember these three questions as you work through the logic:
+
+- Do you need all the data?
+- Do you need to put the data into groups?
+- What kind of calculation do you need?
 
 ## Download the data
 
@@ -102,7 +117,9 @@ boxoffice |>
 
 Apparently there is a reason they make super hero movies.
 
-### Titles in the most theaters on a single day
+### OYO: Titles in the most theaters on a single day
+
+How might you find which movies were in the most theaters in a single day? It's very similar to finding the most revenue.
 
 ```{r}
 boxoffice |> 
@@ -110,29 +127,51 @@ boxoffice |>
   filter(theaters > 4500)
 ```
 
-Perhaps those movies make more because they are in more theaters. Maybe we can get into that.
+Perhaps movies make more when they are in more theaters, which seems logical.
 
 ## Group and count
 
-Let's look at things we can just count. The concept here is to use `group_by()` to put our data into piles (or groups) based on the values in a column, then count how many their are.
+Let's answer some questions that just require grouping and counting. The concept here is to use `group_by()` to put our data into piles (or groups) based on the values in a column, then count how many their are.
 
 ### Title appearing the most
 
-Here we we group by the title of the movies, and then count the **n**umber of rows in that group using `n()`. We arrange the result to show the most appearances at the top. At the end we filter the result at a logical place, You can remove that if you want to see more rows.
+Here we group by the title of the movies, and then count the **n**umber of rows in that group using `n()`. We arrange the result to show the most appearances at the top. At the end we filter the result at a logical place, You can remove that if you want to see more rows.
+
+This is essentially which title has appeared on screen somewhere the most number of days since 2000.
 
 ```{r}
 boxoffice |>
   group_by(title) |> 
-  summarise(appearances = n()) |> 
-  arrange(desc(appearances)) |> 
-  filter(appearances > 150)
+  summarise(days_shown = n()) |> 
+  arrange(desc(days_shown)) |> 
+  filter(days_shown > 150)
 ```
 
-Here we grouped by title to count how many times is what in the data, but what if a different distributor released the same movie? You could try adding `distributor` to the group and see how the results change, including the numbers of rows returned. Does that matter? I'm not sure ... you'd need to look further and probably do some reporting.
+I have a theory here that many the titles at the top of this list (like [Deep Sea](https://en.wikipedia.org/wiki/Deep_Sea_3D)) are IMAX movies ... that there are so few of titles that are appropriate for the format that they keep older films in constant rotation. That would take reporting.
+
+### OYO: Group by multiple items
+
+But putting our critical thinking hat while looking at the list above, could a title like "Born to be Wild" actually be multiple movies? What if a different distributor released a movie with the same title? You could try adding `distributor` to the group and see how the results change, including the numbers of rows returned. Does that matter? I'm not sure ... you'd need to look further and probably do some reporting.
+
+```{r}
+bo_title_dist_cnt <- boxoffice |> 
+  group_by(title, distributor) |> 
+  summarize(days_shown = n()) |> 
+  arrange(days_shown |> desc())
+
+bo_title_dist_cnt
+
+# this uses the shortcut count() to take the list above and recount
+# the titles to see which had more than one distributor
+bo_title_dist_cnt |> 
+  count(title, sort = 2)
+```
+
+While there is a difference in the number of rows returned (i.e., there was ), none at the top films changed.
 
 ## Group and sum
 
-In many cases we want to put our data into groups and the do some [useful math](https://dplyr.tidyverse.org/reference/summarise.html#useful-functions) on variables, like `sum()` or `mean()`.
+In many cases we want to put our data into groups and then do some [useful math](https://dplyr.tidyverse.org/reference/summarise.html#useful-functions) on variables, like `sum()` or `mean()`.
 
 ### Title with highest revenue over time
 
@@ -163,9 +202,9 @@ boxoffice |>
 
 Let's create a version of this data that makes it easier to group by month and year. We use `mutate()` to create or change data, and inside of it we'll create some new variables using functions from [lubridate](https://lubridate.tidyverse.org/) to get date parts.
 
-This is chunk is built sort of like a machine ... We create a new bucket for our data `boxoffice_dates` and then we fill using our original boxoffice data with it's mutations. At the end we use `glimpse()` on the new data so we can make sure our new variables worked the way we intended.
+This chunk below is built like a factory line ... We create a new bucket for our data `boxoffice_dates` and then we fill using our original box office data with its mutations. At the end we use `glimpse()` on the new object so we can make sure our new variables worked the way we intended.
 
-To be clear, this is something you do a line or two at a time, checking the result as you go along. It's easier demonstrate live.
+To be clear, this is something you would build a line or two at a time, checking the result as you go along. It's easier demonstrate that in a live setting.
 
 ```{r}
 boxoffice_dates <- boxoffice |> 
@@ -180,10 +219,9 @@ boxoffice_dates |> glimpse()
 
 To explain what is going on:
 
-- Creating the year above is pretty self explanitory: Pluck the year from the date and call it `yr`.
+- Creating the year above is pretty self explanatory: Pluck the year from the date and call it `yr`.
 - The next value `mo` is plucking the month from the year, but in a special way. We are creating a short month name that understands that "Jan" comes before "Feb" and both are before the alphabetical "Apr". This data type is called an "ordered factor", hence the datatype above being `<ord>`. It will become useful with charting by month of the year.
 - The last values `fl_mo` uses the function `floor_date()` to find the lowest values of a given unit of time (floor being lower than the ceiling). We choose `unit = "month") so we get the first day of the month. This is useful because it is still an actual date, which can again help with plots.
-
 
 ## Group and summarize by dates
 
@@ -214,9 +252,13 @@ yr_revenue |>
   theme_minimal()
 ```
 
-It was the first three lines above that gave you the visual. The others make that Y scale more readable and add (or remove) nice labels.
+It was the first three lines above that gave you the visual. The others make that Y scale more readable and to add (or remove) nicer labels.
 
-### Total revenues by month
+You can read more about [scales](https://ggplot2-book.org/scales) in the [ggplot](https://ggplot2-book.org/) book.
+
+### OYO: Total revenues by month
+
+Can you build a chart similar to the one above but using revenue by **each month** instead?
 
 Some hints on this:
 
@@ -246,7 +288,11 @@ This look shows some seasonality but it is hard to see here. Two things we might
 
 ### Highest grossing movies this year
 
-Highest grossing movies in 2023
+This is again a typical GSA: group_by, summarize and arrange. But let's consider our three questions:
+
+- Do you need all the data? (We only need the current year of data.)
+- Do you need to put the data into groups? (Yes, by the title of the movie.)
+- What kind of calculation do you need? (sum the revenue.)
 
 ```{r}
 boxoffice |> 
@@ -254,7 +300,6 @@ boxoffice |>
   group_by(title) |> 
   summarise(total_rev = sum(revenue)) |> 
   arrange(desc(total_rev))
-
 ```
 
 ### What about the Taylor Era?
@@ -274,7 +319,7 @@ bo_recent <- boxoffice |>
 bo_recent
 ```
 
-Show the plot
+Show the plot:
 
 ```{r}
 bo_recent |> 
@@ -289,19 +334,28 @@ bo_recent |>
     title = "Movie revenue since October 2023",
     x = "", color = "Title"
   )
-
-
 ```
 
+If we get this far in the monthly meeting it will be good. There are more OYO challenges below along with some other looks at the data.
+
+---
 
 ## More on your own challenges
+
+Remember the three questions to work through the logic:
+
+- Do you need all the data?
+- Do you need to put the data into groups?
+- What kind of calculation do you need?
 
 ### Revenue by day for your favorite movie
 
 How might you go about this?
 
-1. Filter the date to find your favorite movie.
+1. Filter on the title to find your favorite movie.
 2. Plot the date along the x axis and revenue along the y axis.
+
+So ... summarize your data:
 
 ```{r}
 boxoffice |> 
@@ -318,8 +372,10 @@ boxoffice |>
 
 The idea here is to show the summer blockbuster season and holiday bumps.
 
-1. Summarize the date by your ordered month. Get the sum or mean (or both!)
+1. Summarize the date by your ordered month. Get both the sum and the mean in the same summarize!
 2. Plot the results
+
+So ... summarize your data:
 
 ```{r}
 bo_by_mo <- boxoffice_dates |> 
@@ -330,7 +386,7 @@ bo_by_mo <- boxoffice_dates |>
 bo_by_mo
 ```
 
-Plot the totals
+Then plot the totals:
 
 ```{r}
 bo_by_mo |> 
@@ -340,7 +396,7 @@ bo_by_mo |>
 
 ```
 
-Plot the averages
+Now plot the averages:
 
 ```{r}
 bo_by_mo |> 
@@ -352,7 +408,9 @@ These two look are roughly the same, which is perhaps not surprising over 23 yea
 
 ### Revenue by YTD
 
-You could calculate the year to date with `yday()` and plot across all years on that date. That would sho 366 values with the amount brought in those days.
+You could calculate the year to date with `yday()` and plot across all years on that date. [See the lubridate cheetsheet](https://rawgit.com/rstudio/cheatsheets/main/lubridate.pdf). That would show 366 values with the revenue for each of those days.
+
+There are a number of ways to go about this, but in general you need to summarize your data and then plot it.
 
 ```{r}
 bo_by_ytd <- boxoffice_dates |> 
@@ -409,7 +467,7 @@ bo_rev |>
   arrange(rev_per_theater |> desc())
 ```
 
-There is some unusual answers at the top that must be errors or odd occurances. Let's do this only where the movie was in more than 100 theaters:
+There is some unusual answers at the top that must be errors or odd occurrences. Let's do this only where the movie was in more than 100 theaters:
 
 ```{r}
 bo_rev |> 

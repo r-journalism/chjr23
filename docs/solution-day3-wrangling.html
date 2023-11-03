@@ -193,8 +193,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./resources/homework.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Homework</span></a>
+  <a href="./lesson-monthly1-review.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Core functions review</span></a>
   </div>
 </li>
       </ul>
@@ -230,6 +230,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="./solution-day4-visualizing.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Solutions Day 4</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./solution-monthly1-review.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Solutions: Core functions</span></a>
   </div>
 </li>
       </ul>
@@ -324,7 +330,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 64,954
+<pre><code>Rows: 64,955
 Columns: 25
 $ femaDeclarationString    &lt;chr&gt; "FM-5389-AZ", "FM-5389-AZ", "FM-5464-RI", "FM…
 $ disasterNumber           &lt;dbl&gt; 5389, 5389, 5464, 5463, 5462, 4731, 5460, 545…
@@ -421,7 +427,7 @@ $ id                       &lt;chr&gt; "226d44a3-418a-4102-9a55-385ea6599b2a", "
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 64,954
+<pre><code>Rows: 64,955
 Columns: 25
 $ femaDeclarationString    &lt;chr&gt; "FM-5389-AZ", "FM-5389-AZ", "FM-5464-RI", "FM…
 $ disasterNumber           &lt;dbl&gt; 5389, 5389, 5464, 5463, 5462, 4731, 5460, 545…
@@ -466,7 +472,7 @@ $ moe      &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>         </span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(joined)              </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 64,954
+<pre><code>Rows: 64,955
 Columns: 29
 $ femaDeclarationString    &lt;chr&gt; "FM-5389-AZ", "FM-5389-AZ", "FM-5464-RI", "FM…
 $ disasterNumber           &lt;dbl&gt; 5389, 5389, 5464, 5463, 5462, 4731, 5460, 545…
@@ -569,7 +575,7 @@ $ moe                      &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(fipsStateCode, fipsCountyCode, GEOID) <span class="sc">|&gt;</span> </span>
 <span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 64,954
+<pre><code>Rows: 64,955
 Columns: 3
 $ fipsStateCode  &lt;chr&gt; "04", "04", "44", "20", "31", "08", "40", "40", "40", "…
 $ fipsCountyCode &lt;chr&gt; "007", "021", "009", "201", "025", "009", "147", "109",…
@@ -582,7 +588,7 @@ $ GEOID          &lt;chr&gt; "04007", "04021", "44009", "20201", "31025", "08009
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(joined_new)              </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Rows: 64,954
+<pre><code>Rows: 64,955
 Columns: 30
 $ femaDeclarationString    &lt;chr&gt; "FM-5389-AZ", "FM-5389-AZ", "FM-5464-RI", "FM…
 $ disasterNumber           &lt;dbl&gt; 5389, 5389, 5464, 5463, 5462, 4731, 5460, 545…
