@@ -28,6 +28,7 @@ website:
           - solution-day3-wrangling.qmd
           - solution-day4-visualizing.qmd
           - solution-monthly1-review.qmd
+          - solution-monthly3-iteration.qmd
       - section: "Resources"
         contents:
           - resources/functions.qmd
