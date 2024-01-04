@@ -1,5 +1,5 @@
 ---
-title: "Interation"
+title: "Solutions: Iteration"
 ---
 
 This lesson covers some tools for iteration ... to repeat the same same action on multiple objects. The concepts used here are covered in more detail in the [Functions](https://r4ds.hadley.nz/functions) and [Iteration](https://r4ds.hadley.nz/iteration) chapters of R for Data Science.
@@ -7,21 +7,23 @@ This lesson covers some tools for iteration ... to repeat the same same action o
 Some of the tasks we'll accomplish:
 
 - Import and bind multiple files
-- Create multiple plots from once data source
-- Summarize the same function across multiple columns
+- Create multiple plots using map
+- Summarize across multiple columns with the same function
 - Filter across multiple columns
 
-We won't get through it all in 45 mins, but hopefully the explanations help.
+We won't get through it all in 45 mins, but hopefully the written explanations will help.
 
 ## New packages
 
-This lesson uses a package called clipr that probably need to install. Uncomment the line, run it, then recomment it.
+This lesson uses a package called clipr we haven't used before. Uncomment the install line line, run it, then recomment it.
 
 ```{r}
 # install.packages(clipr)
 ```
 
 ## Setup libraries
+
+The libraries we'll use in this project.
 
 ```{r}
 #| label: setup
@@ -36,7 +38,7 @@ library(clipr)
 
 ## Importing multiple files
 
-We have weather files from six different states. We could import them each individually and then use `bind_rows()` to put them together. That's a lot even for just six files ... what if there were dozens?
+We already have weather files from six different states in our project. We could import them each individually and then use `bind_rows()` to put them together. That's a lot even for just six files ... what if there were dozens?
 
 Instead, we'll import and combine them all at once. This will work for us because all the files are the same structure and have the same column names.
 
@@ -48,16 +50,16 @@ We do this in three steps:
 
 ### Get a list of files
 
-`list.files()` (you guessed it) lists files in a directory we specify. Our use case is a smidge complicated because we want specific files from among all the files in data-raw, so we'll find them using a regular expression pattern.
+`list.files()` (you guessed it) lists files in a directory we specify. In our case it is a smidge complicated because we want specific files from among all the files in the `data-raw` folder, so we'll find them using a regular expression pattern.
 
-Our pattern is looking for file names that "start with two letters and then .csv". This matches our two-letter state files for our weather data. You can how more regex in this [Regular Expressions NICAR lesson](https://bit.ly/nicar-regex).
+Our pattern is looking for file names that "start with two letters and then .csv". This matches our two-letter state files for our weather data. You can more about regex in this [Regular Expressions NICAR lesson](https://bit.ly/nicar-regex) and the [Regular expressions](https://r4ds.hadley.nz/regexps) chapter in R for Data Science.
 
 Once we find the correct files, we choose to keep the full path name. We save the result into the new object `wx_files_list`.
 
 ```{r}
 wx_files_list <- list.files(
     "data-raw",
-    pattern = "^\\w{2}.csv",
+    pattern = "^\\w{2}\\.csv",
     full.names = T
   )
 
@@ -96,12 +98,12 @@ wx_all
 
 The `name` values in our data are ugly, so let's build some more friendly names for them. There are a lot of them so we are going to use some new tricks to build this. The tricks are:
 
-- We'll pull values from a column into a vector
+- We'll pull values from a column and copy them for later
 - I'll demonstrate multi-line editing
 
 #### Copy the list of cities
 
-We'll use this next code to get a list of all our cities for the renaming-cites chunk below.
+We'll use this to get a list of all our cities for the renaming-cites chunk below.
 
 - It starts with the data
 - Then pipes into `distinct()` to get a unique list of the station names
@@ -114,16 +116,16 @@ We'll use this next code to get a list of all our cities for the renaming-cites 
 wx_all |> distinct(name) |> pull(name) |> clipr::write_clip(allow_non_interactive = TRUE)
 ```
 
-It will help to set up the next chunk first, but once we do we'll come back to thsi.
+It will help to set up the next chunk first, but once we do we'll come back to this to get the names.
 
 #### Build the mutate
 
-We want to a column that has a nice version of the city from our "name" field. Since some city names are two words and there isn't a common separator we'll have to do this manually, but I want to show some neat editing tricks that make this easier. We'll be working back 'n' forth between the next two code chunks.
+We want a column that has a nice version of the city from our "name" field. Since some city names are two words and there isn't a common separator we'll have to do this manually, but I'll demonstrate some editing tricks to make this easier.
 
-1. I'll first build the `case_match()`
-2. I'll go the city-names chunk below to copy the city names
-3. I'll come back to this chunk an paste them in
-4. I'll use multi-line editing to set up the list for the clean names. We'll use *option+click+drag* (Mac) or *alt+click+drag* (PC) to highlight the station names and then edit all the lines at once.
+1. I first build the `mutate()` with the `case_match()` syntax.
+2. I use the city-names chunk above to copy the city names
+3. I'll come back to this chunk an paste them inside the `case_match()`
+4. I'll use multi-line editing to set up the list too add the clean names. We'll use *option+click+drag* (Mac) or *alt+click+drag* (PC) to highlight the station names and then edit all the lines at once.
 
 > This chunk will be "finished" when you see it to ensure it runs, but I'll re-edit it when showing you how multi-line eding works.
 
@@ -160,7 +162,7 @@ wx_city |> count(city, name)
 
 ### Create state and year
 
-What's might be new here is to build the state we use `str_sub()` to pull characters from the `name` field based on their position. To get it we count backward from the end of the string since it ends with "XX US" where XX is the state. We start with the 5th character from end, and then stop at the 4th character from the end.
+To build the state field we use `str_sub()` to pull characters from the `name` field based on their position, but we count backward from the end of the string since it ends with "XX US" where XX is the state. We start with the 5th character from end, and then stop at the 4th character from the end.
 
 For a new `year` variable we pluck the year from the `date` field. We've done that in other lessons.
 
@@ -186,9 +188,9 @@ wx <- wx_adds |>
 wx |> head()
 ```
 
-## Chart average highs, lows
+## Plot average highs, lows
 
-This next section isn't new, but we have to do it before we can show more new stuff.
+This next section doesn't cover new ground, but we have to do it before we can show more new stuff.
 
 To chart the average highs and lows for each city, we have to perform a number of steps:
 
@@ -249,7 +251,7 @@ temps_long |>
   facet_wrap(~city)
 ```
 
-## Iterate over cities to build charts
+## Iterate over cities to build plots
 
 But we can map over our cities to build plots much like we mapped over files to combine them.
 
@@ -318,7 +320,7 @@ We commented out the part about saving the plots to images so you can see it hap
 
 1. In your Files pane, click on the `data-processed` folder so you can see the contents. You probably have a couple of `.rds` files in there from before.
 2. Go back to the plot_temps function and uncomment the code. Rerun the chunk.
-3. Go to the next chunk where we map the function and return it while watching your Files pane. You should see the images for each plot appear.
+3. Go to the next chunk where we map the function and run it while watching your Files pane. You should see the images for each plot appear.
 
 ## Functions across multiple columns
 
@@ -347,7 +349,7 @@ That's great until you need an argument, like to deal with the NA values that sh
 
 To pass an argument into across, we can create a "temporary function" and pass it our function with its related arguments.
 
-- Our first across creates temporary function "x" and passes it the `sum()` function with the needed "na.rm = T" argument.
+- Our first across creates a temporary function "x" and passes it the `sum()` function with the needed "na.rm = T" argument.
 - The second across line does the same thing, but we use it to round the values to the nearest tenth, which also needed an argument to specify the rounding place value.
 
 ```{r}
@@ -393,7 +395,7 @@ starwars |>
   filter(if_any(contains("color"), ~ str_detect(.x, "brown")))
 ```
 
-## if_all
+### if_all
 
 This works the same way, but the test has to be true for ALL of the columns instead of just one of them.
 
