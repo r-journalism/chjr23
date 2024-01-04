@@ -42,15 +42,15 @@ We already have weather files from six different states in our project. We could
 
 Instead, we'll import and combine them all at once. This will work for us because all the files are the same structure and have the same column names.
 
-We do this in three steps:
+We will do this in three steps:
 
-- Create a list of the files we want
-- Use `map()` to apply the read_csv function to each file
-- Bind them all together (which we'll pipe into after the map)
+- We'll use `list.files()` to create a vector of the files we want
+- We'll use `map()` to apply the read_csv function to each file and create a list
+- We'll use `list_rbind()` to combine them into a single data frame
 
 ### Get a list of files
 
-`list.files()` (you guessed it) lists files in a directory we specify. In our case it is a smidge complicated because we want specific files from among all the files in the `data-raw` folder, so we'll find them using a regular expression pattern.
+`list.files()` (you guessed it) lists files in a directory we specify. In our case it is a smidgen complicated because we want specific files from among all the files in the `data-raw` folder, so we'll find them using a regular expression pattern.
 
 Our pattern is looking for file names that "start with two letters and then .csv". This matches our two-letter state files for our weather data. You can more about regex in this [Regular Expressions NICAR lesson](https://bit.ly/nicar-regex) and the [Regular expressions](https://r4ds.hadley.nz/regexps) chapter in R for Data Science.
 
