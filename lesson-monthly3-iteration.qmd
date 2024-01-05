@@ -1,0 +1,414 @@
+---
+title: "Iteration"
+---
+
+This lesson covers some tools for iteration ... to repeat the same action on multiple objects. The concepts used here are covered in more detail in the [Functions](https://r4ds.hadley.nz/functions) and [Iteration](https://r4ds.hadley.nz/iteration) chapters of R for Data Science.
+
+Some of the tasks we'll accomplish:
+
+- Import and bind multiple files
+- Create multiple plots using map
+- Summarize across multiple columns with the same function
+- Filter across multiple columns
+
+We won't get through it all in 45 mins, but hopefully the written explanations will help.
+
+::: callout-tip
+
+There are no "on your own" parts to this lesson, but if you want to follow along on your own computer and play with the code, download this <i class="bi bi-download"></i> [practice copy](practice-monthly3-iteration.qmd){download="practice-monthly3-iteration.qmd"} and save it in your chj23 project.
+
+If you want a clean copy of the lesson to save for reference, download the <i class="bi bi-download"></i> [ lesson version](lesson-monthly3-iteration.qmd){download="lesson-monthly3-iteration.qmd"} which is this file you are reading. They are essentially the same but with different file names.
+
+:::
+
+## New packages
+
+This lesson uses a package called clipr we haven't used before. Uncomment the install line line, run it, then recomment it.
+
+```{r}
+# install.packages(clipr)
+```
+
+## Setup libraries
+
+The libraries we'll use in this project.
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(janitor)
+library(clipr)
+```
+
+
+## Importing multiple files
+
+We already have weather files from six different states in our project. We could import them each individually and then use `bind_rows()` to put them together. That's a lot even for just six files ... what if there were dozens?
+
+Instead, we'll import and combine them all at once. This will work for us because all the files are the same structure and have the same column names.
+
+We will do this in three steps:
+
+- We'll use `list.files()` to create a vector of the files we want
+- We'll use `map()` to apply the read_csv function to each file and create a list
+- We'll use `list_rbind()` to combine them into a single data frame
+
+### Get a list of files
+
+`list.files()` (you guessed it) lists files in a directory we specify. In our case it is a smidgen complicated because we want specific files from among all the files in the `data-raw` folder, so we'll find them using a regular expression pattern.
+
+Our pattern is looking for file names that "start with two letters and then .csv". This matches our two-letter state files for our weather data. You can more about regex in this [Regular Expressions NICAR lesson](https://bit.ly/nicar-regex) and the [Regular expressions](https://r4ds.hadley.nz/regexps) chapter in R for Data Science.
+
+Once we find the correct files, we choose to keep the full path name. We save the result into the new object `wx_files_list`.
+
+```{r}
+wx_files_list <- list.files(
+    "data-raw",
+    pattern = "^\\w{2}\\.csv",
+    full.names = T
+  )
+
+wx_files_list
+```
+
+### Map the list to a function
+
+The `map()` function applies a function to each element of a vector or list.
+
+Inside `map()` below we:
+
+- Start with our list of files
+- We say which function to apply, read_csv in our case.
+- We give the function an argument, col_select. This allows us to choose specific columns AS we are importing. (You can do this with regular `read_csv()`, too!)
+
+The result of that map function is a list of our six data frames. We pipe that list into into `list_rbind()` to bind them together. This is similar to `bind_rows()` but is specifically for a list of data frames.
+
+Lastly we use `clean_names()` to normalize the column names.
+
+```{r}
+wx_all <-  map(
+    wx_files_list,
+    read_csv,
+    col_select = c(NAME, DATE, PRCP, SNOW, SNWD, TMAX, TMIN)
+  ) |> 
+  list_rbind() |> 
+  clean_names()
+
+wx_all
+```
+
+## Some data cleanup
+
+### Create a clean city
+
+The `name` values in our data are ugly, so let's build some more friendly names for them. There are a lot of them so we are going to use some new tricks to build this. The tricks are:
+
+- We'll pull values from a column and copy them for later
+- I'll demonstrate multi-line editing
+
+#### Copy the list of cities
+
+We'll use this to get a list of all our cities for the renaming-cites chunk below.
+
+- It starts with the data
+- Then pipes into `distinct()` to get a unique list of the station names
+- We then use the `pull()` function to pluck the values of that column into a list.
+- Then we use `write_clip()` to save that list into our computer system's clipboard. It's like doing command-C to copy.
+
+```{r}
+#| label: city-names
+
+wx_all |> distinct(name) |> pull(name) |> clipr::write_clip(allow_non_interactive = TRUE)
+```
+
+It will help to set up the next chunk first, but once we do we'll come back to this to get the names.
+
+#### Build the mutate
+
+We want a column that has a nice version of the city from our "name" field. Since some city names are two words and there isn't a common separator we'll have to do this manually, but I'll demonstrate some editing tricks to make this easier.
+
+1. I first build the `mutate()` with the `case_match()` syntax.
+2. I use the city-names chunk above to copy the city names
+3. I'll come back to this chunk an paste them inside the `case_match()`
+4. I'll use multi-line editing to set up the list too add the clean names. We'll use *option+click+drag* (Mac) or *alt+click+drag* (PC) to highlight the station names and then edit all the lines at once.
+
+> This chunk will be "finished" when you see it to ensure it runs, but I'll re-edit it when showing you how multi-line eding works.
+
+```{r}
+#| label: renaming-cities
+
+wx_city <- wx_all |> 
+  mutate(
+    city = case_match(
+      name,
+      "FORT SMITH REGIONAL AIRPORT, AR US" ~ "FORT SMITH",
+      "LITTLE ROCK AIRPORT ADAMS FIELD, AR US" ~ "LITTLE ROCK",
+      "HOT SPRINGS 1 NNE, AR US" ~ "HOT SPRINGS",
+      "SAN FRANCISCO DOWNTOWN, CA US" ~ "SAN FRANCISCO",
+      "LOS ANGELES DOWNTOWN USC, CA US" ~ "LOS ANGELES",
+      "SACRAMENTO 5 ESE, CA US" ~ "SACRAMENTO",
+      "CHARLOTTE DOUGLAS AIRPORT, NC US" ~ "CHARLOTTE",
+      "WILMINGTON INTERNATIONAL AIRPORT, NC US" ~ "WILMINGTON",
+      "RALEIGH DURHAM INTERNATIONAL AIRPORT, NC US" ~ "RALEIGH",
+      "ALBUQUERQUE INTERNATIONAL AIRPORT, NM US" ~ "ALBUQUERQUE",
+      "CIMARRON 4 SW, NM US" ~ "CIMARRON",
+      "SANTA FE CO MUNICIPAL AIRPORT, NM US" ~ "SANTA FE",
+      "NY CITY CENTRAL PARK, NY US" ~ "NEW YORK CITY",
+      "BUFFALO NIAGARA INTERNATIONAL, NY US" ~ "BUFFALO",
+      "ALBANY INTERNATIONAL AIRPORT, NY US" ~ "ALBANY",
+      "HOUSTON WILLIAM P HOBBY AIRPORT, TX US" ~ "HOUSTON",
+      "AUSTIN CAMP MABRY, TX US" ~ "AUSTIN",
+      "DALLAS FAA AIRPORT, TX US" ~ "DALLAS"
+    )
+  )
+
+wx_city |> count(city, name)
+```
+
+### Create state and year
+
+To build the state field we use `str_sub()` to pull characters from the `name` field based on their position, but we count backward from the end of the string since it ends with "XX US" where XX is the state. We start with the 5th character from end, and then stop at the 4th character from the end.
+
+For a new `year` variable we pluck the year from the `date` field. We've done that in other lessons.
+
+```{r}
+wx_adds <- wx_city |> 
+  mutate(
+    state = str_sub(name, -5, -4),
+    year = year(date)
+  )
+
+wx_adds
+```
+
+### Clean up the columns
+
+Here we are dropping the old station name column and then using `relocate()` to move the city and state to the front of the data frame so they are easy to see.
+
+```{r}
+wx <- wx_adds |> 
+  select(!name) |> 
+  relocate(city, state)
+
+wx |> head()
+```
+
+## Plot average highs, lows
+
+This next section doesn't cover new ground, but we have to do it before we can show more new stuff.
+
+To chart the average highs and lows for each city, we have to perform a number of steps:
+
+- We summarize our data to get the averages for each city
+- We pivot our data to work best for ggplot
+- We plot the chart (filtering for a city because we can't do them all at once)
+
+### Summarize across data
+
+Here we get the average high/low for each city each year. The only odd thing here is when I name the new columns I break form and use title case to make for a prettier chart legend later.
+
+```{r}
+avg_yr_temps <- wx |>
+  group_by(city, state, year) |> 
+  summarize(
+    High = mean(tmax, na.rm = T) |> round(1),
+    Low = mean(tmin, na.rm = T) |> round(1)
+  )
+
+avg_yr_temps
+```
+
+### Pivot the data
+
+While we could technically plot out data in the shape above, ggplot prefers to have data in a "long" format to plot multiple measures, so we pivot this data. Nothing particularly interesting here other than perhaps how we note the "cols" using a range of their variable names. We do it this way verse the position in case the data format changes later for some reason.
+
+```{r}
+temps_long <- avg_yr_temps |> 
+  pivot_longer(
+    cols = High:Low,
+    names_to = "type",
+    values_to = "average"
+  )
+
+temps_long
+```
+
+### Example plot of single city
+
+Plotting more than one city at a time would make for an unwieldy result, so instead we filter our data for just one city and then plot it.
+
+```{r}
+temps_long |> 
+  filter(city == "ALBANY") |>
+  ggplot(aes(x = year, y = average, color = type)) +
+  geom_point() +
+  labs(title = "Yearly average high & low temperatures for Albany")
+```
+
+### As a facet wrap
+
+We could show all the cities at once using a facet wrap. There are pros and cons to this ... they are easy to compare, but it is difficult to see specific cities.
+
+```{r}
+temps_long |> 
+  ggplot(aes(x = year, y = average, color = type)) +
+  geom_point(size = .025) +
+  facet_wrap(~city)
+```
+
+## Iterate over cities to build plots
+
+But we can map over our cities to build plots much like we mapped over files to combine them.
+
+Like before, we will:
+
+- Build a list of things we want to iterate ... cities in this case.
+- Use map to feed them into a function.
+
+The difference is this time we have to build our own function.
+
+### Build a vector of cities
+
+To build our list of cities we will get a distinct list of cities from the data, then use `pull()` to create a list of them. We'll save it as `city_list`.
+
+```{r}
+city_list <- temps_long |> distinct(city) |> pull(city)
+
+city_list
+```
+
+
+### Plotting in a function
+
+We'll create our own function that builds a plot based on the city. We'll use this function later with `map()`.
+
+- We create a function with `function() {}` with the code between the curly braces. In our case, we save the  function into an object called `plot_temps` so we can reuse it.
+- We create an argument for the function called `plot_city`. This is the value that will be fed into the function.
+- The function starts with our data `temps_long` AND THEN ...
+- We filter it based on the city submitted to the function (which will come from our city_list vector!) AND THEN ...
+- We pipe into ggplot, setting all the aesthetics, geoms and labs.
+    - Inside `labs()` we do some interesting things. We are using `str_glue()` to add the city to the chart title, changing it to title case in the process.
+    - I've commented some code that saves each chart as an image. I want you to first see the result in your notebook before saving individual images to your computer. The most complicated part of this is creating a friendly file name for the chart based on the city name from the data.
+
+```{r}
+plot_temps <- function(plot_city) {
+  temps_long |> 
+    filter(city == plot_city) |> 
+    ggplot(aes(x = year, y = average, color = type)) +
+    geom_point() +
+    labs(title = str_glue("Yearly average high & low temperatures: ", plot_city |> str_to_title()),
+         x = "Year", y = "Average temperature", color = "Temp type")
+  # plot_file_name <- str_glue("data-processed/", plot_city, ".png") |>
+  #   str_replace_all(" ","-") |>
+  #   str_to_lower()
+  # ggsave(filename = plot_file_name)
+}
+
+# An example chart using the first city from our list
+plot_temps(city_list[[1]])
+```
+
+### Map the list to the plot function
+
+Now let's iterate the vector of city names through the plotting function.
+
+We'll run this first to see all the plots, then we'll comment out the ggsave code above and run it again.
+
+```{r}
+city_list |> 
+  map(plot_temps)
+```
+
+### Modify the code to save as images
+
+We commented out the part about saving the plots to images so you can see it happen. Follow these steps:
+
+1. In your Files pane, click on the `data-processed` folder so you can see the contents. You probably have a couple of `.rds` files in there from before.
+2. Go back to the plot_temps function and uncomment the code. Rerun the chunk.
+3. Go to the next chunk where we map the function and run it while watching your Files pane. You should see the images for each plot appear.
+
+## Functions across multiple columns
+
+You can use `across()` to apply the same function across multiple columns using `select()`-like terminology. The simple concept gets complicated quickly, but it is super powerful when you need it.
+
+- The first argument chooses which columns you are working with. It can handle any kind of [select](https://dplyr.tidyverse.org/reference/select.html) syntax.
+- The second argument is the function you are applying across those columns.
+
+We'll get the total rain and snow for each year to show this functionality.
+
+### Single function on multiple columns
+
+Here we choose two columns using `c()`, but there are a multitude of ways to choose multiple columns.
+
+```{r}
+wx |> 
+  group_by(city, state, year) |> 
+  summarize(
+    across(c(prcp,snow), sum)
+  )
+```
+
+That's great until you need an argument, like to deal with the NA values that show up here. (If any value is empty when trying to `sum()`, there is an error unless you use the "na.rm = TRUE" argument.)
+
+### Passing arguments to across
+
+To pass an argument into across, we can create a "temporary function" and pass it our function with its related arguments.
+
+- Our first across creates a temporary function "x" and passes it the `sum()` function with the needed "na.rm = T" argument.
+- The second across line does the same thing, but we use it to round the values to the nearest tenth, which also needed an argument to specify the rounding place value.
+
+```{r}
+wx |> 
+  group_by(city, state, year) |> 
+  summarise(
+    across(c(prcp,snow), function(x) sum(x, na.rm = T)),
+    across(c(prcp,snow), function(y) round(y, 1))
+  ) 
+```
+
+## Filtering across columns
+
+There is similar functionality designed specifically for filtering across multiple columns: `if_any()` and `if_all()`. The weather data doesn't have values to show how these work, so we'll use the Star Wars characters example data that comes with the tidyverse package to demonstrate.
+
+First, peek at a sample of starwars data so you have an idea what we are working with.
+
+```{r}
+starwars |> slice_sample(n = 10)
+```
+
+### if_any
+
+Now we'll search across any of the "color" columns for the value "brown". If there is an exact match in an ANY of those columns it will be kept.
+
+- To select our columns to consider we use `ends_with()` to find columns that ended in "color" to get hair, skin and eyes.
+- The `~` indicates our filtering equation follows.
+- In the equation `.x == "brown"` the `.x` represent the current value in the if_any loop, so we are checking if that value is the text "brown".
+
+```{r}
+starwars |> 
+  filter(if_any(ends_with("color"), ~ .x == "brown"))
+```
+
+That is fine, but there were some columns that had values like "brown, grey", which are not caught by a strict `==` comparison. We can use the `str_detect()` function to look for the term "brown" anywhere within any of the selected columns.
+
+- We select the column in the same way as above
+- `~` still indicates our filtering equation follows
+- our function is `str_detect()` with the arguments of the current variable `.x` and the text we are looking for "brown".
+
+```{r}
+starwars |> 
+  filter(if_any(contains("color"), ~ str_detect(.x, "brown")))
+```
+
+### if_all
+
+This works the same way, but the test has to be true for ALL of the columns instead of just one of them.
+
+```{r}
+starwars |> 
+  filter(if_all(ends_with("color"), ~ .x == "brown"))
+```
+

@@ -21,6 +21,7 @@ website:
           - lesson-day3-01-wrangling.qmd
           - lesson-day4-01-visualizing.qmd
           - lesson-monthly1-review.qmd
+          - lesson-monthly3-iteration.qmd
       - section: "Solutions"
         contents:
           - solution-day1-clean.qmd
@@ -28,7 +29,6 @@ website:
           - solution-day3-wrangling.qmd
           - solution-day4-visualizing.qmd
           - solution-monthly1-review.qmd
-          - solution-monthly3-iteration.qmd
       - section: "Resources"
         contents:
           - resources/functions.qmd
