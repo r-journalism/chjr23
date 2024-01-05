@@ -42,6 +42,6 @@ For at least the first couple of days we'll use web-published versions of the le
 - Day 3: [Tidying data](https://r-journalism.github.io/chjr23/slides/03_tidying_data.html)
 - Day 4: [Visualizing data](https://r-journalism.github.io/chjr23/slides/04_visualizing_data.html)
 
-## Extra:
+## Extras:
 
 - Tidycensus [page](https://r-journalism.github.io/chjr/tidycensus.html) | [code](https://github.com/r-journalism/chjr/blob/main/inst/tutorials/tidycensus/tidycensus.Rmd)
